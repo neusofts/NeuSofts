@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Plupload - jQuery UI Widget</title>
+<style type="text/css">
+	body {
+		font-family:Verdana, Geneva, sans-serif;
+		color:#333;
+		background:url(../bg.jpg);
+	}
+</style>
+<link rel="stylesheet" href="http://ajax.useso.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" />
+<link rel="stylesheet" href="../../js/jquery.ui.plupload/css/jquery.ui.plupload.css" type="text/css" />
+
+<script type="text/javascript" src="app_resource/jquery.min.js"></script>
+<script type="text/javascript" src="app_resource/jquery-ui.min.js"></script>
+<script type="text/javascript" src="app_resource/browserplus-min.js"></script>
+
+<script type="text/javascript" src="../../js/plupload.js"></script>
+<script type="text/javascript" src="../../js/plupload.gears.js"></script>
+<script type="text/javascript" src="../../js/plupload.silverlight.js"></script>
+<script type="text/javascript" src="../../js/plupload.flash.js"></script>
+<script type="text/javascript" src="../../js/plupload.browserplus.js"></script>
+<script type="text/javascript" src="../../js/plupload.html4.js"></script>
+<script type="text/javascript" src="../../js/plupload.html5.js"></script>
+<script type="text/javascript" src="../../js/jquery.ui.plupload/jquery.ui.plupload.js"></script>
+<script type="text/javascript" src="../../js/i18n/zh-cn.js"></script>
+
+<!-- 图片切割部分 -->
+<script src="/demo/avatar_cut/newVer/js/jquery.Jcrop.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/demo/avatar_cut/newVer/css/jquery.Jcrop.css" type="text/css" />
+<link rel="stylesheet" href="/demo/avatar_cut/newVer/demos/demo_files/demos.css" type="text/css" />
+<!-- //图片切割部分 -->
+
+</head>
+<body>
+
+<h1>
+  <a href="#">点击此处加载上传控件</a>
+  <small>（提示：上传成功将删除服务器之前所有文件）</small>
+  <a href="../../docs/api" target="_black">官方api</a>
+</h1>
+
+<form id="uploader_form" method="post" action="dump.php">
+	<div id="uploader">
+		<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+	</div>
+</form>
+
+<!-- 图片切割部分 -->
+<div id="cut-div" style="display:none;">
+  <div class="jcExample">
+  <div class="article">
+    <h1>Jcrop - ImgCut Module Class</h1>
+    <!-- <h1>Jcrop - Aspect ratio w/ preview pane</h1> -->
+    <table>
+      <tr>
+        <td>
+          <img src="/demo/avatar_cut/newVer/demos/demo_files/pool.jpg" id="target" alt="Flowers" />
+        </td>
+        <td>
+          <div class="preview-div" style="width:40px;height:40px;display:none;overflow:hidden;">
+            <img src="/demo/avatar_cut/newVer/demos/demo_files/pool.jpg" class="jcrop-preview" />
+          </div>
+          <div class="preview-div" style="width:80px;height:80px;display:none;overflow:hidden;margin-top:10px;">
+            <img src="/demo/avatar_cut/newVer/demos/demo_files/pool.jpg" class="jcrop-preview" />
+          </div>
+          <div class="preview-div" style="width:120px;height:120px;display:none;overflow:hidden;margin-top:10px;">
+            <img src="/demo/avatar_cut/newVer/demos/demo_files/pool.jpg" class="jcrop-preview" />
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  </div>
+  </div>
+<!-- //图片切割部分 -->
+
+<script id="DoUpload-Class" type="text/javascript">
+/*
+* DoUpload module 上传控件、[剪裁工具]
+* @param 	uploaderId 	{[String]} 可选，初始化上传队列的id选择器（仅限id选择器，下同）
+* 参数规则，div：name，form：name_form
+*/
+function DoUpload(uploaderId) {
+	var _class = DoUpload ,
+		_this = this ,
+		_cut = null ,
+		_uploaderId = uploaderId || 'uploader' ;
+
+	if (typeof _class._initialized === 'undefined') {
+		var methods = {
+			init : function () {
+				//
+			},
+
+			/*
+			* plupload widget
+			*/
+			upload : function (options) {
+				var $div = $('#' + _uploaderId) ,
+					$form = $('#' + _uploaderId + '_form') ,
+					config = {
+							   runtimes : 'html5, flash, silverlight, browserplus, gears, html4' ,
+									url : '../upload.php' ,
+						  max_file_size : '1mb' ,
+						 max_file_count : 3 ,
+							 chunk_size : '1mb' ,
+						   unique_names : true ,
+						multiple_queues : true ,
+								 resize : {width: 570, height: 500, quality: 100} ,
+								 Rename : true ,
+							   sortable : true ,
+								filters : [
+											{title: 'Image files', extensions: 'jpg,gif,png'} ,
+											{title: 'Zip files', extensions: 'rar,zip'}
+										  ] ,
+						  flash_swf_url : '../../js/plupload.flash.swf' ,
+					silverlight_xap_url : '../../js/plupload.silverlight.xap'
+				}
+				
+				if (!$form.data('instance')) {
+					$.type(options) === 'object' && $.extend(config, options) ;
+					$div.plupload(config) ;
+
+					var uploader = $div.plupload('getUploader') ;
+
+					uploader.bind('FileUploaded', function (up, files, obj) {
+				    	//alert(JSON.stringify(files)) ;
+				    	_this.cut('../uploads/' + files.target_name) ;
+				    	//{"id":"p17d5e1c9i1qcjil11ln25t1fll5","name":"5.jpg","size":200034,"loaded":200034,"percent":100,"status":5,"target_name":"p17d5e1c9i1qcjil11ln25t1fll5.jpg"}
+				    }) ;
+
+					$form.data('instance', uploader).submit(function (e) {
+						if (uploader.files.length > 0) {
+							uploader.bind('StateChanged', function() {
+								var uploadedCount = uploader.total.uploaded + uploader.total.failed ;
+								uploader.files.length === uploadedCount && $form[0].submit() ;
+							}) ;
+							uploader.start() ;
+						} else {
+							alert('You must at least upload one file.') ;
+							return false ;
+						}
+					}) ;
+				}
+				//-------
+			},
+
+			/*
+			* avatar cutting widget
+			*/
+			cut : function (src) {
+        $('#cut-div').show() ;
+        $.newImgUrl = src ;
+				if (_cut) {
+					var jcrop = _cut.getApi() ;
+					_cut.setViewImg(src, function () {
+  					jcrop.animateTo([10, 10, 130, 130]);
+          }) ;
+				} else {
+					_cut = new ImgCut({
+					    viewClass: 'preview-div' ,  //初始化 大中小图片预览区域及个数，DOM结构决定
+              imgId : 'target' ,
+					    bgColor: 'blue' ,           //初始化 背景颜色
+					    bgFade: true ,              //初始化 背景渐变效果
+					    shade: false ,              //初始化 选区是否显示黑白效果
+					    bgOpacity: 0.3 ,            //初始化 背景透明度
+					    addClass: 'jcrop-light' ,   //初始化 选区边界凸效果
+					    minSize: [ 120, 120 ] ,     //初始化 区域选择最小值，或者按最大缩略图比例在回调中定义
+					    maxSize: [ 0, 0 ]           //初始化 区域选择最大值
+					  },
+					  function (cutObj) {
+					  	cutObj.setViewImg($.newImgUrl, function () {
+                cutObj.getApi().animateTo([10, 10, 130, 130]);
+                //回调：结合选区边界效果设置使用
+                cutObj.getApi().ui.selection.addClass('jcrop-selection');
+              }) ;
+					  }
+					) ;
+				}
+			}
+		}
+
+		$.extend(_class.prototype, methods) ;
+	}
+
+	_class._initialized = true ;
+
+	this.init() ;
+}
+
+/* 图片切割部分 */
+function ImgCut(options, callback) {
+  var 
+    _class  = ImgCut ,
+    _ops    = options
+  ;
+
+  if (!$.isPlainObject(options)) {
+    return false ;
+  }
+
+  this.bounds = [] ;
+  this.result = {} ;
+  this.api    = {} ;
+  this.$img   = $('#' + _ops.imgId) ;
+  this.$view  = $('.' + _ops.viewClass).size() ? $('.' + _ops.viewClass) : false ;
+  
+  if (typeof _class._initialized === 'undefined') {
+    var methods = {
+      //初始化
+      init : function () {
+        this.setResult() ;
+        this.jCrop() ;
+      },
+
+      //创建jCrop对象
+      jCrop : function () {
+        var that = this ;
+        var options = {
+          onChange: function (c) {
+            $.extend(that.result, c) ;
+            if (parseInt(c.w) > 0 && that.$view) {
+              function view($div, width, height) {
+                var rx = width / c.w ,
+                    ry = height / c.h ;
+                $div.find('img').css({
+                  width      : Math.round(rx * that.bounds[0]) + 'px' ,
+                  height     : Math.round(ry * that.bounds[1]) + 'px' ,
+                  marginLeft : '-' + Math.round(rx * c.x) + 'px' ,
+                  marginTop  : '-' + Math.round(ry * c.y) + 'px'
+                }) ;
+              }
+              that.$view.show().each(function () {
+                view($(this), $(this).width(), $(this).height()) ;
+              }) ;
+            }
+          } ,
+          onSelect: this.onChange ,
+          aspectRatio: 1
+        }
+
+        $.extend(options, _ops) ;
+
+        return this.$img.Jcrop(options,
+          //loader后this被创建
+          function () {
+            this.focus() ;
+            that.api = this ;
+            that.bounds = this.getBounds() ;
+            //释放本类实例对象
+            $.isFunction(callback) && callback(that) ;
+        }) ;
+      },
+
+      //修改图片时且同步缩略图预览时调用
+      //已包装jcrop.setImage(url, callback)，有缩略图预览时必须掉此方法
+      setViewImg : function (url, callback) {
+        var 
+            that = this ,
+            url = url + '?ver=' + (new Date()).getTime() ,
+            minSize = that.api.getOptions().minSize ,
+            img = new Image()
+        ;
+
+        img.onload = function () {
+          if (this.width >= minSize[0] && this.height >= minSize[1]) {
+            that.api.setImage(url, callback) ;
+            that.result.url = url ;
+            that.bounds[0] = this.width ;
+            that.bounds[1] = this.height ;
+            that.$img.attr('src', url) ;
+            that.$view && that.$view.find('img').attr('src', url) ;
+          } else {
+            alert('错误：被处理图片尺寸小于选区最小要求！') ;
+            return false ;
+          }
+        }
+
+        img.onerror = function () {
+          alert('错误：图片加载失败，请重试！') ;
+          return false ;
+        }
+
+        img.src = url ;
+      },
+
+      //装载与后端传递的数据
+      setResult : function () {
+        var that = this ;
+        this.result.url = this.$img.attr('src') ;
+        this.$view && this.$view.each(function (i) {
+          that.result['avatar_' + (i + 1)] = [] ;
+          that.result['avatar_' + (i + 1)][0] = $(this).width() ;
+          that.result['avatar_' + (i + 1)][1] = $(this).height() ;
+        }) ;
+      },
+
+      //获取Jcrop对象
+      getApi : function () {
+        return this.api ;
+      },
+
+      //获取返回值：坐标、宽度、高度、大中小图尺寸、图片路径
+      getResult : function () {
+        return this.result ;
+      }
+    }
+
+    $.extend(_class.prototype, methods) ;
+  
+    _class._initialized = true ;
+  }
+
+  this.init() ;
+}
+
+$(function () {
+	var oUploader = new DoUpload('uploader') ;
+	$('h1:first').click(function () {
+		oUploader.upload({
+			//resize : {}	//不做压缩、降品质处理
+		}) ;
+	}) ;
+}) ;
+</script>
+
+<!-- 代码高亮区域 -->
+<div>
+    <pre class="prettyprint linenums js"><center style="color:red; font-size:12px;">window.onload后3秒钟自动加载高亮代码...</center></pre>
+</div>
+<link href="http://www.neusofts.com/demo/bootstrap/v2.0.2/docs/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+<script type="text/javascript" src="http://www.neusofts.com/demo/bootstrap/v2.0.2/docs/assets/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+function getCode() {
+  $('.prettyprint').html($('#DoUpload-Class').html()) ;
+  prettyPrint();
+  $('ol.linenums li').hover(
+    function () {
+      $(this).css('background', '#ddd') ;
+    } ,
+    function () {
+      $(this).css('background', '') ;
+    }
+  ) ;
+}
+window.onload = function () {
+  setTimeout(function () {
+    getCode() ;
+    //$('html, body').animate({scrollTop:500}, 2000) ;
+    $('<input>', {
+      'type' : 'button' ,
+      'style' : 'width:100%; text-align:center; font-size:14px; font-weight:bold; padding:4px 0;' ,
+      'value' : '返 回 顶 部 ↑↑↑↑'
+    })
+    .appendTo('body')
+    .click(function () {
+      $('html, body').animate({scrollTop:0}, 1000) ;
+    }) ;
+  }, 3000) ;
+}
+</script>
+<!-- //代码高亮区域 -->
+
+</body>
+</html>

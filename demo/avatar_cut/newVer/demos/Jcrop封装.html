@@ -1,0 +1,535 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8" /> 
+  <title>Jcrop &raquo; Tutorials &raquo; aspectRatio w/ Preview</title>
+  <script src="../js/jquery.min.js" type="text/javascript"></script>
+  <script src="../js/jquery.Jcrop.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
+  <link rel="stylesheet" href="demo_files/demos.css" type="text/css" />
+</head>
+
+<body>
+
+  <div id="outer">
+    <div class="jcExample">
+      <div class="article">
+
+      <h1>Jcrop - ImgCut Module Class</h1>
+      <!-- <h1>Jcrop - Aspect ratio w/ preview pane</h1> -->
+
+      <!-- 测试实例化一 -->
+        <table>
+          <tr>
+            <td conspan="2">实例化一：</td>
+          </tr>
+          <tr>
+            <td>
+              <img src="demo_files/pool.jpg" id="target" alt="Flowers" />
+            </td>
+            <td>
+              <div class="preview-div" style="width:40px;height:40px;display:none;overflow:hidden;">
+                <img src="demo_files/pool.jpg" class="jcrop-preview" />
+              </div>
+              <div class="preview-div" style="width:80px;height:80px;display:none;overflow:hidden;margin-top:10px;">
+                <img src="demo_files/pool.jpg" class="jcrop-preview" />
+              </div>
+              <div class="preview-div" style="width:120px;height:120px;display:none;overflow:hidden;margin-top:10px;">
+                <img src="demo_files/pool.jpg" class="jcrop-preview" />
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div id="dl_links" style="padding-bottom:20px;">
+          <!-- <a href="http://deepliquid.com/content/Jcrop.html">Jcrop Home</a> |
+          <a href="http://deepliquid.com/content/Jcrop_Manual.html">Manual (Docs)</a> -->
+          <!-- 通过对象方法getApi获取jcrop对象 -->
+          <button id="replace-btn"> 显示并换图(底片效果) </button>
+          <button id="style-btn"> 换默认样式 </button>
+          <button id="ao-btn"> 凹样式 </button>
+          <button id="result-btn"> 取值 </button>
+          <button id="opacity-btn"> 测试bye! </button>
+          <a href="../">【官方示例】</a>
+        </div>
+
+        <center id="loading-code" style="color:red; font-size:12px;">window.onload后3秒钟自动加载高亮代码...</center>
+      <!-- //测试实例化一 -->
+
+        <!-- <p id="target-p">
+          <b>An example implementing a preview pane.</b>
+            Obviously the most visual demo, the preview pane is accomplished
+            entirely outside of Jcrop with a simple jQuery-flavored callback.
+            This type of interface could be useful for creating a thumbnail
+            or avatar. The onChange event handler is used to update the
+            view in the preview pane.
+        </p> -->
+
+      <!-- 测试实例化二 -->
+        <table>
+          <tr>
+            <td conspan="2">实例化二：</td>
+          </tr>
+          <tr>
+            <td>
+              <img src="demo_files/pool.jpg" id="target2" alt="Flowers" />
+            </td>
+            <td>
+              <div class="preview-div2" style="width:40px;height:40px;display:none;overflow:hidden;">
+                <img src="demo_files/pool.jpg" class="jcrop-preview" />
+              </div>
+              <div class="preview-div2" style="width:80px;height:80px;display:none;overflow:hidden;margin-top:10px;">
+                <img src="demo_files/pool.jpg" class="jcrop-preview" />
+              </div>
+              <div class="preview-div2" style="width:120px;height:120px;display:none;overflow:hidden;margin-top:10px;">
+                <img src="demo_files/pool.jpg" class="jcrop-preview" />
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div id="dl_links2">
+          <button id="replace-btn2"> 显示并换图(底片效果) </button>
+          <button id="style-btn2"> 换默认样式 </button>
+          <button id="ao-btn2"> 凹样式 </button>
+          <button id="result-btn2"> 取值 </button>
+          <button id="opacity-btn2"> 测试bye! </button>
+        </div>
+      <!-- //测试实例化二 -->
+
+      </div>
+    </div>
+  </div>
+
+<script id="ImgCut-Class" type="text/javascript">
+
+/*
+  * ImgCut Module Class (基于jQuery库，依赖于Jcrop控件)
+  * 调用：new ImgCut({imgId:'target', viewClass:'preview-div', ...} [,callback(官方api, 当前对象)])；
+  * @param  options           {Object}      options对象，imgId、viewClass为必须配置
+  *         options.imgId     {String}      id选择器，不含#或.
+  *         options.viewClass {String}      预览div的jQuery之Class选择器，一般设置大、中、小，取决于DOM结构
+  * @param  callback          {[Function]}  回调，可选，传入参数为Jcrop对象，创建对象及立即执行的操作在此传入
+*/
+function ImgCut(options, callback) {
+  var 
+    _class  = ImgCut ,
+    _ops    = options
+  ;
+
+  if (!$.isPlainObject(options)) {
+    return false ;
+  }
+
+  this.bounds = [] ;
+  this.result = {} ;
+  this.api    = {} ;
+  this.$img   = $('#' + _ops.imgId) ;
+  this.$view  = $('.' + _ops.viewClass).size() ? $('.' + _ops.viewClass) : false ;
+  
+  if (typeof _class._initialized === 'undefined') {
+    var methods = {
+      //初始化
+      init : function () {
+        this.setResult() ;
+        this.jCrop() ;
+      },
+
+      //创建jCrop对象
+      jCrop : function () {
+        var that = this ;
+        var options = {
+          onChange: function (c) {
+            $.extend(that.result, c) ;
+            if (parseInt(c.w) > 0 && that.$view) {
+              function view($div, width, height) {
+                var rx = width / c.w ,
+                    ry = height / c.h ;
+                $div.find('img').css({
+                  width      : Math.round(rx * that.bounds[0]) + 'px' ,
+                  height     : Math.round(ry * that.bounds[1]) + 'px' ,
+                  marginLeft : '-' + Math.round(rx * c.x) + 'px' ,
+                  marginTop  : '-' + Math.round(ry * c.y) + 'px'
+                }) ;
+              }
+              that.$view.show().each(function () {
+                view($(this), $(this).width(), $(this).height()) ;
+              }) ;
+            }
+          } ,
+          onSelect: this.onChange ,
+          aspectRatio: 1
+        }
+
+        $.extend(options, _ops) ;
+
+        return this.$img.Jcrop(options,
+          //loader后this被创建
+          function () {
+            this.focus() ;
+            that.api = this ;
+            that.bounds = this.getBounds() ;
+            //释放本类实例对象
+            $.isFunction(callback) && callback(that) ;
+        }) ;
+      },
+
+      //修改图片时且同步缩略图预览时调用
+      //已包装jcrop.setImage(url, callback)，有缩略图预览时必须掉此方法
+      setViewImg : function (url, callback) {
+        var 
+            that = this ,
+            url = url + '?ver=' + (new Date()).getTime() ,
+            minSize = that.api.getOptions().minSize ,
+            img = new Image()
+        ;
+
+        img.onload = function () {
+          if (this.width >= minSize[0] && this.height >= minSize[1]) {
+            that.api.setImage(url, callback) ;
+            that.result.url = url ;
+            that.bounds[0] = this.width ;
+            that.bounds[1] = this.height ;
+            that.$img.attr('src', url) ;
+            that.$view && that.$view.find('img').attr('src', url) ;
+          } else {
+            alert('错误：被处理图片尺寸小于选区最小要求！') ;
+            return false ;
+          }
+        }
+
+        img.onerror = function () {
+          alert('错误：图片加载失败，请重试！') ;
+          return false ;
+        }
+
+        img.src = url ;
+      },
+
+      //装载与后端传递的数据
+      setResult : function () {
+        var that = this ;
+        this.result.url = this.$img.attr('src') ;
+        this.$view && this.$view.each(function (i) {
+          that.result['avatar_' + (i + 1)] = [] ;
+          that.result['avatar_' + (i + 1)][0] = $(this).width() ;
+          that.result['avatar_' + (i + 1)][1] = $(this).height() ;
+        }) ;
+      },
+
+      //获取Jcrop对象
+      getApi : function () {
+        return this.api ;
+      },
+
+      //获取返回值：坐标、宽度、高度、大中小图尺寸、图片路径
+      getResult : function () {
+        return this.result ;
+      }
+    }
+
+    $.extend(_class.prototype, methods) ;
+  
+    _class._initialized = true ;
+  }
+
+  this.init() ;
+}
+
+//测试实例化一{{{
+  var cut = new ImgCut({
+      viewClass: 'preview-div' ,  //初始化 大中小图片预览区域及个数，DOM结构决定
+      imgId : 'target' ,
+      bgColor: 'blue' ,           //初始化 背景颜色
+      bgFade: true ,              //初始化 背景渐变效果
+
+      shade: false ,              //初始化 选区是否显示黑白效果
+
+      bgOpacity: 0.3 ,            //初始化 背景透明度
+      addClass: 'jcrop-light' ,   //初始化 选区边界凸效果
+      minSize: [ 120, 120 ] ,     //初始化 区域选择最小值，或者按最大缩略图比例在回调中定义
+      maxSize: [ 0, 0 ]           //初始化 区域选择最大值
+    },
+    /*
+    * 注意：此回调this为window，使用参数时注意作用域
+    */
+    function (cutObj) {
+      //回调：cutObj区域坐标，及各缩略图区域显示
+      //回调：无效果初始化选择区域：
+      //cutObj.getApi().setSelect([297, 162, 473, 337]);
+      //回调：动画效果初始化选择区域：
+      cutObj.getApi().animateTo([297, 162, 473, 337]);
+
+      //回调：结合选区边界效果设置使用
+      cutObj.getApi().ui.selection.addClass('jcrop-selection');
+
+      /*
+      //回调：区域选择最小值是否计算所得
+      var result = cutObj.getResult() ;
+      alert('设置最小区域：' + JSON.stringify(result)) ;
+      */
+    }
+  ) ;
+
+  $('#result-btn').click(function () {
+    var result = cut.getResult() ;
+    var str = '返回值如下：\n\n' ;
+    for (obj in result) {
+      str += obj + '：' + result[obj] + '\n' ;
+    }
+    alert(str) ;
+  });
+  $('#style-btn').click(function () {
+    var jcrop = cut.getApi() ;
+    jcrop.ui.holder.removeClass('jcrop-dark');
+    jcrop.ui.holder.removeClass('jcrop-light');
+    jcrop.setOptions({ bgColor: 'black', bgOpacity: 0.6 });
+  }) ;
+  $('#ao-btn').click(function () {
+    var jcrop = cut.getApi() ;
+    jcrop.ui.holder.removeClass('jcrop-light');
+    jcrop.ui.holder.addClass('jcrop-dark');
+    jcrop.setOptions({ bgColor: 'black', bgOpacity: 0.4 });
+  }) ;
+  $('#replace-btn').click(function () {
+    //单击：切换图片并动态初始化选区、缩略图预览区
+    //注意：有缩略图需求时必须调用封装后的方法
+    var jcrop = cut.getApi() ;
+    cut.setViewImg('demo_files/sago.jpg', function() {
+      jcrop.setOptions({
+        bgOpacity: 1 ,
+        outerImage: 'demo_files/sagomod.jpg'
+      }) ;
+      jcrop.animateTo([297, 162, 473, 337]) ;
+    }) ;
+  });
+
+  /*
+  * 通过对象方法getApi获取jcrop对象
+  */
+  $('#opacity-btn').click(function () {
+    
+    /*
+    //各图片尺寸与坐标、图片路径一起传入后端？
+    var result = cut.getResult() ;
+    alert(JSON.stringify(result)) ;
+    */
+
+    //自定义cut边框、背景、透明度等样式，若希望立即执行可放回调中
+    var jcrop = cut.getApi() ;
+
+    //bye效果，需要取消、还原最小区域设置
+    var bounds = cut.bounds ;
+    var minSize = jcrop.getOptions().minSize ;
+    jcrop.setOptions({minSize: [ 0, 0 ]}) ;
+    jcrop.animateTo(
+      [bounds[0]/2, bounds[1]/2, bounds[0]/2, bounds[1]/2] ,
+      function(){
+        this.release() ;
+        this.setOptions({minSize: minSize}) ;
+        //隐藏缩略图预览
+        cut.$view.hide() ;
+      }
+    ) ;
+
+    /*
+    //获取jcrop配置，return object
+    jcrop.getOptions();
+    */
+
+    /*
+    //是否显示设置区域大小图标
+    jcrop.setOptions({allowResize: 0}) ;
+    */
+
+    /*
+    //是否限制区域选择比例化：1为等比例，0为任意，或3/4等比例
+    jcrop.setOptions({aspectRatio: 0}) ;
+    */
+
+    /*
+    //选区是否允许拖动
+    jcrop.setOptions({allowMove: false}) ;
+    */
+
+    /*
+    //取消且隐藏区域选择
+    jcrop.release() ;
+    */
+
+    /*
+    //是否允许新区域选择
+    jcrop.setOptions({ allowSelect: false}) ;
+    */
+
+    /*
+    //隐藏resize及move功能
+    jcrop.disable() ;
+    */
+
+    /*
+    //恢复resize及move功能
+    jcrop.enable() ;
+    */
+
+    /*
+    //切换图片并动态初始化选区，适用无缩略图预览需求
+    jcrop.setImage('demo_files/sago.jpg', function() {
+      this.setOptions({
+        bgOpacity: 1 ,
+        outerImage: 'demo_files/sagomod.jpg'
+      }) ;
+      this.animateTo([297, 162, 473, 337]) ;
+    }) ;
+    */
+
+    /*
+    //注意：有缩略图需求时必须调用封装后的方法
+    cut.setViewImg('demo_files/sago.jpg', function() {
+      jcrop.setOptions({
+        bgOpacity: 1 ,
+        outerImage: 'demo_files/sagomod.jpg'
+      }) ;
+      jcrop.animateTo([297, 162, 473, 337]) ;
+    }) ;
+    */
+
+    /*
+    //启用jcrop-dark区域边界凹效果
+    jcrop.ui.holder.removeClass('jcrop-light');
+    jcrop.ui.holder.addClass('jcrop-dark');
+    jcrop.setOptions({ bgColor: 'black', bgOpacity: 0.4 });
+    */
+
+    /*
+    //启用jcrop-light区域边界凸效果
+    jcrop.ui.holder.removeClass('jcrop-dark');
+    jcrop.ui.holder.addClass('jcrop-light');
+    jcrop.setOptions({ bgColor: 'white', bgOpacity: 0.5 });
+    */
+
+    /*
+    //恢复默认切割效果
+    jcrop.ui.holder.removeClass('jcrop-dark');
+    jcrop.ui.holder.removeClass('jcrop-light');
+    jcrop.setOptions({ bgColor: 'black', bgOpacity: 0.6 });
+    */
+
+    //获得焦点后上下左右箭头调整选区位置，需开启keySupport设置
+    jcrop.focus() ;
+
+    /*
+    * 更多设置请参考：jquery.jcrop.js中$.Jcrop.defaults
+    */
+
+  }) ;
+//}}}
+
+
+//测试实例化二 {{{{{{
+  var cut2 = new ImgCut({
+      viewClass: 'preview-div2' ,
+      imgId : 'target2' ,
+      bgColor: 'blue' ,
+      bgFade: true ,
+
+      shade: false ,
+
+      bgOpacity: 0.3 ,
+      addClass: 'jcrop-light' ,
+      minSize: [ 120, 120 ] ,
+      maxSize: [ 0, 0 ]
+    },
+    function (cutObj) {
+      cutObj.getApi().animateTo([297, 162, 473, 337]);
+      cutObj.getApi().ui.selection.addClass('jcrop-selection');
+    }
+  ) ;
+  $('#result-btn2').click(function () {
+    var result = cut2.getResult() ;
+    var str = '返回值如下：\n\n' ;
+    for (obj in result) {
+      str += obj + '：' + result[obj] + '\n' ;
+    }
+    alert(str) ;
+  });
+  $('#style-btn2').click(function () {
+    var jcrop = cut2.getApi() ;
+    jcrop.ui.holder.removeClass('jcrop-dark');
+    jcrop.ui.holder.removeClass('jcrop-light');
+    jcrop.setOptions({ bgColor: 'black', bgOpacity: 0.6 });
+  }) ;
+  $('#ao-btn2').click(function () {
+    var jcrop = cut2.getApi() ;
+    jcrop.ui.holder.removeClass('jcrop-light');
+    jcrop.ui.holder.addClass('jcrop-dark');
+    jcrop.setOptions({ bgColor: 'black', bgOpacity: 0.4 });
+  }) ;
+  $('#replace-btn2').click(function () {
+    var jcrop = cut2.getApi() ;
+    cut2.setViewImg('demo_files/sago.jpg', function() {
+      jcrop.setOptions({
+        bgOpacity: 1 ,
+        outerImage: 'demo_files/sagomod.jpg'
+      }) ;
+      jcrop.animateTo([297, 162, 473, 337]) ;
+    }) ;
+  });
+  $('#opacity-btn2').click(function () {
+    var jcrop = cut2.getApi() ;
+    var bounds = cut2.bounds ;
+    var minSize = jcrop.getOptions().minSize ;
+    jcrop.setOptions({minSize: [ 0, 0 ]}) ;
+    jcrop.animateTo(
+      [bounds[0]/2, bounds[1]/2, bounds[0]/2, bounds[1]/2] ,
+      function(){
+        this.release() ;
+        this.setOptions({minSize: minSize}) ;
+        cut2.$view.hide() ;
+      }
+    ) ;
+  });
+//}}}}}}
+
+</script>
+
+<!-- 代码高亮区域 -->
+<div>
+    <pre class="prettyprint linenums js"></pre>
+</div>
+<link href="http://www.neusofts.com/demo/bootstrap/v2.0.2/docs/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+<script type="text/javascript" src="http://www.neusofts.com/demo/bootstrap/v2.0.2/docs/assets/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+function getCode() {
+  $('#loading-code').remove() ;
+  $('.prettyprint').html($('#ImgCut-Class').html()) ;
+  prettyPrint();
+  $('ol.linenums li').hover(
+    function () {
+      $(this).css('background', '#ddd') ;
+    } ,
+    function () {
+      $(this).css('background', '') ;
+    }
+  ) ;
+}
+window.onload = function () {
+  setTimeout(function () {
+    getCode() ;
+    $('html, body').animate({scrollTop:700}, 2000) ;
+    $('<input>', {
+      'type' : 'button' ,
+      'style' : 'width:100%; text-align:center; font-size:14px; font-weight:bold; padding:4px 0;' ,
+      'value' : '返 回 顶 部 ↑↑↑↑'
+    })
+    .appendTo('body')
+    .click(function () {
+      $('html, body').animate({scrollTop:0}, 1000) ;
+    }) ;
+  }, 3000) ;
+}
+</script>
+<!-- //代码高亮区域 -->
+
+</body>
+</html>

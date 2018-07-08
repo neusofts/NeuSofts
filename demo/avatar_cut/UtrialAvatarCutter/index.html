@@ -1,0 +1,107 @@
+﻿<!DOCTYPE>
+<html>
+	<head>
+		<title>图片切割测试</title>
+		<LINK href="css/jquery.Jcrop.css" type="text/css" rel="Stylesheet" media="screen">
+		<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
+		<script type="text/javascript" src="js/jQuery.UtrialAvatarCutter.js"></script>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<style>
+			div{float:left;margin-right:10px;}
+			input{clear:both;float:left;margin-top:20px;}
+			pre{font-size: 13px;}
+		</style>
+    	<link href="http://www.neusofts.com/demo/bootstrap/v2.0.2/docs/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+	</head>
+	<body>
+		<!--
+			原始图
+		-->
+		<div id="picture_original">
+			<img src="images/20105I35641.jpg"/>
+		</div>
+		<!---
+			缩略图
+		-->
+		<div id="picture_200"></div>
+		<div id="picture_50"></div>
+		<div id="picture_30"></div>
+		<br>
+		<input type="button" value="切换图片" id="change_btn" />
+		<input type="button" value="确定" id="save_btn" />
+		<br>
+		<div>
+		<pre class="prettyprint linenums js">
+			//调用
+			var cutter = new jQuery.UtrialAvatarCutter(
+				{
+					//主图片所在容器ID
+					content : 'picture_original' ,
+					
+					//缩略图配置, ID:所在容器ID; width,height:缩略图大小
+					purviews : [
+						{id:'picture_200', width:200, height:200},	//大图
+						{id:'picture_50', width:50, height:50},		//中图
+						{id:'picture_30', width:30, height:30} 		//小图
+					],
+					
+					//选择器默认大小
+					selector : {width:200, height:200}
+				}
+			) ;
+	
+			$(window).load(function () {
+				cutter.init();
+
+				//确定按钮动作
+				$('#save_btn').click(
+					function () {
+						var data = cutter.submit() ;
+						alert('x=' + data.x + '\ny=' + data.y + '\nw=' + data.w + '\nh=' + data.h + '\ns=' + data.s) ;
+					}
+				) ;
+
+				//切换图片按钮动作
+				$('#change_btn').click(change_img) ;
+			});
+			
+			/*
+			 * 切换图片
+			 */
+			function change_img(){
+				var imgs = [
+					'images/203dda9bbc2fab3b6e068c1a.jpg' ,
+					'images/945f5df77dc5ac0d730eec20.jpg' ,
+					'images/0399073a6de2761097ddd8e1.jpg' ,
+					'images/6d5e420a3854923b95ca6bcd.jpg' ,
+					'images/634030306987187500.jpg' ,
+					'images/29cf9566f40c5417ab184ce4.jpg' ,
+					'images/807ccafbaae1ce35a8d31184.jpg' ,
+					'images/200810201732108385.jpg' ,
+					'images/3e1af38d87c1efc9513d9219.jpg' ,
+					'images/12491XL456250-2H06.jpg'
+				] ;
+				var ra = (Math.random() + '').substr(3, 1) ;
+				cutter.reload(imgs[ra]) ;
+			}
+			//结束
+		</pre>
+		</div>
+		<script type="text/javascript" src="http://www.neusofts.com/demo/bootstrap/v2.0.2/docs/assets/js/google-code-prettify/prettify.js"></script>
+		<script type="text/javascript">
+			$(function () {
+				eval($('.prettyprint').text()) ;
+				prettyPrint();
+				$('ol.linenums li').hover(
+					function () {
+						$(this).css('background', '#ddd') ;
+					} ,
+					function () {
+						$(this).css('background', '') ;
+					}
+				) ;
+			}) ;
+		</script>
+	</body>
+</html>
