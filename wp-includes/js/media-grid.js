@@ -36,12 +36,32 @@
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -59,8 +79,9 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -74,24 +95,36 @@
 /* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var media = wp.media;
-
-media.controller.EditAttachmentMetadata = __webpack_require__( 11 );
-media.view.MediaFrame.Manage = __webpack_require__( 12 );
-media.view.Attachment.Details.TwoColumn = __webpack_require__( 13 );
-media.view.MediaFrame.Manage.Router = __webpack_require__( 14 );
-media.view.EditImage.Details = __webpack_require__( 15 );
-media.view.MediaFrame.EditAttachments = __webpack_require__( 16 );
-media.view.SelectModeToggleButton = __webpack_require__( 17 );
-media.view.DeleteSelectedButton = __webpack_require__( 18 );
-media.view.DeleteSelectedPermanentlyButton = __webpack_require__( 19 );
+module.exports = __webpack_require__(12);
 
 
 /***/ }),
-/* 11 */
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * @output wp-includes/js/media-grid.js
+ */
+
+var media = wp.media;
+
+media.controller.EditAttachmentMetadata = __webpack_require__( 13 );
+media.view.MediaFrame.Manage = __webpack_require__( 14 );
+media.view.Attachment.Details.TwoColumn = __webpack_require__( 15 );
+media.view.MediaFrame.Manage.Router = __webpack_require__( 16 );
+media.view.EditImage.Details = __webpack_require__( 17 );
+media.view.MediaFrame.EditAttachments = __webpack_require__( 18 );
+media.view.SelectModeToggleButton = __webpack_require__( 19 );
+media.view.DeleteSelectedButton = __webpack_require__( 20 );
+media.view.DeleteSelectedPermanentlyButton = __webpack_require__( 21 );
+
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports) {
 
 var l10n = wp.media.view.l10n,
@@ -125,7 +158,7 @@ module.exports = EditAttachmentMetadata;
 
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports) {
 
 var MediaFrame = wp.media.view.MediaFrame,
@@ -418,7 +451,7 @@ module.exports = Manage;
 
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 var Details = wp.media.view.Attachment.Details,
@@ -475,7 +508,7 @@ module.exports = TwoColumn;
 
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports) {
 
 /**
@@ -548,7 +581,7 @@ module.exports = Router;
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 var View = wp.media.View,
@@ -589,7 +622,7 @@ module.exports = Details;
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports) {
 
 var Frame = wp.media.view.Frame,
@@ -853,7 +886,7 @@ module.exports = EditAttachments;
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports) {
 
 
@@ -934,7 +967,7 @@ module.exports = SelectModeToggle;
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 var Button = wp.media.view.Button,
@@ -993,60 +1026,6 @@ module.exports = DeleteSelected;
 
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-var Button = wp.media.view.Button,
-	DeleteSelected = wp.media.view.DeleteSelectedButton,
-	DeleteSelectedPermanently;
-
-/**
- * wp.media.view.DeleteSelectedPermanentlyButton
- *
- * When MEDIA_TRASH is true, a button that handles bulk Delete Permanently logic
- *
- * @memberOf wp.media.view
- *
- * @class
- * @augments wp.media.view.DeleteSelectedButton
- * @augments wp.media.view.Button
- * @augments wp.media.View
- * @augments wp.Backbone.View
- * @augments Backbone.View
- */
-DeleteSelectedPermanently = DeleteSelected.extend(/** @lends wp.media.view.DeleteSelectedPermanentlyButton.prototype */{
-	initialize: function() {
-		DeleteSelected.prototype.initialize.apply( this, arguments );
-		this.controller.on( 'select:activate', this.selectActivate, this );
-		this.controller.on( 'select:deactivate', this.selectDeactivate, this );
-	},
-
-	filterChange: function( model ) {
-		this.canShow = ( 'trash' === model.get( 'status' ) );
-	},
-
-	selectActivate: function() {
-		this.toggleDisabled();
-		this.$el.toggleClass( 'hidden', ! this.canShow );
-	},
-
-	selectDeactivate: function() {
-		this.toggleDisabled();
-		this.$el.addClass( 'hidden' );
-	},
-
-	render: function() {
-		Button.prototype.render.apply( this, arguments );
-		this.selectActivate();
-		return this;
-	}
-});
-
-module.exports = DeleteSelectedPermanently;
-
-
-/***/ })
-/******/ ]);
 /* 21 */
 /***/ (function(module, exports) {
 

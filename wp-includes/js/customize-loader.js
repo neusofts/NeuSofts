@@ -1,4 +1,9 @@
+/**
+ * @output wp-includes/js/customize-loader.js
+ */
+
 /* global _wpCustomizeLoaderSettings */
+
 /**
  * Expose a public API that allows the customizer to be
  * loaded on any page.
@@ -282,8 +287,5 @@ window.wp = window.wp || {};
 	});
 
 	// Expose the API publicly on window.wp.customize.Loader
-	api.Loader = Loader;
-})( wp, jQuery );
-ustomize.Loader
 	api.Loader = Loader;
 })( wp, jQuery );

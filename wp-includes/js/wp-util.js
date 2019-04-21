@@ -1,3 +1,7 @@
+/**
+ * @output wp-includes/js/wp-util.js
+ */
+
 /* global _wpUtilSettings */
 
 /** @namespace wp */
@@ -118,13 +122,6 @@ window.wp = window.wp || {};
 				deferred.jqXHR.abort();
 				return this;
 			};
-
-			return promise;
-		}
-	};
-
-}(jQuery));
-		};
 
 			return promise;
 		}

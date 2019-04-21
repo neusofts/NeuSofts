@@ -208,6 +208,7 @@
 
 		adjustHeaderHeight();
 		setQuotesIcon();
+		belowEntryMetaClass( 'blockquote.alignleft, blockquote.alignright' );
 		if ( true === supportsInlineSVG() ) {
 			document.documentElement.className = document.documentElement.className.replace( /(\s*)no-svg(\s*)/, '$1svg$2' );
 		}
@@ -243,11 +244,6 @@
 
 	// Add header video class after the video is loaded.
 	$( document ).on( 'wp-custom-header-video-loaded', function() {
-		$body.addClass( 'has-header-video' );
-	});
-
-})( jQuery );
-unction() {
 		$body.addClass( 'has-header-video' );
 	});
 

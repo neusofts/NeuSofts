@@ -1149,7 +1149,7 @@ body {
 }
 .blog-post-detail a {
 	font-size: 12px;
-    padding: 5px 20px 5px 0;
+    /*padding: 5px 20px 5px 0;*/
     transition: all 0.3s ease 0s;
 }
 .blog-post-detail a > i {
@@ -1584,7 +1584,7 @@ a.blog-btn {
 .post-media-sidebar p{
     font-family:'Roboto';
 	font-weight:300;
-	`font-size: 15px;
+	font-size: 15px;
     line-height: 22px;
     margin-bottom: 5px;
     margin-top: 0;
@@ -2574,7 +2574,7 @@ ul ul, ol ul, ul ol, ol ol {
 }
 .blog-post-meta a {
 	font-size: 12px;
-    padding: 5px 20px 5px 0;
+    /*padding: 5px 20px 5px 0;*/
     transition: all 0.3s ease 0s;
 	color: #e5e5e5;
 }

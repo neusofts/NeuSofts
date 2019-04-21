@@ -1,3 +1,7 @@
+/**
+ * @output wp-includes/js/customize-views.js
+ */
+
 (function( $, wp, _ ) {
 
 	if ( ! wp || ! wp.customize ) { return; }
@@ -191,12 +195,6 @@
 		propagate: function(event, arg) {
 			_.each(this.collections, function(collection) {
 				collection.trigger(event, arg);
-			});
-		}
-	});
-
-})( jQuery, window.wp, _ );
-t, arg);
 			});
 		}
 	});

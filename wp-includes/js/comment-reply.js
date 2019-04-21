@@ -1,131 +1,143 @@
 /**
- * @summary Handles the addition of the comment form.
+ * Handles the addition of the comment form.
  *
  * @since 2.7.0
+ * @output wp-includes/js/comment-reply.js
+ *
+ * @namespace addComment
  *
  * @type {Object}
  */
-var addComment = {
-	/**
-	 * @summary Retrieves the elements corresponding to the given IDs.
-	 *
-	 * @since 2.7.0
-	 *
-	 * @param {string} commId The comment ID.
-	 * @param {string} parentId The parent ID.
-	 * @param {string} respondId The respond ID.
-	 * @param {string} postId The post ID.
-	 * @returns {boolean} Always returns false.
-	 */
-	moveForm: function( commId, parentId, respondId, postId ) {
-		var div, element, style, cssHidden,
-			t           = this,
-			comm        = t.I( commId ),
-			respond     = t.I( respondId ),
-			cancel      = t.I( 'cancel-comment-reply-link' ),
-			parent      = t.I( 'comment_parent' ),
-			post        = t.I( 'comment_post_ID' ),
-			commentForm = respond.getElementsByTagName( 'form' )[0];
+window.addComment = ( function( window ) {
+	// Avoid scope lookups on commonly used variables.
+	var document = window.document;
 
-		if ( ! comm || ! respond || ! cancel || ! parent || ! commentForm ) {
+	// Settings.
+	var config = {
+		commentReplyClass : 'comment-reply-link',
+		cancelReplyId     : 'cancel-comment-reply-link',
+		commentFormId     : 'commentform',
+		temporaryFormId   : 'wp-temp-form-div',
+		parentIdFieldId   : 'comment_parent',
+		postIdFieldId     : 'comment_post_ID'
+	};
+
+	// Cross browser MutationObserver.
+	var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+
+	// Check browser cuts the mustard.
+	var cutsTheMustard = 'querySelector' in document && 'addEventListener' in window;
+
+	/*
+	 * Check browser supports dataset.
+	 * !! sets the variable to true if the property exists.
+	 */
+	var supportsDataset = !! document.documentElement.dataset;
+
+	// For holding the cancel element.
+	var cancelElement;
+
+	// For holding the comment form element.
+	var commentFormElement;
+
+	// The respond element.
+	var respondElement;
+
+	// The mutation observer.
+	var observer;
+
+	if ( cutsTheMustard && document.readyState !== 'loading' ) {
+		ready();
+	} else if ( cutsTheMustard ) {
+		window.addEventListener( 'DOMContentLoaded', ready, false );
+	}
+
+	/**
+	 * Sets up object variables after the DOM is ready.
+	 *
+	 * @since 5.1.1
+	 */
+	function ready() {
+		// Initialise the events.
+		init();
+
+		// Set up a MutationObserver to check for comments loaded late.
+		observeChanges();
+	}
+
+	/**
+	 * Add events to links classed .comment-reply-link.
+	 *
+	 * Searches the context for reply links and adds the JavaScript events
+	 * required to move the comment form. To allow for lazy loading of
+	 * comments this method is exposed as window.commentReply.init().
+	 *
+	 * @since 5.1.0
+	 *
+	 * @memberOf addComment
+	 *
+	 * @param {HTMLElement} context The parent DOM element to search for links.
+	 */
+	function init( context ) {
+		if ( ! cutsTheMustard ) {
 			return;
 		}
 
-		t.respondId = respondId;
-		postId = postId || false;
+		// Get required elements.
+		cancelElement = getElementById( config.cancelReplyId );
+		commentFormElement = getElementById( config.commentFormId );
 
-		if ( ! t.I( 'wp-temp-form-div' ) ) {
-			div = document.createElement( 'div' );
-			div.id = 'wp-temp-form-div';
-			div.style.display = 'none';
-			respond.parentNode.insertBefore( div, respond );
+		// No cancel element, no replies.
+		if ( ! cancelElement ) {
+			return;
 		}
 
-		comm.parentNode.insertBefore( respond, comm.nextSibling );
-		if ( post && postId ) {
-			post.value = postId;
+		cancelElement.addEventListener( 'touchstart', cancelEvent );
+		cancelElement.addEventListener( 'click',      cancelEvent );
+
+		var links = replyLinks( context );
+		var element;
+
+		for ( var i = 0, l = links.length; i < l; i++ ) {
+			element = links[i];
+
+			element.addEventListener( 'touchstart', clickEvent );
+			element.addEventListener( 'click',      clickEvent );
 		}
-		parent.value = parentId;
-		cancel.style.display = '';
-
-		/**
-		 * @summary Puts back the comment, hides the cancel button and removes the onclick event.
-		 *
-		 * @returns {boolean} Always returns false.
-		 */
-		cancel.onclick = function() {
-			var t       = addComment,
-				temp    = t.I( 'wp-temp-form-div' ),
-				respond = t.I( t.respondId );
-
-			if ( ! temp || ! respond ) {
-				return;
-			}
-
-			t.I( 'comment_parent' ).value = '0';
-			temp.parentNode.insertBefore( respond, temp );
-			temp.parentNode.removeChild( temp );
-			this.style.display = 'none';
-			this.onclick = null;
-			return false;
-		};
-
-		/*
-		 * Sets initial focus to the first form focusable element.
-		 * Uses try/catch just to avoid errors in IE 7- which return visibility
-		 * 'inherit' when the visibility value is inherited from an ancestor.
-		 */
-		try {
-			for ( var i = 0; i < commentForm.elements.length; i++ ) {
-				element = commentForm.elements[i];
-				cssHidden = false;
-
-				// Modern browsers.
-				if ( 'getComputedStyle' in window ) {
-					style = window.getComputedStyle( element );
-				// IE 8.
-				} else if ( document.documentElement.currentStyle ) {
-					style = element.currentStyle;
-				}
-
-				/*
-				 * For display none, do the same thing jQuery does. For visibility,
-				 * check the element computed style since browsers are already doing
-				 * the job for us. In fact, the visibility computed style is the actual
-				 * computed value and already takes into account the element ancestors.
-				 */
-				if ( ( element.offsetWidth <= 0 && element.offsetHeight <= 0 ) || style.visibility === 'hidden' ) {
-					cssHidden = true;
-				}
-
-				// Skip form elements that are hidden or disabled.
-				if ( 'hidden' === element.type || element.disabled || cssHidden ) {
-					continue;
-				}
-
-				element.focus();
-				// Stop after the first focusable element.
-				break;
-			}
-
-		} catch( er ) {}
-
-		return false;
-	},
+	}
 
 	/**
-	 * @summary Returns the object corresponding to the given ID.
+	 * Return all links classed .comment-reply-link.
 	 *
-	 * @since 2.7.0
+	 * @since 5.1.0
 	 *
-	 * @param {string} id The ID.
-	 * @returns {Element} The element belonging to the ID.
+	 * @param {HTMLElement} context The parent DOM element to search for links.
+	 *
+	 * @return {HTMLCollection|NodeList|Array}
 	 */
-	I: function( id ) {
-		return document.getElementById( id );
+	function replyLinks( context ) {
+		var selectorClass = config.commentReplyClass;
+		var allReplyLinks;
+
+		// childNodes is a handy check to ensure the context is a HTMLElement.
+		if ( ! context || ! context.childNodes ) {
+			context = document;
+		}
+
+		if ( document.getElementsByClassName ) {
+			// Fastest.
+			allReplyLinks = context.getElementsByClassName( selectorClass );
+		}
+		else {
+			// Fast.
+			allReplyLinks = context.querySelectorAll( '.' + selectorClass );
+		}
+
+		return allReplyLinks;
 	}
-};
-nt handler.
+
+	/**
+	 * Cancel event handler.
 	 *
 	 * @since 5.1.0
 	 *

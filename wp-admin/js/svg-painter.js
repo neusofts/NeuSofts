@@ -1,6 +1,7 @@
 /**
  * Attempt to re-color SVG icons used in the admin menu or the toolbar
  *
+ * @output wp-admin/js/svg-painter.js
  */
 
 window.wp = window.wp || {};
@@ -235,10 +236,6 @@ wp.svgPainter = ( function( $, window, document, undefined ) {
 
 			$element.attr( 'style', 'background-image: url("data:image/svg+xml;base64,' + xml + '") !important;' );
 		}
-	};
-
-})( jQuery, window, document );
-
 	};
 
 })( jQuery, window, document );

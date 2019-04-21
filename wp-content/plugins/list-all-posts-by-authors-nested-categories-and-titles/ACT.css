@@ -1,28 +1,28 @@
-.ACT-wrapper h4 {
-	text-transform: uppercase;
-	}
-
-.ATC-wrapper ul li{
-	list-style-type:disc;
-	list-style-position: outside;
-	margin-bottom: 3px;
-	margin-left: 2em;
-
-}
-
-	
-li.subcat {
-	margin-bottom:0px; 
-	margin-top:15px;
-	text-transform:uppercase;
-	font-weight: bold;
-}
-
-li.subpost {
-	margin-left:20px;
-}
-
-.ACT-wrapper .righttext {
-	text-transform:uppercase; 
-	float:right;
+.ACT-wrapper h4 {
+	text-transform: uppercase;
+	}
+
+.ATC-wrapper ul li{
+	list-style-type:disc;
+	list-style-position: outside;
+	margin-bottom: 3px;
+	margin-left: 2em;
+
+}
+
+	
+li.subcat {
+	margin-bottom:0px; 
+	margin-top:15px;
+	text-transform:uppercase;
+	font-weight: bold;
+}
+
+li.subpost {
+	margin-left:20px;
+}
+
+.ACT-wrapper .righttext {
+	text-transform:uppercase; 
+	float:right;
 }

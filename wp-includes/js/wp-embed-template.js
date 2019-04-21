@@ -1,3 +1,6 @@
+/**
+ * @output wp-includes/js/wp-embed-template.js
+ */
 (function ( window, document ) {
 	'use strict';
 
@@ -208,8 +211,5 @@
 		document.addEventListener( 'DOMContentLoaded', onLoad, false );
 		window.addEventListener( 'load', onLoad, false );
 		window.addEventListener( 'resize', onResize, false );
-	}
-})( window, document );
-resize', onResize, false );
 	}
 })( window, document );

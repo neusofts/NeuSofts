@@ -1,3 +1,7 @@
+/**
+ * @output wp-includes/js/customize-preview-nav-menus.js
+ */
+
 /* global _wpCustomizePreviewNavMenusExports */
 
 /** @namespace wp.customize.navMenusPreview */
@@ -435,12 +439,6 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 
 	api.bind( 'preview-ready', function() {
 		self.init();
-	} );
-
-	return self;
-
-}( jQuery, _, wp, wp.customize ) );
-init();
 	} );
 
 	return self;

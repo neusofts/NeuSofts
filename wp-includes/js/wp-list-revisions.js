@@ -1,3 +1,7 @@
+/**
+ * @output wp-includes/js/wp-list-revisions.js
+ */
+
 (function(w) {
 	var init = function() {
 		var pr = document.getElementById('post-revisions'),
@@ -20,8 +24,5 @@
 	if ( w && w.addEventListener )
 		w.addEventListener('load', init, false);
 	else if ( w && w.attachEvent )
-		w.attachEvent('onload', init);
-})(window);
-achEvent )
 		w.attachEvent('onload', init);
 })(window);

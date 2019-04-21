@@ -1,3 +1,7 @@
+/**
+ * @output wp-includes/js/mce-view.js
+ */
+
 /* global tinymce */
 
 /*
@@ -972,4 +976,3 @@
 		}
 	} ) );
 } )( window, window.wp.mce.views, window.wp.media, window.jQuery );
-p.mce.views, window.wp.media, window.jQuery );

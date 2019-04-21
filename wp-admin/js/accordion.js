@@ -25,7 +25,8 @@
  *
  * Note that any appropriate tags may be used, as long as the above classes are present.
  *
- * @since 3.6.0.
+ * @since 3.6.0
+ * @output wp-admin/js/accordion.js
  */
 
 ( function( $ ){
@@ -87,11 +88,6 @@
 		// If there's an element with an aria-expanded attribute, assume it's a toggle control and toggle the aria-expanded value.
 		if ( sectionToggleControl ) {
 			sectionToggleControl.attr( 'aria-expanded', String( sectionToggleControl.attr( 'aria-expanded' ) === 'false' ) );
-		}
-	}
-
-})(jQuery);
-= 'false' ) );
 		}
 	}
 

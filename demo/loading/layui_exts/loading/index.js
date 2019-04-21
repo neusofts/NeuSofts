@@ -1,5 +1,5 @@
 layui.config({
-	version: 'v2.4.3',
+	version: 'v2.4.3-v1.3',
 	debug: true,
 	base: '../js/'
 }).extend({
@@ -33,7 +33,8 @@ layui.config({
 		'afterHide': function () { layer.msg('这是 “隐藏之后” 的回调'); },
 		'afterHideAll': function () { layer.msg('这是 “全部隐藏之后” 的回调'); },
 		'animateTime': 600,
-		'clickHide': 0
+		'clickHide': 0,
+		'inheritRadius': 0
 	}
 	, onloadLoading = $(window).loading('show', {
 		"opacity": 0.7,
@@ -41,6 +42,12 @@ layui.config({
 		"text": "正在加载第三方高亮组件...",
 		"textCss": {
 			"color": "#666"
+		},
+		'afterShow': function () {
+			// 测试：无高亮组件
+			// window.onload = new function () {
+			// 	onloadLoading.destroy();
+			// };
 		},
 		"afterHide": function () { layer.msg('页面加载完成，请开始吧！'); },
 		"offsetTop": 16
@@ -58,6 +65,7 @@ layui.config({
 	(index):352 8 {name: "textCss", value: "{color: '#fff'}"}
 	(index):352 9 {name: "textClassName", value: "textclass1 textclass2"}
 	(index):352 9 {name: "title", value: ""}
+	(index):352 9 {name: "inheritRadius", value: false}
 	(index):352 10 {name: "cb", value: "beforeShow"}
 	(index):352 11 {name: "cb", value: "afterShow"}
 	(index):352 12 {name: "cb", value: "afterHide"}
@@ -210,13 +218,24 @@ layui.config({
 		}
 	});
 
-	// 日期
-	laydate.render({
-		elem: '#date'
-	});
-
-	laydate.render({
-		elem: '#date1'
+	// 日期控件
+	$('#my-date').on('click.date', function () {
+		laydate.render({
+			elem: '#my-date',
+			show: true,
+			value: new Date(),
+			isInitValue: false,
+			format: '今天是：yyyy年MM月dd日',
+			ready: function () {
+				$('div.layui-laydate').loading('show', {
+					background: '#000',
+					imgSrc: null,
+					opacity: 0.5,
+					text: '示例：暂停选择日期',
+					textCss: {color: '#fff'}
+				});
+			}
+		});
 	});
 
 	// 创建一个编辑器
@@ -280,6 +299,79 @@ layui.config({
 		form.render('select');
 	});
 
+	// 上传按钮 <独立>
+	// var uploadLoading = function () {
+		$('#my-upload').on('click.upload', function () {
+			$(this).loading('show', {
+				title: '文件上传中，请稍候...（单击退出）',
+				clickHide: true
+			});
+		});
+	// }; uploadLoading();
+
+	// 圆形loading
+	$('#my-radius').on('click.radius', function () {
+		$(this).loading('show', {
+			imgSrc: null,
+			background: '#000',
+			text: '继承了父节点边框哦<br>支持br换行哦<br>2秒后跳转...',
+			textCss: {color: '#fff', 'font-size': '12px'},
+			inheritRadius: true,
+			opacity: 0.7,
+			clickHide: true
+		});
+
+		setTimeout(function () {
+			setScrollTop($('#my-doc')[0]);
+		}, 2e3);
+	});
+
+	// loading in loading
+	$('#my-in-loading').on('click.in.loading', function () {
+		var $obj = $('#in-loading');
+		var claName = 'div.lay-loading';
+		
+		setScrollTop($obj[0]);
+
+		$obj.loading('show', {
+			imgSrc: null,
+			background: 'green',
+			text: '这是第一层loading...',
+			textCss: {color: '#fff'},
+			inheritRadius: true,
+			clickHide: true
+		});
+
+		setTimeout(function () {
+			$obj.children(claName).loading('show', {
+				background: 'orange',
+				inheritRadius: true,
+				clickHide: true,
+				imgSrc: null,
+				offsetTop: -30,
+				textCss: {color: '#fff'},
+				text: '这是第二层loading，我已偏移30px哦'
+			});
+		}, 1e3);
+
+		setTimeout(function () {
+			$obj.children(claName).children(claName).loading('show', {
+				background: 'blue',
+				inheritRadius: true,
+				clickHide: true,
+				imgSrc: null,
+				offsetTop: -60,
+				textCss: {color: '#fff'},
+				text: '这是第三层loading，我已偏移60px哦，连续单击关闭'
+			});
+		}, 2e3);
+	});
+
+	// 监听window的hideAll事件
+	// $(window).on('lay-loading.hideAll', function () {
+	// 	uploadLoading();
+	// });
+
 	// 关闭所有loading
 	$('#my-close-all').on('click.closeAll', function () {
 		$(window).loading('hideAll');
@@ -296,16 +388,12 @@ layui.config({
 	// 固定效果 <独立>
 	$('#my-demo').on('click.demo', function () {
 		setScrollTop($('#my-show-1')[0]);
-		var loading = $('#my-show-1').loading('show', {
+		$('#my-show-1').loading('show', {
 			background: 'green',
 			imgSrc: null,
 			textCss: { color: '#fff' },
 			text: '数据处理中...'
 		});
-
-		setTimeout(function () {
-			loading.hide();
-		}, 3e3);
 	});
 
 	// 重置表单
@@ -330,97 +418,6 @@ layui.config({
 	$('#my-more').on('click.more', function () {
 		$('div.my-show-ot').loading('show', getSetting($('form')));
 		setTimeout(function () {
-			$(document).scrollTop($('div.my-show-ot').offset().top);
-			layer.tips('多区域显示效果', $('div.my-show-ot')[0], {
-				tips: [1, 'orange'], time: 4e3, tipsMore: true
-			});
-			layer.tips('多区域显示效果', $('div.my-show-ot')[1], {
-				tips: [1, 'orange'], time: 4e3, tipsMore: true
-			});
-		}, 0.2e3);
-	});
-
-	// layer显示loading <按配置>
-	$('#my-layer').on('click.layer', function () {
-		var obj = {
-			title: '身份验证',
-			user: {
-				value: 'admin',
-				title: '帐号',
-				placeholder: '请输入用户名'
-			},
-			pw: {
-				value: '123456',
-				title: '密码',
-				placeholder: '请输入密码',
-				info: '密码长度6～18位'
-			},
-			btn: {
-				submit: '提交',
-				reset: '取消'
-			}
-		};
-
-		if (!tplLogin) tplLogin = getTpl('form.tpl');
-		laytpl(tplLogin).render(obj, function (html) {
-			var index = layer.open({
-				type: 1
-				, title: obj.title
-				, shade: 0.6
-				, anim: 1
-				, btn: [obj.btn.submit, obj.btn.reset]
-				, content: html
-				, yes: function (index, obj) {
-					var loading = $('#layer-form').closest('div.layui-layer').loading('show', getSetting($('form')));
-					setTimeout(function () {
-						loading.hide();
-					}, 3e3);
-				}
-			});
-
-			layer.style(index, {
-				width: '470px'
-			});
-
-			setTimeout(function () {
-				layer.tips('点此试试', $('a.layui-layer-btn0')[0], {
-					tips: [1, 'orange'], time: 2e3
-				});
-			}, 0.5e3);
-		});
-	});
-
-	// 监听tab切换
-	element.on('tab(code-tab)', function (elem) {
-		var $cont = $(elem.elem[0]).find('.layui-tab-item:eq('+ elem.index +')');
-		var obj = $cont.find('.code')[0];
-		var $edit = $cont.find('.CodeMirror');
-		
-		!$edit.size() && codePrint(obj);
-	});
-
-	$(function () {
-		// 代码高亮默认执行
-		$('textarea.auto-code').each(function (i, obj) {
-			codePrint(obj);
-		});
-
-		// 定时生成配置信息
-		var oldOptionsStr = '';
-		setInterval(function () {
-			if (oldOptionsStr != getSetting($('form'), 'format')) {
-				$('#textarea').val(getSetting($('form'), 'format'));
-				$('#my-show-1').find('.CodeMirror').remove();
-				codePrint($('#textarea')[0]);
-				oldOptionsStr = getSetting($('form'), 'format');
-			}
-		}, 1.5e3);
-
-		$(window).on('load', function () {
-			onloadLoading.destroy();
-		});
-	});
-});	setTimeout(function () {
 			$(document).scrollTop($('div.my-show-ot').offset().top);
 			layer.tips('多区域显示效果', $('div.my-show-ot')[0], {
 				tips: [1, 'orange'], time: 4e3, tipsMore: true

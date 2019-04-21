@@ -1,3 +1,7 @@
+/**
+ * @output wp-includes/js/customize-models.js
+ */
+
 /* global _wpCustomizeHeader */
 (function( $, wp ) {
 	var api = wp.customize;
@@ -271,11 +275,6 @@
 			this.type = 'default';
 			this.data = _wpCustomizeHeader.defaults;
 			api.HeaderTool.ChoiceList.prototype.initialize.apply(this);
-		}
-	});
-
-})( jQuery, window.wp );
-ialize.apply(this);
 		}
 	});
 

@@ -21,7 +21,7 @@
 	<div class="row">
 		<?php
 		$j=1;
-		$args = array( 'post_type' => 'post','posts_per_page' =>3,'post__not_in'=>get_option("sticky_posts")); 	
+		$args = array( 'post_type' => 'post','posts_per_page' =>3,'post_not_in'=>get_option("sticky_posts")); 	
 		query_posts( $args );
 		if(query_posts( $args ))
 		{	while(have_posts()):the_post();

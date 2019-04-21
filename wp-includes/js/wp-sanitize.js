@@ -1,3 +1,7 @@
+/**
+ * @output wp-includes/js/wp-sanitize.js
+ */
+
 ( function () {
 
 	window.wp = window.wp || {};
@@ -40,12 +44,6 @@
 				textarea.innerHTML = _text;
 				_text = wp.sanitize.stripTags( textarea.value );
 			} catch ( er ) {}
-
-			return _text;
-		}
-	};
-}() );
- catch ( er ) {}
 
 			return _text;
 		}

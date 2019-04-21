@@ -1,3 +1,7 @@
+/**
+ * @output wp-includes/js/wp-a11y.js
+ */
+
 /** @namespace wp */
 window.wp = window.wp || {};
 
@@ -99,8 +103,5 @@ window.wp = window.wp || {};
 	/** @namespace wp.a11y */
 	wp.a11y = wp.a11y || {};
 	wp.a11y.speak = speak;
-
-}( window.wp, window.jQuery ));
-eak = speak;
 
 }( window.wp, window.jQuery ));

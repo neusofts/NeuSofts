@@ -1,3 +1,7 @@
+/**
+ * @output wp-includes/js/wp-custom-header.js
+ */
+
 /* global YT */
 (function( window, settings ) {
 
@@ -457,8 +461,5 @@
 			}
 		});
 	}
-
-})( window, window._wpCustomHeaderSettings || {} );
-}
 
 })( window, window._wpCustomHeaderSettings || {} );

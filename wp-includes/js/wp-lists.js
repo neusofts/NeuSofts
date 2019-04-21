@@ -1,3 +1,7 @@
+/**
+ * @output wp-includes/js/wp-lists.js
+ */
+
 /* global ajaxurl, wpAjax */
 
 /**
@@ -848,11 +852,6 @@ $.fn.wpList = function( settings ) {
 
 	wpList.init.call( this );
 	this.wpList.process();
-
-	return this;
-};
-} ) ( jQuery );
-t.process();
 
 	return this;
 };

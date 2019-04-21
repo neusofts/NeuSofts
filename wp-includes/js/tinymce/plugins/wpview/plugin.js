@@ -1,9 +1,12 @@
 /**
  * WordPress View plugin.
  */
-( function( tinymce, wp ) {
+( function( tinymce ) {
 	tinymce.PluginManager.add( 'wpview', function( editor ) {
 		function noop () {}
+
+		// Set this here as wp-tinymce.js may be loaded too early.
+		var wp = window.wp;
 
 		if ( ! wp || ! wp.mce || ! wp.mce.views ) {
 			return {
@@ -155,7 +158,7 @@
 		} );
 
 		editor.addButton( 'wp_view_edit', {
-			tooltip: 'Edit ', // trailing space is needed, used for context
+			tooltip: 'Edit|button', // '|button' is not displayed, only used for context
 			icon: 'dashicon dashicons-edit',
 			onclick: function() {
 				var node = editor.selection.getNode();
@@ -194,13 +197,6 @@
 		editor.wp = editor.wp || {};
 		editor.wp.getView = noop;
 		editor.wp.setViewCursor = noop;
-
-		return {
-			getView: noop
-		};
-	} );
-} )( window.tinymce, window.wp );
-ViewCursor = noop;
 
 		return {
 			getView: noop
