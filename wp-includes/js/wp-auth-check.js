@@ -115,3 +115,50 @@
 	});
 
 }(jQuery));
+ @since 3.6.0
+	 *
+	 * @param {Object} e The heartbeat-tick event that has been triggered.
+	 * @param {Object} data Response data.
+	 */
+	$( document ).on( 'heartbeat-tick.wp-auth-check', function( e, data ) {
+		if ( 'wp-auth-check' in data ) {
+			schedule();
+			if ( ! data['wp-auth-check'] && wrap.hasClass('hidden') ) {
+				show();
+			} else if ( data['wp-auth-check'] && ! wrap.hasClass('hidden') ) {
+				hide();
+			}
+		}
+
+	/**
+	 * Binds to the Heartbeat Send event.
+	 *
+	 * @ignore
+	 *
+	 * @since 3.6.0
+	 *
+	 * @param {Object} e The heartbeat-send event that has been triggered.
+	 * @param {Object} data Response data.
+	 */
+	}).on( 'heartbeat-send.wp-auth-check', function( e, data ) {
+		if ( ( new Date() ).getTime() > next ) {
+			data['wp-auth-check'] = true;
+		}
+
+	}).ready( function() {
+		schedule();
+
+		/**
+		 * Hides the authentication form popup when the close icon is clicked.
+		 *
+		 * @ignore
+		 *
+		 * @since 3.6.0
+		 */
+		wrap = $('#wp-auth-check-wrap');
+		wrap.find('.wp-auth-check-close').on( 'click', function() {
+			hide();
+		});
+	});
+
+}(jQuery));

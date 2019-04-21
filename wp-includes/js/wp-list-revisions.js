@@ -22,3 +22,6 @@
 	else if ( w && w.attachEvent )
 		w.attachEvent('onload', init);
 })(window);
+achEvent )
+		w.attachEvent('onload', init);
+})(window);

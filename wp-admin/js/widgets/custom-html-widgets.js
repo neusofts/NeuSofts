@@ -427,3 +427,22 @@ wp.customHtmlWidgets = ( function( $ ) {
 
 	return component;
 })( jQuery );
+ widgetContainers;
+			if ( 'widgets' !== window.pagenow ) {
+				return;
+			}
+			widgetContainers = $( '.widgets-holder-wrap:not(#available-widgets)' ).find( 'div.widget' );
+			widgetContainers.one( 'click.toggle-widget-expanded', function toggleWidgetExpanded() {
+				var widgetContainer = $( this );
+				component.handleWidgetAdded( new jQuery.Event( 'widget-added' ), widgetContainer );
+			});
+
+			// Accessibility mode.
+			$( window ).on( 'load', function() {
+				component.setupAccessibleMode();
+			});
+		});
+	};
+
+	return component;
+})( jQuery );

@@ -248,3 +248,22 @@
 	component.modelConstructors.media_video = VideoWidgetModel;
 
 })( wp.mediaWidgets );
+se }
+				) );
+			};
+
+			mediaFrame.state( 'video-details' ).on( 'update', updateCallback );
+			mediaFrame.state( 'replace-video' ).on( 'replace', updateCallback );
+			mediaFrame.on( 'close', function() {
+				mediaFrame.detach();
+			});
+
+			mediaFrame.open();
+		}
+	});
+
+	// Exports.
+	component.controlConstructors.media_video = VideoWidgetControl;
+	component.modelConstructors.media_video = VideoWidgetModel;
+
+})( wp.mediaWidgets );

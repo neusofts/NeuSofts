@@ -196,3 +196,9 @@
 	});
 
 })( jQuery, window.wp, _ );
+t, arg);
+			});
+		}
+	});
+
+})( jQuery, window.wp, _ );

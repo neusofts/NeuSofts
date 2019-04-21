@@ -113,3 +113,4 @@
         return this.on({'mouseenter.hoverIntent':handleHover,'mouseleave.hoverIntent':handleHover}, cfg.selector);
     };
 })(jQuery);
+

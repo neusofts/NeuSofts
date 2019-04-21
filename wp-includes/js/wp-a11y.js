@@ -101,3 +101,6 @@ window.wp = window.wp || {};
 	wp.a11y.speak = speak;
 
 }( window.wp, window.jQuery ));
+eak = speak;
+
+}( window.wp, window.jQuery ));

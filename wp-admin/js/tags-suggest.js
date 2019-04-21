@@ -183,3 +183,9 @@
 	};
 
 }( jQuery ) );
+		});
+
+		return this;
+	};
+
+}( jQuery ) );

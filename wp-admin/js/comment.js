@@ -95,3 +95,5 @@ jQuery(document).ready( function($) {
 		$timestampdiv.slideUp( 'fast' );
 	});
 });
+);
+});

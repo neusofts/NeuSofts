@@ -64,3 +64,10 @@ var directionality = (function () {
 
 }());
 })();
+{
+    }
+
+    return Plugin;
+
+}());
+})();

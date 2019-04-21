@@ -227,3 +227,89 @@
 	window.wp.emoji = new wpEmoji();
 
 } )( window, window._wpemojiSettings );
+e first argument.
+		 */
+		function parse( object, args ) {
+			var params;
+
+			/*
+			 * If the browser has full support, twemoji is not loaded or our
+			 * object is not what was expected, we do not parse anything.
+			 */
+			if ( settings.supports.everything || ! twemoji || ! object ||
+				( 'string' !== typeof object && ( ! object.childNodes || ! object.childNodes.length ) ) ) {
+
+				return object;
+			}
+
+			// Compose the params for the twitter emoji library.
+			args = args || {};
+			params = {
+				base: browserSupportsSvgAsImage() ? settings.svgUrl : settings.baseUrl,
+				ext:  browserSupportsSvgAsImage() ? settings.svgExt : settings.ext,
+				className: args.className || 'emoji',
+				callback: function( icon, options ) {
+					// Ignore some standard characters that TinyMCE recommends in its character map.
+					switch ( icon ) {
+						case 'a9':
+						case 'ae':
+						case '2122':
+						case '2194':
+						case '2660':
+						case '2663':
+						case '2665':
+						case '2666':
+							return false;
+					}
+
+					if ( settings.supports.everythingExceptFlag &&
+						! /^1f1(?:e[6-9a-f]|f[0-9a-f])-1f1(?:e[6-9a-f]|f[0-9a-f])$/.test( icon ) && // Country flags
+						! /^(1f3f3-fe0f-200d-1f308|1f3f4-200d-2620-fe0f)$/.test( icon )             // Rainbow and pirate flags
+					) {
+						return false;
+					}
+
+					return ''.concat( options.base, icon, options.ext );
+				},
+				onerror: function() {
+					if ( twemoji.parentNode ) {
+						this.setAttribute( 'data-error', 'load-failed' );
+						twemoji.parentNode.replaceChild( document.createTextNode( twemoji.alt ), twemoji );
+					}
+				}
+			};
+
+			if ( typeof args.imgAttr === 'object' ) {
+				params.attributes = function() {
+					return args.imgAttr;
+				};
+			}
+
+			return twemoji.parse( object, params );
+		}
+
+		/**
+		 * Initialize our emoji support, and set up listeners.
+		 */
+		if ( settings ) {
+			if ( settings.DOMReady ) {
+				load();
+			} else {
+				settings.readyCallback = load;
+			}
+		}
+
+		return {
+			parse: parse,
+			test: test
+		};
+	}
+
+	window.wp = window.wp || {};
+
+	/**
+	 * @namespace wp.emoji
+	 */
+	window.wp.emoji = new wpEmoji();
+
+} )( window, window._wpemojiSettings );

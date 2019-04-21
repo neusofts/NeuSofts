@@ -420,4 +420,107 @@ layui.config({
 			onloadLoading.destroy();
 		});
 	});
+});	setTimeout(function () {
+			$(document).scrollTop($('div.my-show-ot').offset().top);
+			layer.tips('多区域显示效果', $('div.my-show-ot')[0], {
+				tips: [1, 'orange'], time: 4e3, tipsMore: true
+			});
+			layer.tips('多区域显示效果', $('div.my-show-ot')[1], {
+				tips: [1, 'orange'], time: 4e3, tipsMore: true
+			});
+		}, 0.2e3);
+	});
+
+	// layer显示loading <按配置>
+	$('#my-layer').on('click.layer', function () {
+		var obj = {
+			title: '身份验证',
+			user: {
+				value: 'admin',
+				title: '帐号',
+				placeholder: '请输入用户名'
+			},
+			pw: {
+				value: '123456',
+				title: '密码',
+				placeholder: '请输入密码',
+				info: '密码长度6～18位'
+			},
+			btn: {
+				submit: '提交',
+				reset: '取消'
+			}
+		};
+
+		if (!tplLogin) tplLogin = getTpl('form.tpl');
+		laytpl(tplLogin).render(obj, function (html) {
+			var index = layer.open({
+				type: 1
+				, title: obj.title
+				, shade: 0.6
+				, anim: 1
+				, btn: [obj.btn.submit, obj.btn.reset]
+				, content: html
+				, yes: function (index, obj) {
+					var loading = $('#layer-form').closest('div.layui-layer').loading('show', getSetting($('form')));
+					setTimeout(function () {
+						loading.hide();
+					}, 3e3);
+				}
+			});
+
+			layer.style(index, {
+				width: '470px'
+			});
+
+			setTimeout(function () {
+				layer.tips('点此试试', $('a.layui-layer-btn0')[0], {
+					tips: [1, 'orange'], time: 2e3
+				});
+			}, 0.5e3);
+		});
+	});
+
+	// 监听tab切换
+	element.on('tab(code-tab)', function (elem) {
+		var $cont = $(elem.elem[0]).find('.layui-tab-item:eq('+ elem.index +')');
+		var obj = $cont.find('.code')[0];
+		var $edit = $cont.find('.CodeMirror');
+		
+		!$edit.size() && codePrint(obj);
+	});
+
+	$(function () {
+		// 代码高亮默认执行
+		$('textarea.auto-code').each(function (i, obj) {
+			codePrint(obj);
+		});
+
+		// 定时生成配置信息
+		var oldOptionsStr = '';
+		setInterval(function () {
+			if (oldOptionsStr != getSetting($('form'), 'format')) {
+				$('#textarea').val(getSetting($('form'), 'format'));
+				$('#my-show-1').find('.CodeMirror').remove();
+				codePrint($('#textarea')[0]);
+				oldOptionsStr = getSetting($('form'), 'format');
+			}
+		}, 1.5e3);
+
+		// 加载高亮组件loading
+		window.onload = new function () {
+			onloadLoading.destroy();
+		};
+
+		// btns animate
+		$('button[data-anim]').on('click.anim', function (e) {
+			var animPre = 'layui-anim-';
+			var $obj = $(this);
+			var animClass = animPre + $obj.data('anim');
+			$obj.addClass(animClass);
+			setTimeout(function () {
+				$obj.removeClass(animClass);
+			}, 2e3);
+		});
+	});
 });

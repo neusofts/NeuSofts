@@ -2336,3 +2336,55 @@
 	}
 
 })( window.wp, jQuery );
+ially focus.
+	 * @param {wp.customize.Section|wp.customize.Panel|wp.customize.Control} returnConstruct - The object to return focus.
+	 */
+	function focusConstructWithBreadcrumb( focusConstruct, returnConstruct ) {
+		focusConstruct.focus();
+		function onceCollapsed( isExpanded ) {
+			if ( ! isExpanded ) {
+				focusConstruct.expanded.unbind( onceCollapsed );
+				returnConstruct.focus();
+			}
+		}
+		focusConstruct.expanded.bind( onceCollapsed );
+	}
+
+	/**
+	 * @param {String} widgetId
+	 * @returns {Object}
+	 */
+	function parseWidgetId( widgetId ) {
+		var matches, parsed = {
+			number: null,
+			id_base: null
+		};
+
+		matches = widgetId.match( /^(.+)-(\d+)$/ );
+		if ( matches ) {
+			parsed.id_base = matches[1];
+			parsed.number = parseInt( matches[2], 10 );
+		} else {
+			// likely an old single widget
+			parsed.id_base = widgetId;
+		}
+
+		return parsed;
+	}
+
+	/**
+	 * @param {String} widgetId
+	 * @returns {String} settingId
+	 */
+	function widgetIdToSettingId( widgetId ) {
+		var parsed = parseWidgetId( widgetId ), settingId;
+
+		settingId = 'widget_' + parsed.id_base;
+		if ( parsed.number ) {
+			settingId += '[' + parsed.number + ']';
+		}
+
+		return settingId;
+	}
+
+})( window.wp, jQuery );

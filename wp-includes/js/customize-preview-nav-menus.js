@@ -440,3 +440,9 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 	return self;
 
 }( jQuery, _, wp, wp.customize ) );
+init();
+	} );
+
+	return self;
+
+}( jQuery, _, wp, wp.customize ) );

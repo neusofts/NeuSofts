@@ -750,3 +750,4 @@ if ( jQuery.Callbacks ) {
 }
 
 })( jQuery, window );
+Query, window );

@@ -1273,3 +1273,94 @@ var charmap = (function () {
 
 }());
 })();
+           win.find('#preview').text(td.firstChild.firstChild.data);
+            win.find('#previewTitle').text(td.title);
+          } else {
+            win.find('#preview').text(' ');
+            win.find('#previewTitle').text(' ');
+          }
+        }
+      };
+      win = editor.windowManager.open({
+        title: 'Special character',
+        spacing: 10,
+        padding: 10,
+        items: [
+          charMapPanel,
+          {
+            type: 'container',
+            layout: 'flex',
+            direction: 'column',
+            align: 'center',
+            spacing: 5,
+            minWidth: 160,
+            minHeight: 160,
+            items: [
+              {
+                type: 'label',
+                name: 'preview',
+                text: ' ',
+                style: 'font-size: 40px; text-align: center',
+                border: 1,
+                minWidth: 140,
+                minHeight: 80
+              },
+              {
+                type: 'spacer',
+                minHeight: 20
+              },
+              {
+                type: 'label',
+                name: 'previewTitle',
+                text: ' ',
+                style: 'white-space: pre-wrap;',
+                border: 1,
+                minWidth: 140
+              }
+            ]
+          }
+        ],
+        buttons: [{
+            text: 'Close',
+            onclick: function () {
+              win.close();
+            }
+          }]
+      });
+    };
+    var Dialog = { open: open };
+
+    var register = function (editor) {
+      editor.addCommand('mceShowCharmap', function () {
+        Dialog.open(editor);
+      });
+    };
+    var Commands = { register: register };
+
+    var register$1 = function (editor) {
+      editor.addButton('charmap', {
+        icon: 'charmap',
+        tooltip: 'Special character',
+        cmd: 'mceShowCharmap'
+      });
+      editor.addMenuItem('charmap', {
+        icon: 'charmap',
+        text: 'Special character',
+        cmd: 'mceShowCharmap',
+        context: 'insert'
+      });
+    };
+    var Buttons = { register: register$1 };
+
+    global.add('charmap', function (editor) {
+      Commands.register(editor);
+      Buttons.register(editor);
+      return Api.get(editor);
+    });
+    function Plugin () {
+    }
+
+    return Plugin;
+
+}());
+})();

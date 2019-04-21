@@ -126,3 +126,4 @@
 		} );
 	} );
 } )( window.tinymce, window.wp, window._wpemojiSettings );
+ymce );

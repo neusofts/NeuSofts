@@ -1058,3 +1058,74 @@ tinymce.PluginManager.add( 'wordpress', function( editor ) {
 });
 
 }( window.tinymce ));
+}
+		} );
+
+		editor.on( 'focus', function() {
+			if ( activeToolbar ) {
+				activeToolbar.show();
+			}
+		} );
+
+		function hide( event ) {
+			if ( activeToolbar ) {
+				if ( activeToolbar.tempHide || event.type === 'hide' || event.type === 'blur' ) {
+					activeToolbar.hide();
+					activeToolbar = false;
+				} else if ( (
+					event.type === 'resizewindow' ||
+					event.type === 'scrollwindow' ||
+					event.type === 'resize' ||
+					event.type === 'scroll'
+				) && ! activeToolbar.blockHide ) {
+					clearTimeout( timeout );
+
+					timeout = setTimeout( function() {
+						if ( activeToolbar && typeof activeToolbar.show === 'function' ) {
+							activeToolbar.scrolling = false;
+							activeToolbar.show();
+						}
+					}, 250 );
+
+					activeToolbar.scrolling = true;
+					activeToolbar.hide();
+				}
+			}
+		}
+
+		editor.dom.bind( editor.getWin(), 'resize', hide );
+
+		if ( editor.inline ) {
+			// Enable `capture` for the event.
+			// This will hide/reposition the toolbar on any scrolling in the document.
+			document.addEventListener( 'scroll', hide, true );
+		} else {
+			editor.dom.bind( editor.getWin(), 'scroll', hide );
+			// For full height iframe editor.
+			editor.on( 'resizewindow scrollwindow', hide );
+		}
+
+		editor.on( 'remove', function() {
+			document.removeEventListener( 'scroll', hide, true );
+			editor.off( 'resizewindow scrollwindow', hide );
+			editor.dom.unbind( editor.getWin(), 'resize scroll', hide );
+		} );
+
+		editor.on( 'blur hide', hide );
+
+		editor.wp = editor.wp || {};
+		editor.wp._createToolbar = create;
+	}, true );
+
+	function noop() {}
+
+	// Expose some functions (back-compat)
+	return {
+		_showButtons: noop,
+		_hideButtons: noop,
+		_setEmbed: noop,
+		_getEmbed: noop
+	};
+});
+
+}( window.tinymce ));

@@ -1625,4 +1625,59 @@ module.exports = Selection;
 
 /***/ })
 
+/******/ });tly on the parent class
+		 */
+		return Attachments.prototype.add.call( this, models, options );
+	},
+
+	/**
+	 * Fired when toggling (clicking on) an attachment in the modal.
+	 *
+	 * @param {undefined|boolean|wp.media.model.Attachment} model
+	 *
+	 * @fires wp.media.model.Selection#selection:single
+	 * @fires wp.media.model.Selection#selection:unsingle
+	 *
+	 * @returns {Backbone.Model}
+	 */
+	single: function( model ) {
+		var previous = this._single;
+
+		// If a `model` is provided, use it as the single model.
+		if ( model ) {
+			this._single = model;
+		}
+		// If the single model isn't in the selection, remove it.
+		if ( this._single && ! this.get( this._single.cid ) ) {
+			delete this._single;
+		}
+
+		this._single = this._single || this.last();
+
+		// If single has changed, fire an event.
+		if ( this._single !== previous ) {
+			if ( previous ) {
+				previous.trigger( 'selection:unsingle', previous, this );
+
+				// If the model was already removed, trigger the collection
+				// event manually.
+				if ( ! this.get( previous.cid ) ) {
+					this.trigger( 'selection:unsingle', previous, this );
+				}
+			}
+			if ( this._single ) {
+				this._single.trigger( 'selection:single', this._single, this );
+			}
+		}
+
+		// Return the single model, or the last model as a fallback.
+		return this._single;
+	}
+});
+
+module.exports = Selection;
+
+
+/***/ })
+
 /******/ });

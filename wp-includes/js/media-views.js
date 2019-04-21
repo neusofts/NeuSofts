@@ -9215,4 +9215,351 @@ module.exports = Spinner;
 
 
 /***/ })
+/******/ ]));mage' );
+		}
+	},
+
+	replaceAttachment: function( event ) {
+		event.preventDefault();
+		this.controller.setState( 'replace-image' );
+	}
+});
+
+module.exports = ImageDetails;
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports) {
+
+var View = wp.media.View,
+	UploaderStatus = wp.media.view.UploaderStatus,
+	l10n = wp.media.view.l10n,
+	$ = jQuery,
+	Cropper;
+
+/**
+ * wp.media.view.Cropper
+ *
+ * Uses the imgAreaSelect plugin to allow a user to crop an image.
+ *
+ * Takes imgAreaSelect options from
+ * wp.customize.HeaderControl.calculateImageSelectOptions via
+ * wp.customize.HeaderControl.openMM.
+ *
+ * @memberOf wp.media.view
+ *
+ * @class
+ * @augments wp.media.View
+ * @augments wp.Backbone.View
+ * @augments Backbone.View
+ */
+Cropper = View.extend(/** @lends wp.media.view.Cropper.prototype */{
+	className: 'crop-content',
+	template: wp.template('crop-content'),
+	initialize: function() {
+		_.bindAll(this, 'onImageLoad');
+	},
+	ready: function() {
+		this.controller.frame.on('content:error:crop', this.onError, this);
+		this.$image = this.$el.find('.crop-image');
+		this.$image.on('load', this.onImageLoad);
+		$(window).on('resize.cropper', _.debounce(this.onImageLoad, 250));
+	},
+	remove: function() {
+		$(window).off('resize.cropper');
+		this.$el.remove();
+		this.$el.off();
+		View.prototype.remove.apply(this, arguments);
+	},
+	prepare: function() {
+		return {
+			title: l10n.cropYourImage,
+			url: this.options.attachment.get('url')
+		};
+	},
+	onImageLoad: function() {
+		var imgOptions = this.controller.get('imgSelectOptions'),
+			imgSelect;
+
+		if (typeof imgOptions === 'function') {
+			imgOptions = imgOptions(this.options.attachment, this.controller);
+		}
+
+		imgOptions = _.extend(imgOptions, {
+			parent: this.$el,
+			onInit: function() {
+
+				// Store the set ratio.
+				var setRatio = imgSelect.getOptions().aspectRatio;
+
+				// On mousedown, if no ratio is set and the Shift key is down, use a 1:1 ratio.
+				this.parent.children().on( 'mousedown touchstart', function( e ) {
+
+					// If no ratio is set and the shift key is down, use a 1:1 ratio.
+					if ( ! setRatio && e.shiftKey ) {
+						imgSelect.setOptions( {
+							aspectRatio: '1:1'
+						} );
+					}
+				} );
+
+				this.parent.children().on( 'mouseup touchend', function() {
+
+					// Restore the set ratio.
+					imgSelect.setOptions( {
+						aspectRatio: setRatio ? setRatio : false
+					} );
+				} );
+			}
+		} );
+		this.trigger('image-loaded');
+		imgSelect = this.controller.imgSelect = this.$image.imgAreaSelect(imgOptions);
+	},
+	onError: function() {
+		var filename = this.options.attachment.get('filename');
+
+		this.views.add( '.upload-errors', new wp.media.view.UploaderStatusError({
+			filename: UploaderStatus.prototype.filename(filename),
+			message: window._wpMediaViewsL10n.cropError
+		}), { at: 0 });
+	}
+});
+
+module.exports = Cropper;
+
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports) {
+
+var View = wp.media.view,
+	SiteIconCropper;
+
+/**
+ * wp.media.view.SiteIconCropper
+ *
+ * Uses the imgAreaSelect plugin to allow a user to crop a Site Icon.
+ *
+ * Takes imgAreaSelect options from
+ * wp.customize.SiteIconControl.calculateImageSelectOptions.
+ *
+ * @memberOf wp.media.view
+ *
+ * @class
+ * @augments wp.media.view.Cropper
+ * @augments wp.media.View
+ * @augments wp.Backbone.View
+ * @augments Backbone.View
+ */
+SiteIconCropper = View.Cropper.extend(/** @lends wp.media.view.SiteIconCropper.prototype */{
+	className: 'crop-content site-icon',
+
+	ready: function () {
+		View.Cropper.prototype.ready.apply( this, arguments );
+
+		this.$( '.crop-image' ).on( 'load', _.bind( this.addSidebar, this ) );
+	},
+
+	addSidebar: function() {
+		this.sidebar = new wp.media.view.Sidebar({
+			controller: this.controller
+		});
+
+		this.sidebar.set( 'preview', new wp.media.view.SiteIconPreview({
+			controller: this.controller,
+			attachment: this.options.attachment
+		}) );
+
+		this.controller.cropperView.views.add( this.sidebar );
+	}
+});
+
+module.exports = SiteIconCropper;
+
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports) {
+
+var View = wp.media.View,
+	$ = jQuery,
+	SiteIconPreview;
+
+/**
+ * wp.media.view.SiteIconPreview
+ *
+ * Shows a preview of the Site Icon as a favicon and app icon while cropping.
+ *
+ * @memberOf wp.media.view
+ *
+ * @class
+ * @augments wp.media.View
+ * @augments wp.Backbone.View
+ * @augments Backbone.View
+ */
+SiteIconPreview = View.extend(/** @lends wp.media.view.SiteIconPreview.prototype */{
+	className: 'site-icon-preview',
+	template: wp.template( 'site-icon-preview' ),
+
+	ready: function() {
+		this.controller.imgSelect.setOptions({
+			onInit: this.updatePreview,
+			onSelectChange: this.updatePreview
+		});
+	},
+
+	prepare: function() {
+		return {
+			url: this.options.attachment.get( 'url' )
+		};
+	},
+
+	updatePreview: function( img, coords ) {
+		var rx = 64 / coords.width,
+			ry = 64 / coords.height,
+			preview_rx = 16 / coords.width,
+			preview_ry = 16 / coords.height;
+
+		$( '#preview-app-icon' ).css({
+			width: Math.round(rx * this.imageWidth ) + 'px',
+			height: Math.round(ry * this.imageHeight ) + 'px',
+			marginLeft: '-' + Math.round(rx * coords.x1) + 'px',
+			marginTop: '-' + Math.round(ry * coords.y1) + 'px'
+		});
+
+		$( '#preview-favicon' ).css({
+			width: Math.round( preview_rx * this.imageWidth ) + 'px',
+			height: Math.round( preview_ry * this.imageHeight ) + 'px',
+			marginLeft: '-' + Math.round( preview_rx * coords.x1 ) + 'px',
+			marginTop: '-' + Math.floor( preview_ry* coords.y1 ) + 'px'
+		});
+	}
+});
+
+module.exports = SiteIconPreview;
+
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports) {
+
+var View = wp.media.View,
+	EditImage;
+
+/**
+ * wp.media.view.EditImage
+ *
+ * @memberOf wp.media.view
+ *
+ * @class
+ * @augments wp.media.View
+ * @augments wp.Backbone.View
+ * @augments Backbone.View
+ */
+EditImage = View.extend(/** @lends wp.media.view.EditImage.prototype */{
+	className: 'image-editor',
+	template: wp.template('image-editor'),
+
+	initialize: function( options ) {
+		this.editor = window.imageEdit;
+		this.controller = options.controller;
+		View.prototype.initialize.apply( this, arguments );
+	},
+
+	prepare: function() {
+		return this.model.toJSON();
+	},
+
+	loadEditor: function() {
+		var dfd = this.editor.open( this.model.get('id'), this.model.get('nonces').edit, this );
+		dfd.done( _.bind( this.focus, this ) );
+	},
+
+	focus: function() {
+		this.$( '.imgedit-submit .button' ).eq( 0 ).focus();
+	},
+
+	back: function() {
+		var lastState = this.controller.lastState();
+		this.controller.setState( lastState );
+	},
+
+	refresh: function() {
+		this.model.fetch();
+	},
+
+	save: function() {
+		var lastState = this.controller.lastState();
+
+		this.model.fetch().done( _.bind( function() {
+			this.controller.setState( lastState );
+		}, this ) );
+	}
+
+});
+
+module.exports = EditImage;
+
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports) {
+
+/**
+ * wp.media.view.Spinner
+ *
+ * Represents a spinner in the Media Library.
+ *
+ * @since 3.9.0
+ *
+ * @memberOf wp.media.view
+ *
+ * @class
+ * @augments wp.media.View
+ * @augments wp.Backbone.View
+ * @augments Backbone.View
+ */
+var Spinner = wp.media.View.extend(/** @lends wp.media.view.Spinner.prototype */{
+	tagName:   'span',
+	className: 'spinner',
+	spinnerTimeout: false,
+	delay: 400,
+
+	/**
+	 * Shows the spinner. Delays the visibility by the configured amount.
+	 *
+	 * @since 3.9.0
+	 *
+	 * @return {wp.media.view.Spinner} The spinner.
+	 */
+	show: function() {
+		if ( ! this.spinnerTimeout ) {
+			this.spinnerTimeout = _.delay(function( $el ) {
+				$el.addClass( 'is-active' );
+			}, this.delay, this.$el );
+		}
+
+		return this;
+	},
+
+	/**
+	 * Hides the spinner.
+	 *
+	 * @since 3.9.0
+	 *
+	 * @return {wp.media.view.Spinner} The spinner.
+	 */
+	hide: function() {
+		this.$el.removeClass( 'is-active' );
+		this.spinnerTimeout = clearTimeout( this.spinnerTimeout );
+
+		return this;
+	}
+});
+
+module.exports = Spinner;
+
+
+/***/ })
 /******/ ]));

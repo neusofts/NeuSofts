@@ -196,3 +196,10 @@ function getAllUserSettings() {
 	return wpCookies.getHash( 'wp-settings-' + userSettings.uid ) || {};
 }
 
+ {
+	if ( 'object' !== typeof userSettings ) {
+		return {};
+	}
+
+	return wpCookies.getHash( 'wp-settings-' + userSettings.uid ) || {};
+};

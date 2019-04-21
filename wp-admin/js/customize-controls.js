@@ -9295,3 +9295,67 @@
 	});
 
 })( wp, jQuery );
+			api.previewer.send( 'autosaving' );
+				}
+			}
+			api.state( 'saved' ).bind( onChangeSaved );
+			onChangeSaved( api.state( 'saved' ).get() );
+
+			/**
+			 * Request changeset update and then re-schedule the next changeset update time.
+			 *
+			 * @since 4.7.0
+			 * @private
+			 */
+			updateChangesetWithReschedule = function() {
+				if ( ! updatePending ) {
+					updatePending = true;
+					api.requestChangesetUpdate( {}, { autosave: true } ).always( function() {
+						updatePending = false;
+					} );
+				}
+				scheduleChangesetUpdate();
+			};
+
+			/**
+			 * Schedule changeset update.
+			 *
+			 * @since 4.7.0
+			 * @private
+			 */
+			scheduleChangesetUpdate = function() {
+				clearTimeout( timeoutId );
+				timeoutId = setTimeout( function() {
+					updateChangesetWithReschedule();
+				}, api.settings.timeouts.changesetAutoSave );
+			};
+
+			// Start auto-save interval for updating changeset.
+			scheduleChangesetUpdate();
+
+			// Save changeset when focus removed from window.
+			$( document ).on( 'visibilitychange.wp-customize-changeset-update', function() {
+				if ( document.hidden ) {
+					updateChangesetWithReschedule();
+				}
+			} );
+
+			// Save changeset before unloading window.
+			$( window ).on( 'beforeunload.wp-customize-changeset-update', function() {
+				updateChangesetWithReschedule();
+			} );
+		}
+		api.bind( 'change', startAutosaving );
+
+		// Make sure TinyMCE dialogs appear above Customizer UI.
+		$( document ).one( 'tinymce-editor-setup', function() {
+			if ( window.tinymce.ui.FloatPanel && ( ! window.tinymce.ui.FloatPanel.zIndex || window.tinymce.ui.FloatPanel.zIndex < 500001 ) ) {
+				window.tinymce.ui.FloatPanel.zIndex = 500001;
+			}
+		} );
+
+		body.addClass( 'ready' );
+		api.trigger( 'ready' );
+	});
+
+})( wp, jQuery );

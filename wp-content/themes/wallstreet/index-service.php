@@ -28,10 +28,10 @@
 			<?php } ?>
 			<div class="service-area">
 			<?php if($current_options['service_title_one']) { ?>
-			<h2><a href="#"><?php echo esc_html($current_options['service_title_one']); ?></a></h2>
+			<h2 style="color:#fff;"><?php echo esc_html($current_options['service_title_one']); ?></h2>
 			<?php } ?>
 			<?php if($current_options['service_description_one']) { ?>
-			<p><?php echo esc_html($current_options['service_description_one']); ?></p>
+			<p><a href="/?p=282" style="color:#fff;"><?php echo esc_html($current_options['service_description_one']); ?></a></p>
 			<?php } ?>
 			</div><!-- / service-area -->
 		</div> <!-- / service-effect column -->
@@ -44,10 +44,10 @@
 			<?php } ?>
 			<div class="service-area">
 			<?php if($current_options['service_title_two']) { ?>
-			<h2><a href="#"><?php echo esc_html($current_options['service_title_two']); ?></a></h2>
+			<h2 style="color:#fff;"><?php echo esc_html($current_options['service_title_two']); ?></h2>
 			<?php } ?>
 			<?php if($current_options['service_description_two']) { ?>
-			<p><?php echo esc_html($current_options['service_description_two']); ?></p>
+			<p><a href="/?p=746" style="color:#fff;"><?php echo esc_html($current_options['service_description_two']); ?></a></p>
 			<?php } ?>
 			</div><!-- / service-area -->
 		</div> <!-- / service-effect column -->
@@ -60,10 +60,10 @@
 			<?php } ?>
 			<div class="service-area">
 			<?php if($current_options['service_title_three']) { ?>
-			<h2><a href="#"><?php echo esc_html($current_options['service_title_three']); ?></a></h2>
+			<h2 style="color:#fff;"><?php echo esc_html($current_options['service_title_three']); ?></h2>
 			<?php } ?>
 			<?php if($current_options['service_description_three']) { ?>
-			<p><?php echo esc_html($current_options['service_description_three']); ?></p>
+			<p><a href="/?p=747" style="color:#fff;"><?php echo esc_html($current_options['service_description_three']); ?></a></p>
 			<?php } ?>
 			</div><!-- / service-area -->
 		</div> <!-- / service-effect column -->

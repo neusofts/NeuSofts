@@ -966,3 +966,7 @@ window.wp = window.wp || {};
 	 */
 	exports.customize = api;
 })( wp, jQuery );
+namespace wp.customize
+	 */
+	exports.customize = api;
+})( wp, jQuery );

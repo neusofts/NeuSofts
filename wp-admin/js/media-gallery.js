@@ -37,3 +37,9 @@ jQuery(function($) {
 		}
 	});
 });
+);
+
+			e.preventDefault();
+		}
+	});
+});

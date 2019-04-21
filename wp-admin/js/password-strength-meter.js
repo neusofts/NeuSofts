@@ -78,3 +78,39 @@ var passwordStrength;
 	// Back-compat.
 	passwordStrength = wp.passwordStrength.meter;
 })(jQuery);
+i++ ) {
+				if ( rawValues[ i ] ) {
+					blacklist = blacklist.concat( rawValues[ i ].replace( /\W/g, ' ' ).split( ' ' ) );
+				}
+			}
+
+			/*
+			 * Remove empty values, short words and duplicates. Short words are likely to
+			 * cause many false positives.
+			 */
+			blacklist = $.grep( blacklist, function( value, key ) {
+				if ( '' === value || 4 > value.length ) {
+					return false;
+				}
+
+				return $.inArray( value, blacklist ) === key;
+			});
+
+			return blacklist;
+		}
+	};
+
+	// Backward compatibility.
+
+	/**
+	 * Password strength meter function.
+	 *
+	 * @since 2.5.0
+	 * @deprecated 3.7.0 Use wp.passwordStrength.meter instead.
+	 *
+	 * @global
+	 *
+	 * @type {wp.passwordStrength.meter}
+	 */
+	window.passwordStrength = wp.passwordStrength.meter;
+})(jQuery);

@@ -1607,3 +1607,236 @@ var paste = (function () {
 
 }());
 })();
+ntent = content['text/plain'];
+      return plainTextContent ? plainTextContent.indexOf('file://') === 0 : false;
+    };
+    var setFocusedRange = function (editor, rng) {
+      editor.focus();
+      editor.selection.setRng(rng);
+    };
+    var setup = function (editor, clipboard, draggingInternallyState) {
+      if (Settings.shouldBlockDrop(editor)) {
+        editor.on('dragend dragover draggesture dragdrop drop drag', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        });
+      }
+      if (!Settings.shouldPasteDataImages(editor)) {
+        editor.on('drop', function (e) {
+          var dataTransfer = e.dataTransfer;
+          if (dataTransfer && dataTransfer.files && dataTransfer.files.length > 0) {
+            e.preventDefault();
+          }
+        });
+      }
+      editor.on('drop', function (e) {
+        var dropContent, rng;
+        rng = getCaretRangeFromEvent(editor, e);
+        if (e.isDefaultPrevented() || draggingInternallyState.get()) {
+          return;
+        }
+        dropContent = clipboard.getDataTransferItems(e.dataTransfer);
+        var internal = clipboard.hasContentType(dropContent, InternalHtml.internalHtmlMime());
+        if ((!clipboard.hasHtmlOrText(dropContent) || isPlainTextFileUrl(dropContent)) && clipboard.pasteImageData(e, rng)) {
+          return;
+        }
+        if (rng && Settings.shouldFilterDrop(editor)) {
+          var content_1 = dropContent['mce-internal'] || dropContent['text/html'] || dropContent['text/plain'];
+          if (content_1) {
+            e.preventDefault();
+            global$2.setEditorTimeout(editor, function () {
+              editor.undoManager.transact(function () {
+                if (dropContent['mce-internal']) {
+                  editor.execCommand('Delete');
+                }
+                setFocusedRange(editor, rng);
+                content_1 = Utils.trimHtml(content_1);
+                if (!dropContent['text/html']) {
+                  clipboard.pasteText(content_1);
+                } else {
+                  clipboard.pasteHtml(content_1, internal);
+                }
+              });
+            });
+          }
+        }
+      });
+      editor.on('dragstart', function (e) {
+        draggingInternallyState.set(true);
+      });
+      editor.on('dragover dragend', function (e) {
+        if (Settings.shouldPasteDataImages(editor) && draggingInternallyState.get() === false) {
+          e.preventDefault();
+          setFocusedRange(editor, getCaretRangeFromEvent(editor, e));
+        }
+        if (e.type === 'dragend') {
+          draggingInternallyState.set(false);
+        }
+      });
+    };
+    var DragDrop = { setup: setup };
+
+    var setup$1 = function (editor) {
+      var plugin = editor.plugins.paste;
+      var preProcess = Settings.getPreProcess(editor);
+      if (preProcess) {
+        editor.on('PastePreProcess', function (e) {
+          preProcess.call(plugin, plugin, e);
+        });
+      }
+      var postProcess = Settings.getPostProcess(editor);
+      if (postProcess) {
+        editor.on('PastePostProcess', function (e) {
+          postProcess.call(plugin, plugin, e);
+        });
+      }
+    };
+    var PrePostProcess = { setup: setup$1 };
+
+    function addPreProcessFilter(editor, filterFunc) {
+      editor.on('PastePreProcess', function (e) {
+        e.content = filterFunc(editor, e.content, e.internal, e.wordContent);
+      });
+    }
+    function addPostProcessFilter(editor, filterFunc) {
+      editor.on('PastePostProcess', function (e) {
+        filterFunc(editor, e.node);
+      });
+    }
+    function removeExplorerBrElementsAfterBlocks(editor, html) {
+      if (!WordFilter.isWordContent(html)) {
+        return html;
+      }
+      var blockElements = [];
+      global$3.each(editor.schema.getBlockElements(), function (block, blockName) {
+        blockElements.push(blockName);
+      });
+      var explorerBlocksRegExp = new RegExp('(?:<br>&nbsp;[\\s\\r\\n]+|<br>)*(<\\/?(' + blockElements.join('|') + ')[^>]*>)(?:<br>&nbsp;[\\s\\r\\n]+|<br>)*', 'g');
+      html = Utils.filter(html, [[
+          explorerBlocksRegExp,
+          '$1'
+        ]]);
+      html = Utils.filter(html, [
+        [
+          /<br><br>/g,
+          '<BR><BR>'
+        ],
+        [
+          /<br>/g,
+          ' '
+        ],
+        [
+          /<BR><BR>/g,
+          '<br>'
+        ]
+      ]);
+      return html;
+    }
+    function removeWebKitStyles(editor, content, internal, isWordHtml) {
+      if (isWordHtml || internal) {
+        return content;
+      }
+      var webKitStylesSetting = Settings.getWebkitStyles(editor);
+      var webKitStyles;
+      if (Settings.shouldRemoveWebKitStyles(editor) === false || webKitStylesSetting === 'all') {
+        return content;
+      }
+      if (webKitStylesSetting) {
+        webKitStyles = webKitStylesSetting.split(/[, ]/);
+      }
+      if (webKitStyles) {
+        var dom_1 = editor.dom, node_1 = editor.selection.getNode();
+        content = content.replace(/(<[^>]+) style="([^"]*)"([^>]*>)/gi, function (all, before, value, after) {
+          var inputStyles = dom_1.parseStyle(dom_1.decode(value));
+          var outputStyles = {};
+          if (webKitStyles === 'none') {
+            return before + after;
+          }
+          for (var i = 0; i < webKitStyles.length; i++) {
+            var inputValue = inputStyles[webKitStyles[i]], currentValue = dom_1.getStyle(node_1, webKitStyles[i], true);
+            if (/color/.test(webKitStyles[i])) {
+              inputValue = dom_1.toHex(inputValue);
+              currentValue = dom_1.toHex(currentValue);
+            }
+            if (currentValue !== inputValue) {
+              outputStyles[webKitStyles[i]] = inputValue;
+            }
+          }
+          outputStyles = dom_1.serializeStyle(outputStyles, 'span');
+          if (outputStyles) {
+            return before + ' style="' + outputStyles + '"' + after;
+          }
+          return before + after;
+        });
+      } else {
+        content = content.replace(/(<[^>]+) style="([^"]*)"([^>]*>)/gi, '$1$3');
+      }
+      content = content.replace(/(<[^>]+) data-mce-style="([^"]+)"([^>]*>)/gi, function (all, before, value, after) {
+        return before + ' style="' + value + '"' + after;
+      });
+      return content;
+    }
+    function removeUnderlineAndFontInAnchor(editor, root) {
+      editor.$('a', root).find('font,u').each(function (i, node) {
+        editor.dom.remove(node, true);
+      });
+    }
+    var setup$2 = function (editor) {
+      if (global$1.webkit) {
+        addPreProcessFilter(editor, removeWebKitStyles);
+      }
+      if (global$1.ie) {
+        addPreProcessFilter(editor, removeExplorerBrElementsAfterBlocks);
+        addPostProcessFilter(editor, removeUnderlineAndFontInAnchor);
+      }
+    };
+    var Quirks = { setup: setup$2 };
+
+    var stateChange = function (editor, clipboard, e) {
+      var ctrl = e.control;
+      ctrl.active(clipboard.pasteFormat.get() === 'text');
+      editor.on('PastePlainTextToggle', function (e) {
+        ctrl.active(e.state);
+      });
+    };
+    var register$2 = function (editor, clipboard) {
+      var postRender = curry(stateChange, editor, clipboard);
+      editor.addButton('pastetext', {
+        active: false,
+        icon: 'pastetext',
+        tooltip: 'Paste as text',
+        cmd: 'mceTogglePlainTextPaste',
+        onPostRender: postRender
+      });
+      editor.addMenuItem('pastetext', {
+        text: 'Paste as text',
+        selectable: true,
+        active: clipboard.pasteFormat,
+        cmd: 'mceTogglePlainTextPaste',
+        onPostRender: postRender
+      });
+    };
+    var Buttons = { register: register$2 };
+
+    global.add('paste', function (editor) {
+      if (DetectProPlugin.hasProPlugin(editor) === false) {
+        var userIsInformedState = Cell(false);
+        var draggingInternallyState = Cell(false);
+        var pasteFormat = Cell(Settings.isPasteAsTextEnabled(editor) ? 'text' : 'html');
+        var clipboard = Clipboard(editor, pasteFormat);
+        var quirks = Quirks.setup(editor);
+        Buttons.register(editor, clipboard);
+        Commands.register(editor, clipboard, userIsInformedState);
+        PrePostProcess.setup(editor);
+        CutCopy.register(editor);
+        DragDrop.setup(editor, clipboard, draggingInternallyState);
+        return Api.get(clipboard, quirks);
+      }
+    });
+    function Plugin () {
+    }
+
+    return Plugin;
+
+}());
+})();

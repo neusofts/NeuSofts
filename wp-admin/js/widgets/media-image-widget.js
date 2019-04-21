@@ -164,3 +164,13 @@
 	component.modelConstructors.media_image = ImageWidgetModel;
 
 })( wp.mediaWidgets, jQuery );
+ops.link_url = control.model.get( 'link_url' );
+			return previewTemplateProps;
+		}
+	});
+
+	// Exports.
+	component.controlConstructors.media_image = ImageWidgetControl;
+	component.modelConstructors.media_image = ImageWidgetModel;
+
+})( wp.mediaWidgets, jQuery );

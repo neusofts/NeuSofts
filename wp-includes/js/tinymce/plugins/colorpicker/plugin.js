@@ -124,3 +124,15 @@ var colorpicker = (function () {
 
 }());
 })();
+editor.settings.color_picker_callback = function (callback, value) {
+          Dialog.open(editor, callback, value);
+        };
+      }
+    });
+    function Plugin () {
+    }
+
+    return Plugin;
+
+}());
+})();

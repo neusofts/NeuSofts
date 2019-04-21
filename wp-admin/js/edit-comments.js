@@ -974,3 +974,28 @@ $(document).ready(function(){
 });
 
 })(jQuery);
+disableInInput: true,
+					type: 'keypress',
+					noDisable: '.check-column input[type="checkbox"]'
+				},
+				cycle_expr: '#the-comment-list tr',
+				start_row_index: 0
+			}
+		);
+	}
+
+	// Quick Edit and Reply have an inline comment editor.
+	$( '#the-comment-list' ).on( 'click', '.comment-inline', function() {
+		var $el = $( this ),
+			action = 'replyto';
+
+		if ( 'undefined' !== typeof $el.data( 'action' ) ) {
+			action = $el.data( 'action' );
+		}
+
+		$( this ).attr( 'aria-expanded', 'true' );
+		commentReply.open( $el.data( 'commentId' ), $el.data( 'postId' ), action );
+	} );
+});
+
+})(jQuery);

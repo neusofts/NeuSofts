@@ -895,3 +895,11 @@
 	});
 
 })( wp, jQuery );
+ting ) {
+			setting.bind( api.settingPreviewHandlers.custom_css );
+		} );
+
+		api.trigger( 'preview-ready' );
+	});
+
+})( wp, jQuery );

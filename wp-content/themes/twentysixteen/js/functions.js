@@ -198,3 +198,19 @@
 		belowEntryMetaClass( 'blockquote.alignleft, blockquote.alignright' );
 	} );
 } )( jQuery );
+ )
+			.on( 'resize.twentysixteen', function() {
+				clearTimeout( resizeTimer );
+				resizeTimer = setTimeout( function() {
+					belowEntryMetaClass( 'img.size-full' );
+					belowEntryMetaClass( 'blockquote.alignleft, blockquote.alignright' );
+					belowEntryMetaClass( '.wp-block-image img' );
+				}, 300 );
+				onResizeARIA();
+			} );
+
+		belowEntryMetaClass( 'img.size-full' );
+		belowEntryMetaClass( 'blockquote.alignleft, blockquote.alignright' );
+		belowEntryMetaClass( '.wp-block-image img' );
+	} );
+} )( jQuery );

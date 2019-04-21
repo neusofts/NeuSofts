@@ -389,3 +389,205 @@ window.wp = window.wp || {};
 		ready: function() {}
 	});
 }(jQuery));
+s.at At which index to put the elements.
+		 *
+		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 */
+		insert: function( $target, els, options ) {
+			var at = options && options.at,
+				$children;
+
+			if ( _.isNumber( at ) && ($children = $target.children()).length > at )
+				$children.eq( at ).before( els );
+			else
+				$target.append( els );
+
+			return this;
+		},
+
+		/**
+		 * Triggers the ready event.
+		 *
+		 * Only use this method if you know what you're doing. For performance reasons,
+		 * this method does not check if the view is actually attached to the DOM. It's
+		 * taking your word for it.
+		 *
+		 * Fires the ready event on the current view and all attached subviews.
+		 *
+		 * @since 3.5.0
+		 */
+		ready: function() {
+			this.view.trigger('ready');
+
+			// Find all attached subviews, and call ready on them.
+			_.chain( this.all() ).map( function( view ) {
+				return view.views;
+			}).flatten().where({ attached: true }).invoke('ready');
+		},
+		/**
+		 * Attaches a series of views to a selector. Internal.
+		 *
+		 * Checks to see if a matching selector exists, renders the views,
+		 * performs the proper DOM operation, and then checks if the view is
+		 * attached to the document.
+		 *
+		 * @since 3.5.0
+		 *
+		 * @private
+		 *
+		 * @param {string}       selector    A jQuery selector.
+		 * @param {Array|Object} views       The subviews for the main view.
+		 * @param {Object}       options     Options for call.
+		 * @param {boolean}      options.add If true the provided views will be added.
+		 *
+		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 */
+		_attach: function( selector, views, options ) {
+			var $selector = selector ? this.view.$( selector ) : this.view.$el,
+				managers;
+
+			// Check if we found a location to attach the views.
+			if ( ! $selector.length )
+				return this;
+
+			managers = _.chain( views ).pluck('views').flatten().value();
+
+			// Render the views if necessary.
+			_.each( managers, function( manager ) {
+				if ( manager.rendered )
+					return;
+
+				manager.view.render();
+				manager.rendered = true;
+			}, this );
+
+			// Insert or replace the views.
+			this[ options.add ? 'insert' : 'replace' ]( $selector, _.pluck( views, 'el' ), options );
+
+			/*
+			 * Set attached and trigger ready if the current view is already
+			 * attached to the DOM.
+			 */
+			_.each( managers, function( manager ) {
+				manager.attached = true;
+
+				if ( options.ready )
+					manager.ready();
+			}, this );
+
+			return this;
+		},
+
+		/**
+		 * Determines whether or not the current view is in the DOM.
+		 *
+		 * @since 3.5.0
+		 *
+		 * @private
+		 *
+		 * @return {boolean} Whether or not the current view is in the DOM.
+		 */
+		_isReady: function() {
+			var node = this.view.el;
+			while ( node ) {
+				if ( node === document.body )
+					return true;
+				node = node.parentNode;
+			}
+
+			return false;
+		}
+	});
+
+	wp.Backbone.View = Backbone.View.extend({
+
+		// The constructor for the `Views` manager.
+		Subviews: wp.Backbone.Subviews,
+
+		/**
+		 * The base view class.
+		 *
+		 * This extends the backbone view to have a build-in way to use subviews. This
+		 * makes it easier to have nested views.
+		 *
+		 * @since 3.5.0
+		 * @since 3.6.0 Moved wp.media.View to wp.Backbone.View
+		 *
+		 * @constructs
+		 * @augments Backbone.View
+		 *
+		 * @memberOf wp.Backbone
+		 *
+		 *
+		 * @param {Object} options The options for this view.
+		 */
+		constructor: function( options ) {
+			this.views = new this.Subviews( this, this.views );
+			this.on( 'ready', this.ready, this );
+
+			this.options = options || {};
+
+			Backbone.View.apply( this, arguments );
+		},
+
+		/**
+		 * Removes this view and all subviews.
+		 *
+		 * @since 3.5.0
+		 *
+		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 */
+		remove: function() {
+			var result = Backbone.View.prototype.remove.apply( this, arguments );
+
+			// Recursively remove child views.
+			if ( this.views )
+				this.views.remove();
+
+			return result;
+		},
+
+		/**
+		 * Renders this view and all subviews.
+		 *
+		 * @since 3.5.0
+		 *
+		 * @return {wp.Backbone.View} The current instance of the view.
+		 */
+		render: function() {
+			var options;
+
+			if ( this.prepare )
+				options = this.prepare();
+
+			this.views.detach();
+
+			if ( this.template ) {
+				options = options || {};
+				this.trigger( 'prepare', options );
+				this.$el.html( this.template( options ) );
+			}
+
+			this.views.render();
+			return this;
+		},
+
+		/**
+		 * Returns the options for this view.
+		 *
+		 * @since 3.5.0
+		 *
+		 * @return {Object} The options for this view.
+		 */
+		prepare: function() {
+			return this.options;
+		},
+
+		/**
+		 * Method that is called when the ready event is triggered.
+		 *
+		 * @since 3.5.0
+		 */
+		ready: function() {}
+	});
+}(jQuery));

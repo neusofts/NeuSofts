@@ -316,3 +316,15 @@ msgstr "有点尴尬诶。"
 #: 404.php:16
 msgid "Not Found"
 msgstr "未找到"
+r URI of the theme
+#: footer.php:24
+msgid "https://wordpress.org/"
+msgstr "https://cn.wordpress.org/"
+
+#. Author of the theme
+msgid "the WordPress team"
+msgstr "WordPress团队"
+
+#. Theme URI of the theme
+msgid "https://wordpress.org/themes/twentythirteen/"
+msgstr "https://wordpress.org/themes/twentythirteen/"

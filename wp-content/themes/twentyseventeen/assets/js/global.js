@@ -247,3 +247,8 @@
 	});
 
 })( jQuery );
+unction() {
+		$body.addClass( 'has-header-video' );
+	});
+
+})( jQuery );

@@ -351,3 +351,18 @@ msgstr ""
 #. Author of the plugin/theme
 msgid "the WordPress team"
 msgstr "WordPress团队"
+e can&rsquo;t be found."
+msgstr "有点尴尬诶！该页无法显示。"
+
+#. Author of the theme
+msgid "the WordPress team"
+msgstr "WordPress团队"
+
+#. Theme URI of the theme
+msgid "https://wordpress.org/themes/twentysixteen/"
+msgstr "https://wordpress.org/themes/twentysixteen/"
+
+#. Author URI of the theme
+#: footer.php:60
+msgid "https://wordpress.org/"
+msgstr "https://cn.wordpress.org/"

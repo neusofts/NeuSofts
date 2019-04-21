@@ -972,3 +972,4 @@
 		}
 	} ) );
 } )( window, window.wp.mce.views, window.wp.media, window.jQuery );
+p.mce.views, window.wp.media, window.jQuery );

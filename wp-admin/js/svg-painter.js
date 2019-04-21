@@ -238,3 +238,7 @@ wp.svgPainter = ( function( $, window, document, undefined ) {
 	};
 
 })( jQuery, window, document );
+
+	};
+
+})( jQuery, window, document );

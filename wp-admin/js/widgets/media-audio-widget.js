@@ -148,3 +148,20 @@
 	component.modelConstructors.media_audio = AudioWidgetModel;
 
 })( wp.mediaWidgets );
+		};
+
+			mediaFrame.state( 'audio-details' ).on( 'update', updateCallback );
+			mediaFrame.state( 'replace-audio' ).on( 'replace', updateCallback );
+			mediaFrame.on( 'close', function() {
+				mediaFrame.detach();
+			});
+
+			mediaFrame.open();
+		}
+	});
+
+	// Exports.
+	component.controlConstructors.media_audio = AudioWidgetControl;
+	component.modelConstructors.media_audio = AudioWidgetModel;
+
+})( wp.mediaWidgets );

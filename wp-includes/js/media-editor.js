@@ -1056,3 +1056,5 @@
 	_.bindAll( wp.media.editor, 'open' );
 	$( wp.media.editor.init );
 }(jQuery, _));
+tor.init );
+}(jQuery, _));

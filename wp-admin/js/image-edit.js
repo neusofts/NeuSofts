@@ -1090,3 +1090,42 @@
 	}
 };
 })(jQuery);
+			});
+
+			if ( sel = this.iasapi.getSelection(true) ) {
+				r = Math.ceil( sel.y1 + ( ( sel.x2 - sel.x1 ) / ( x / y ) ) );
+
+				if ( r > h ) {
+					r = h;
+					if ( n ) {
+						$('#imgedit-crop-height-' + postid).val('');
+					} else {
+						$('#imgedit-crop-width-' + postid).val('');
+					}
+				}
+
+				this.iasapi.setSelection( sel.x1, sel.y1, sel.x2, r );
+				this.iasapi.update();
+			}
+		}
+	},
+
+	/**
+	 * Validates if a value in a jQuery.HTMLElement is numeric.
+	 *
+	 * @memberof imageEdit
+	 * @since    4.6
+	 *
+	 * @param {jQuery} el The html element.
+	 *
+	 * @returns {void|boolean} Returns false if the value is not numeric,
+	 *                         void when it is.
+	 */
+	validateNumeric: function( el ) {
+		if ( ! this.intval( $( el ).val() ) ) {
+			$( el ).val( '' );
+			return false;
+		}
+	}
+};
+})(jQuery);

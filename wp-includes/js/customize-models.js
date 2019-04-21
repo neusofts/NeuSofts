@@ -275,3 +275,8 @@
 	});
 
 })( jQuery, window.wp );
+ialize.apply(this);
+		}
+	});
+
+})( jQuery, window.wp );

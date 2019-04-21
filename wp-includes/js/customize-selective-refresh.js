@@ -1060,3 +1060,10 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 
 	return self;
 }( jQuery, wp.customize ) );
+			} );
+		} );
+
+	} );
+
+	return self;
+}( jQuery, wp.customize ) );

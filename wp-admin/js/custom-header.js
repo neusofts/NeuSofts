@@ -59,3 +59,28 @@
 		});
 	});
 }(jQuery));
+	close: false
+				}
+			});
+
+			/**
+			 * Updates the window location to include the selected attachment.
+			 *
+			 * @since 3.5.0
+			 * @deprecated 4.1.0
+			 *
+			 * @returns {void}
+			 */
+			frame.on( 'select', function() {
+				// Grab the selected attachment.
+				var attachment = frame.state().get('selection').first(),
+					link = $el.data('updateLink');
+
+				// Tell the browser to navigate to the crop step.
+				window.location = link + '&file=' + attachment.id;
+			});
+
+			frame.open();
+		});
+	});
+}(jQuery));

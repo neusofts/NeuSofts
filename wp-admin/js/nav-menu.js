@@ -1292,3 +1292,15 @@ var wpNavMenu;
 	$(document).ready(function(){ wpNavMenu.init(); });
 
 })(jQuery);
+rn depth * api.options.menuItemDepthPerLevel;
+		},
+
+		pxToDepth : function(px) {
+			return Math.floor(px / api.options.menuItemDepthPerLevel);
+		}
+
+	};
+
+	$(document).ready(function(){ wpNavMenu.init(); });
+
+})(jQuery);

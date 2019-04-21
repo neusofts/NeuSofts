@@ -989,3 +989,27 @@ wp.themePluginEditor = (function( $ ) {
 
 	return component;
 })( jQuery );
+ocusToItem(this.treeitems[index]);
+			}
+		};
+
+		TreeLinks.prototype.getIndexFirstChars = function (startIndex, _char) {
+			for (var i = startIndex; i < this.firstChars.length; i++) {
+				if (this.treeitems[i].isVisible) {
+					if (_char === this.firstChars[i]) {
+						return i;
+					}
+				}
+			}
+			return -1;
+		};
+
+		return TreeLinks;
+	})();
+
+	/* jshint ignore:end */
+	/* jscs:enable */
+	/* eslint-enable */
+
+	return component;
+})( jQuery );

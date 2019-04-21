@@ -210,3 +210,6 @@
 		window.addEventListener( 'resize', onResize, false );
 	}
 })( window, document );
+resize', onResize, false );
+	}
+})( window, document );

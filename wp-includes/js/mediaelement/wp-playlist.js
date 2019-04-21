@@ -197,3 +197,15 @@
 	window.WPPlaylistView = WPPlaylistView;
 
 }(jQuery, _, Backbone));
+@since 4.9.3
+	 * @type {object}
+	 */
+	window.wp.playlist = {
+		initialize: initialize
+	};
+
+	$( document ).ready( initialize );
+
+	window.WPPlaylistView = WPPlaylistView;
+
+}(jQuery, _, Backbone));

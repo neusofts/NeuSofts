@@ -1150,3 +1150,411 @@ $document.ready( function() {
 })();
 
 }( jQuery, window ));
+tion unpinMenu() {
+		if ( isIOS || ! menuIsPinned ) {
+			return;
+		}
+
+		pinnedMenuTop = pinnedMenuBottom = menuIsPinned = false;
+		$adminMenuWrap.css({
+			position: '',
+			top: '',
+			bottom: ''
+		});
+	}
+
+	/**
+	 * Pins and unpins the menu when applicable.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @returns {void}
+	 */
+	function setPinMenu() {
+		resetHeights();
+
+		if ( $adminmenu.data('wp-responsive') ) {
+			$body.removeClass( 'sticky-menu' );
+			unpinMenu();
+		} else if ( height.menu + height.adminbar > height.window ) {
+			pinMenu();
+			$body.removeClass( 'sticky-menu' );
+		} else {
+			$body.addClass( 'sticky-menu' );
+			unpinMenu();
+		}
+	}
+
+	if ( ! isIOS ) {
+		$window.on( 'scroll.pin-menu', pinMenu );
+		$document.on( 'tinymce-editor-init.pin-menu', function( event, editor ) {
+			editor.on( 'wp-autoresize', resetHeights );
+		});
+	}
+
+	/**
+	 * Changes the sortables and responsiveness of metaboxes.
+	 *
+	 * @since 3.8.0
+	 *
+	 *@returns {void}
+	 */
+	window.wpResponsive = {
+
+		/**
+		 * Initializes the wpResponsive object.
+		 *
+		 * @since 3.8.0
+		 *
+		 * @returns {void}
+		 */
+		init: function() {
+			var self = this;
+
+			// Modify functionality based on custom activate/deactivate event
+			$document.on( 'wp-responsive-activate.wp-responsive', function() {
+				self.activate();
+			}).on( 'wp-responsive-deactivate.wp-responsive', function() {
+				self.deactivate();
+			});
+
+			$( '#wp-admin-bar-menu-toggle a' ).attr( 'aria-expanded', 'false' );
+
+			// Toggle sidebar when toggle is clicked.
+			$( '#wp-admin-bar-menu-toggle' ).on( 'click.wp-responsive', function( event ) {
+				event.preventDefault();
+
+				// close any open toolbar submenus.
+				$adminbar.find( '.hover' ).removeClass( 'hover' );
+
+				$wpwrap.toggleClass( 'wp-responsive-open' );
+				if ( $wpwrap.hasClass( 'wp-responsive-open' ) ) {
+					$(this).find('a').attr( 'aria-expanded', 'true' );
+					$( '#adminmenu a:first' ).focus();
+				} else {
+					$(this).find('a').attr( 'aria-expanded', 'false' );
+				}
+			} );
+
+			// Add menu events.
+			$adminmenu.on( 'click.wp-responsive', 'li.wp-has-submenu > a', function( event ) {
+				if ( ! $adminmenu.data('wp-responsive') ) {
+					return;
+				}
+
+				$( this ).parent( 'li' ).toggleClass( 'selected' );
+				event.preventDefault();
+			});
+
+			self.trigger();
+			$document.on( 'wp-window-resized.wp-responsive', $.proxy( this.trigger, this ) );
+
+			// This needs to run later as UI Sortable may be initialized later on $(document).ready().
+			$window.on( 'load.wp-responsive', function() {
+				var width = navigator.userAgent.indexOf('AppleWebKit/') > -1 ? $window.width() : window.innerWidth;
+
+				if ( width <= 782 ) {
+					self.disableSortables();
+				}
+			});
+		},
+
+		/**
+		 * Changes properties of body and admin menu.
+		 *
+		 * Pins and unpins the menu and adds the auto-fold class to the body.
+		 * Makes the admin menu responsive and disables the metabox sortables.
+		 *
+		 * @since 3.8.0
+		 *
+		 * @returns {void}
+		 */
+		activate: function() {
+			setPinMenu();
+
+			if ( ! $body.hasClass( 'auto-fold' ) ) {
+				$body.addClass( 'auto-fold' );
+			}
+
+			$adminmenu.data( 'wp-responsive', 1 );
+			this.disableSortables();
+		},
+
+		/**
+		 * Changes properties of admin menu and enables metabox sortables.
+		 *
+		 * Pin and unpin the menu.
+		 * Removes the responsiveness of the admin menu and enables the metabox sortables.
+		 *
+		 * @since 3.8.0
+		 *
+		 * @returns {void}
+		 */
+		deactivate: function() {
+			setPinMenu();
+			$adminmenu.removeData('wp-responsive');
+			this.enableSortables();
+		},
+
+		/**
+		 * Sets the responsiveness and enables the overlay based on the viewport width.
+		 *
+		 * @since 3.8.0
+		 *
+		 * @returns {void}
+		 */
+		trigger: function() {
+			var viewportWidth = getViewportWidth();
+
+			// Exclude IE < 9, it doesn't support @media CSS rules.
+			if ( ! viewportWidth ) {
+				return;
+			}
+
+			if ( viewportWidth <= 782 ) {
+				if ( ! wpResponsiveActive ) {
+					$document.trigger( 'wp-responsive-activate' );
+					wpResponsiveActive = true;
+				}
+			} else {
+				if ( wpResponsiveActive ) {
+					$document.trigger( 'wp-responsive-deactivate' );
+					wpResponsiveActive = false;
+				}
+			}
+
+			if ( viewportWidth <= 480 ) {
+				this.enableOverlay();
+			} else {
+				this.disableOverlay();
+			}
+		},
+
+		/**
+		 * Inserts a responsive overlay and toggles the window.
+		 *
+		 * @since 3.8.0
+		 *
+		 * @returns {void}
+		 */
+		enableOverlay: function() {
+			if ( $overlay.length === 0 ) {
+				$overlay = $( '<div id="wp-responsive-overlay"></div>' )
+					.insertAfter( '#wpcontent' )
+					.hide()
+					.on( 'click.wp-responsive', function() {
+						$toolbar.find( '.menupop.hover' ).removeClass( 'hover' );
+						$( this ).hide();
+					});
+			}
+
+			$toolbarPopups.on( 'click.wp-responsive', function() {
+				$overlay.show();
+			});
+		},
+
+		/**
+		 * Disables the responsive overlay and removes the overlay.
+		 *
+		 * @since 3.8.0
+		 *
+		 * @returns {void}
+		 */
+		disableOverlay: function() {
+			$toolbarPopups.off( 'click.wp-responsive' );
+			$overlay.hide();
+		},
+
+		/**
+		 * Disables sortables.
+		 *
+		 * @since 3.8.0
+		 *
+		 * @returns {void}
+		 */
+		disableSortables: function() {
+			if ( $sortables.length ) {
+				try {
+					$sortables.sortable( 'disable' );
+				} catch ( e ) {}
+			}
+		},
+
+		/**
+		 * Enables sortables.
+		 *
+		 * @since 3.8.0
+		 *
+		 * @returns {void}
+		 */
+		enableSortables: function() {
+			if ( $sortables.length ) {
+				try {
+					$sortables.sortable( 'enable' );
+				} catch ( e ) {}
+			}
+		}
+	};
+
+	/**
+	 * Add an ARIA role `button` to elements that behave like UI controls when JavaScript is on.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @returns {void}
+	 */
+	function aria_button_if_js() {
+		$( '.aria-button-if-js' ).attr( 'role', 'button' );
+	}
+
+	$( document ).ajaxComplete( function() {
+		aria_button_if_js();
+	});
+
+	/**
+	 * Get the viewport width.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @returns {number|boolean} The current viewport width or false if the
+	 *                           browser doesn't support innerWidth (IE < 9).
+	 */
+	function getViewportWidth() {
+		var viewportWidth = false;
+
+		if ( window.innerWidth ) {
+			// On phones, window.innerWidth is affected by zooming.
+			viewportWidth = Math.max( window.innerWidth, document.documentElement.clientWidth );
+		}
+
+		return viewportWidth;
+	}
+
+	/**
+	 * Sets the admin menu collapsed/expanded state.
+	 *
+	 * Sets the global variable `menuState` and triggers a custom event passing
+	 * the current menu state.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @returns {void}
+	 */
+	function setMenuState() {
+		var viewportWidth = getViewportWidth() || 961;
+
+		if ( viewportWidth <= 782  ) {
+			menuState = 'responsive';
+		} else if ( $body.hasClass( 'folded' ) || ( $body.hasClass( 'auto-fold' ) && viewportWidth <= 960 && viewportWidth > 782 ) ) {
+			menuState = 'folded';
+		} else {
+			menuState = 'open';
+		}
+
+		$document.trigger( 'wp-menu-state-set', { state: menuState } );
+	}
+
+	// Set the menu state when the window gets resized.
+	$document.on( 'wp-window-resized.set-menu-state', setMenuState );
+
+	/**
+	 * Sets ARIA attributes on the collapse/expand menu button.
+	 *
+	 * When the admin menu is open or folded, updates the `aria-expanded` and
+	 * `aria-label` attributes of the button to give feedback to assistive
+	 * technologies. In the responsive view, the button is always hidden.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @returns {void}
+	 */
+	$document.on( 'wp-menu-state-set wp-collapse-menu', function( event, eventData ) {
+		var $collapseButton = $( '#collapse-button' ),
+			ariaExpanded = 'true',
+			ariaLabelText = commonL10n.collapseMenu;
+
+		if ( 'folded' === eventData.state ) {
+			ariaExpanded = 'false';
+			ariaLabelText = commonL10n.expandMenu;
+		}
+
+		$collapseButton.attr({
+			'aria-expanded': ariaExpanded,
+			'aria-label': ariaLabelText
+		});
+	});
+
+	window.wpResponsive.init();
+	setPinMenu();
+	setMenuState();
+	currentMenuItemHasPopup();
+	makeNoticesDismissible();
+	aria_button_if_js();
+
+	$document.on( 'wp-pin-menu wp-window-resized.pin-menu postboxes-columnchange.pin-menu postbox-toggled.pin-menu wp-collapse-menu.pin-menu wp-scroll-start.pin-menu', setPinMenu );
+
+	// Set initial focus on a specific element.
+	$( '.wp-initial-focus' ).focus();
+
+	// Toggle update details on update-core.php.
+	$body.on( 'click', '.js-update-details-toggle', function() {
+		var $updateNotice = $( this ).closest( '.js-update-details' ),
+			$progressDiv = $( '#' + $updateNotice.data( 'update-details' ) );
+
+		/*
+		 * When clicking on "Show details" move the progress div below the update
+		 * notice. Make sure it gets moved just the first time.
+		 */
+		if ( ! $progressDiv.hasClass( 'update-details-moved' ) ) {
+			$progressDiv.insertAfter( $updateNotice ).addClass( 'update-details-moved' );
+		}
+
+		// Toggle the progress div visibility.
+		$progressDiv.toggle();
+		// Toggle the Show Details button expanded state.
+		$( this ).attr( 'aria-expanded', $progressDiv.is( ':visible' ) );
+	});
+});
+
+// Fire a custom jQuery event at the end of window resize.
+( function() {
+	var timeout;
+
+	/**
+	 * Triggers the WP window-resize event.
+	 *
+	 * @since 3.8.0
+	 *
+	 * @returns {void}
+	 */
+	function triggerEvent() {
+		$document.trigger( 'wp-window-resized' );
+	}
+
+	/**
+	 * Fires the trigger event again after 200 ms.
+	 *
+	 * @since 3.8.0
+	 *
+	 * @returns {void}
+	 */
+	function fireOnce() {
+		window.clearTimeout( timeout );
+		timeout = window.setTimeout( triggerEvent, 200 );
+	}
+
+	$window.on( 'resize.wp-fire-once', fireOnce );
+}());
+
+// Make Windows 8 devices play along nicely.
+(function(){
+	if ( '-ms-user-select' in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/) ) {
+		var msViewportStyle = document.createElement( 'style' );
+		msViewportStyle.appendChild(
+			document.createTextNode( '@-ms-viewport{width:auto!important}' )
+		);
+		document.getElementsByTagName( 'head' )[0].appendChild( msViewportStyle );
+	}
+})();
+
+}( jQuery, window ));

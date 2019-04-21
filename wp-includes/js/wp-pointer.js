@@ -283,3 +283,162 @@
 		}
 	});
 })(jQuery);
+	 *
+		 * @since 3.3.0
+		 * @private
+		 *
+		 * @param {string|Object} position Either a side of a pointer or an object
+		 *                                 containing a pointer.
+		 *
+		 * @return {Object} result  An object containing position related data.
+		 */
+		_processPosition: function( position ) {
+			var opposite = {
+					top: 'bottom',
+					bottom: 'top',
+					left: 'right',
+					right: 'left'
+				},
+				result;
+
+			// If the position object is a string, it is shorthand for position.edge.
+			if ( typeof position == 'string' ) {
+				result = {
+					edge: position + ''
+				};
+			} else {
+				result = $.extend( {}, position );
+			}
+
+			if ( ! result.edge )
+				return result;
+
+			if ( result.edge == 'top' || result.edge == 'bottom' ) {
+				result.align = result.align || 'left';
+
+				result.at = result.at || result.align + ' ' + opposite[ result.edge ];
+				result.my = result.my || result.align + ' ' + result.edge;
+			} else {
+				result.align = result.align || 'top';
+
+				result.at = result.at || opposite[ result.edge ] + ' ' + result.align;
+				result.my = result.my || result.edge + ' ' + result.align;
+			}
+
+			return result;
+		},
+
+		/**
+		 * Opens the pointer.
+		 *
+		 * Only opens the pointer widget in case it is closed and not disabled, and
+		 * calls 'update' before doing so. Calling update makes sure that the pointer
+		 * is correctly sized and positioned.
+		 *
+		 * @since 3.3.0
+		 *
+		 * @param {Object} event The event that triggered the opening of this pointer.
+		 */
+		open: function( event ) {
+			var self = this,
+				o    = this.options;
+
+			if ( this.active || o.disabled || this.element.is(':hidden') )
+				return;
+
+			this.update().done( function() {
+				self._open( event );
+			});
+		},
+
+		/**
+		 * Opens and shows the pointer element.
+		 *
+		 * @since 3.3.0
+		 * @private
+		 *
+		 * @param {Object} event An event object.
+		 */
+		_open: function( event ) {
+			var self = this,
+				o    = this.options;
+
+			if ( this.active || o.disabled || this.element.is(':hidden') )
+				return;
+
+			this.active = true;
+
+			this._trigger( 'open', event, this._handoff() );
+
+			this._trigger( 'show', event, this._handoff({
+				opened: function() {
+					self._trigger( 'opened', event, self._handoff() );
+				}
+			}));
+		},
+
+		/**
+		 * Closes and hides the pointer element.
+		 *
+		 * @since 3.3.0
+		 *
+		 * @param {Object} event An event object.
+		 */
+		close: function( event ) {
+			if ( !this.active || this.options.disabled )
+				return;
+
+			var self = this;
+			this.active = false;
+
+			this._trigger( 'close', event, this._handoff() );
+			this._trigger( 'hide', event, this._handoff({
+				closed: function() {
+					self._trigger( 'closed', event, self._handoff() );
+				}
+			}));
+		},
+
+		/**
+		 * Puts the pointer on top by increasing the z-index.
+		 *
+		 * @since 3.3.0
+		 */
+		sendToTop: function() {
+			if ( this.active )
+				this.pointer.css( 'z-index', zindex++ );
+		},
+
+		/**
+		 * Toggles the element between shown and hidden.
+		 *
+		 * @since 3.3.0
+		 *
+		 * @param {Object} event An event object.
+		 */
+		toggle: function( event ) {
+			if ( this.pointer.is(':hidden') )
+				this.open( event );
+			else
+				this.close( event );
+		},
+
+		/**
+		 * Extends the pointer and the widget element with the supplied parameter, which
+		 * is either an element or a function.
+		 *
+		 * @since 3.3.0
+		 * @private
+		 *
+		 * @param {Object} extend The object to be merged into the original object.
+		 *
+		 * @return {Object} The extended object.
+		 */
+		_handoff: function( extend ) {
+			return $.extend({
+				pointer: this.pointer,
+				element: this.element
+			}, extend);
+		}
+	});
+})(jQuery);

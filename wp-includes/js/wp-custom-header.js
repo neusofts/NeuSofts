@@ -459,3 +459,6 @@
 	}
 
 })( window, window._wpCustomHeaderSettings || {} );
+}
+
+})( window, window._wpCustomHeaderSettings || {} );

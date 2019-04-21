@@ -17,3 +17,11 @@
 	$.wp.wpdialog.prototype.options.closeOnEscape = false;
 
 })(jQuery);
+element.focus();
+			this._trigger('refresh');
+		}
+	});
+
+	$.wp.wpdialog.prototype.options.closeOnEscape = false;
+
+})(jQuery);

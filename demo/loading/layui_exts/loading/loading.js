@@ -472,3 +472,51 @@
 
 	return $;
 }));
+				}
+	
+				return $that.loading('show', _(fnName.settings, arg1));
+			}
+	
+			// arg1为string默认调用方法 & arg2默认为局部配置
+			if (ds.is.string(arg1) || !arg1) {
+				var loading = {}, loadingArr = [], rdm;
+	
+				arg1 = arg1 ? arg1 : 'show';
+	
+				$that.each(function (index, obj) {
+					if (arg2) {
+						arg2.$this = $(obj);
+
+						if (arg2.afterHideAll) {
+							fnName.settings.afterHideAll = arg2.afterHideAll;
+						}
+					} else {
+						arg2 = {$this: $(obj)};
+					}
+	
+					rdm = '.rdm' + ds.getTime() + index;
+					loading = new Class(arg2);
+					$(obj).data('loading', loading);
+					ds.is['function'](loading[arg1]) && loading[arg1]();
+					loadingArr.push(loading);
+	
+					// 单击div/img/text是否隐藏
+					$(obj).off(eventNameClick).on(eventNameClick, '.' + loadingClassName, function (e) {
+						loading.settings.clickHide && $(obj).data('loading').hide();
+						e.stopPropagation();
+						return false;
+					});
+
+					// resize监听
+                    $(W).off(eventNameResize + rdm).on(eventNameResize + rdm, function () {
+                        pteMethods.resize.call($(obj).data('loading') || null);
+                    });
+				});
+			}
+	
+			return loadingArr.length > 1 ? loadingArr : loadingArr[0];
+		}
+	});
+
+	return $;
+}));

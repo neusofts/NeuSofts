@@ -200,3 +200,10 @@
 		};
 	} );
 } )( window.tinymce, window.wp );
+ViewCursor = noop;
+
+		return {
+			getView: noop
+		};
+	} );
+} )( window.tinymce );

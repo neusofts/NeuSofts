@@ -122,3 +122,15 @@ var tabfocus = (function () {
 
 }());
 })();
+board = { setup: setup };
+
+    global.add('tabfocus', function (editor) {
+      Keyboard.setup(editor);
+    });
+    function Plugin () {
+    }
+
+    return Plugin;
+
+}());
+})();

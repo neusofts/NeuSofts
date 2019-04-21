@@ -1167,3 +1167,7 @@ window.wp = window.wp || {};
 
 	$( revisions.init );
 }(jQuery));
+;
+
+	$( revisions.init );
+}(jQuery));

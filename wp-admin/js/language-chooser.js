@@ -24,3 +24,14 @@ $( 'form' ).submit( function() {
 });
 
 });
+
+});
+
+$( 'form' ).submit( function() {
+	// Show spinner for languages that need to be downloaded.
+	if ( ! select.children( 'option:selected' ).data( 'installed' ) ) {
+		$( this ).find( '.step .spinner' ).css( 'visibility', 'visible' );
+	}
+});
+
+});

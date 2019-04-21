@@ -67,3 +67,57 @@ jQuery(document).ready( function($) {
 
 	$('.categorychecklist :checkbox').change( syncChecks ).filter( ':checked' ).change();
 });
+ {
+				var th = $(this), val = th.find('input').val(), id = th.find('input')[0].id, name = $.trim( th.text() ), o;
+				$('#' + id).change( syncChecks );
+				o = $( '<option value="' +  parseInt( val, 10 ) + '"></option>' ).text( name );
+			} );
+		} );
+	};
+
+	/*
+	 * Instantiates the list manager.
+	 *
+	 * @see js/_enqueues/lib/lists.js
+	 */
+	$('#categorychecklist').wpList( {
+		// CSS class name for alternate styling.
+		alt: '',
+
+		// The type of list.
+		what: 'link-category',
+
+		// ID of the element the parsed Ajax response will be stored in.
+		response: 'category-ajax-response',
+
+		// Callback that's run after an item got added to the list.
+		addAfter: catAddAfter
+	} );
+
+	// All categories is the default tab, so we delete the user setting.
+	$('a[href="#categories-all"]').click(function(){deleteUserSetting('cats');});
+
+	// Set a preference for the popular categories to cookies.
+	$('a[href="#categories-pop"]').click(function(){setUserSetting('cats','pop');});
+
+	if ( 'pop' == getUserSetting('cats') )
+		$('a[href="#categories-pop"]').click();
+
+	/**
+	 * Adds event handler that shows the interface controls to add a new category.
+	 *
+	 * @ignore
+	 *
+	 * @param {Event} event The event object.
+	 * @returns {boolean} Always returns false to prevent regular link
+	 *                    functionality.
+	 */
+	$('#category-add-toggle').click( function() {
+		$(this).parents('div:first').toggleClass( 'wp-hidden-children' );
+		$('#category-tabs a[href="#categories-all"]').click();
+		$('#newcategory').focus();
+		return false;
+	} );
+
+	$('.categorychecklist :checkbox').change( syncChecks ).filter( ':checked' ).change();
+});

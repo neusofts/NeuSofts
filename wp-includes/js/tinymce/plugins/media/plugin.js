@@ -1164,3 +1164,61 @@ var media = (function () {
 
 }());
 })();
+n('ObjectSelected', function (e) {
+        var objectType = e.target.getAttribute('data-mce-object');
+        if (objectType === 'audio' || objectType === 'script') {
+          e.preventDefault();
+        }
+      });
+      editor.on('objectResized', function (e) {
+        var target = e.target;
+        var html;
+        if (target.getAttribute('data-mce-object')) {
+          html = target.getAttribute('data-mce-html');
+          if (html) {
+            html = unescape(html);
+            target.setAttribute('data-mce-html', escape(UpdateHtml.updateHtml(html, {
+              width: e.width,
+              height: e.height
+            })));
+          }
+        }
+      });
+    };
+    var Selection = { setup: setup$2 };
+
+    var register$1 = function (editor) {
+      editor.addButton('media', {
+        tooltip: 'Insert/edit media',
+        cmd: 'mceMedia',
+        stateSelector: [
+          'img[data-mce-object]',
+          'span[data-mce-object]',
+          'div[data-ephox-embed-iri]'
+        ]
+      });
+      editor.addMenuItem('media', {
+        icon: 'media',
+        text: 'Media',
+        cmd: 'mceMedia',
+        context: 'insert',
+        prependToContext: true
+      });
+    };
+    var Buttons = { register: register$1 };
+
+    global.add('media', function (editor) {
+      Commands.register(editor);
+      Buttons.register(editor);
+      ResolveName.setup(editor);
+      FilterContent.setup(editor);
+      Selection.setup(editor);
+      return Api.get(editor);
+    });
+    function Plugin () {
+    }
+
+    return Plugin;
+
+}());
+})();

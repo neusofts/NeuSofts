@@ -124,3 +124,10 @@ window.wp = window.wp || {};
 	};
 
 }(jQuery));
+		};
+
+			return promise;
+		}
+	};
+
+}(jQuery));

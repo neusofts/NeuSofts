@@ -271,3 +271,11 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 } ( jQuery ) );
+ide-privacy-policy-tutorial' );
+					window.getSelection().removeAllRanges();
+				} catch ( er ) {}
+			}
+		}
+	});
+
+} ( jQuery ) );

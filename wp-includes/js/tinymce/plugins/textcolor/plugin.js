@@ -344,3 +344,24 @@ var textcolor = (function () {
 
 }());
 })();
+role: 'application',
+          ariaRemember: true,
+          html: renderColorPicker(editor, false),
+          onclick: onPanelClick(editor, Settings.getBackColorCols(editor))
+        },
+        onclick: onButtonClick(editor)
+      });
+    };
+    var Buttons = { register: register$1 };
+
+    global.add('textcolor', function (editor) {
+      Commands.register(editor);
+      Buttons.register(editor);
+    });
+    function Plugin () {
+    }
+
+    return Plugin;
+
+}());
+})();

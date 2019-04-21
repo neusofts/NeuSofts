@@ -488,3 +488,5 @@ msgstr "贡献者页面"
 #. Template Name of the plugin/theme
 msgid "Full Width Page"
 msgstr "全宽页面"
+ss.org/themes/twentyfourteen/"
+msgstr "https://wordpress.org/themes/twentyfourteen/"

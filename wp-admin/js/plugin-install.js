@@ -218,3 +218,7 @@ jQuery( document ).ready( function( $ ) {
 			});
 	}
 });
+$body.hasClass( 'show-upload-view' ) );
+			});
+	}
+});

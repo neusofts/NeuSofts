@@ -288,3 +288,10 @@ inlineEditTax = {
 $(document).ready(function(){inlineEditTax.init();});
 
 })( jQuery, window.wp );
+s[parts.length - 1];
+	}
+};
+
+$(document).ready(function(){inlineEditTax.init();});
+
+})( jQuery, window.wp );

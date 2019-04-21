@@ -261,3 +261,179 @@ var tagBox, array_unique_noempty;
 		}
 	};
 }( jQuery ));
+es the available tags and creates a tagcloud.
+		 *
+		 * Retrieves the available tags from the database and creates an interactive
+		 * tagcloud. Clicking a tag will add it.
+		 *
+		 * @since 2.9.0
+		 * @memberOf tagBox
+		 *
+		 * @param {string} id The ID to extract the taxonomy from.
+		 *
+		 * @return {void}
+		 */
+		get : function( id ) {
+			var tax = id.substr( id.indexOf('-') + 1 );
+
+			/**
+			 * Puts a received tag cloud into a DOM element.
+			 *
+			 * The tag cloud HTML is generated on the server.
+			 *
+			 * @since 2.9.0
+			 *
+			 * @param {number|string} r The response message from the AJAX call.
+			 * @param {string} stat The status of the AJAX request.
+			 *
+			 * @return {void}
+			 */
+			$.post( ajaxurl, { 'action': 'get-tagcloud', 'tax': tax }, function( r, stat ) {
+				if ( 0 === r || 'success' != stat ) {
+					return;
+				}
+
+				r = $( '<div id="tagcloud-' + tax + '" class="the-tagcloud">' + r + '</div>' );
+
+				/**
+				 * Adds a new tag when a tag in the tagcloud is clicked.
+				 *
+				 * @since 2.9.0
+				 *
+				 * @return {boolean} Returns false to prevent the default action.
+				 */
+				$( 'a', r ).click( function() {
+					tagBox.userAction = 'add';
+					tagBox.flushTags( $( '#' + tax ), this );
+					return false;
+				});
+
+				$( '#' + id ).after( r );
+			});
+		},
+
+		/**
+		 * Track the user's last action.
+		 *
+		 * @since 4.7.0
+		 */
+		userAction: '',
+
+		/**
+		 * Dispatches an audible message to screen readers.
+		 *
+		 * This will inform the user when a tag has been added or removed.
+		 *
+		 * @since 4.7.0
+		 *
+		 * @return {void}
+		 */
+		screenReadersMessage: function() {
+			var message;
+
+			switch ( this.userAction ) {
+				case 'remove':
+					message = window.tagsSuggestL10n.termRemoved;
+					break;
+
+				case 'add':
+					message = window.tagsSuggestL10n.termAdded;
+					break;
+
+				default:
+					return;
+			}
+
+			window.wp.a11y.speak( message, 'assertive' );
+		},
+
+		/**
+		 * Initializes the tags box by setting up the links, buttons. Sets up event
+		 * handling.
+		 *
+		 * This includes handling of pressing the enter key in the input field and the
+		 * retrieval of tag suggestions.
+		 *
+		 * @since 2.9.0
+		 * @memberOf tagBox
+		 *
+		 * @return {void}
+		 */
+		init : function() {
+			var ajaxtag = $('div.ajaxtag');
+
+			$('.tagsdiv').each( function() {
+				tagBox.quickClicks( this );
+			});
+
+			$( '.tagadd', ajaxtag ).click( function() {
+				tagBox.userAction = 'add';
+				tagBox.flushTags( $( this ).closest( '.tagsdiv' ) );
+			});
+
+			/**
+			 * Handles pressing enter on the new tag input field.
+			 *
+			 * Prevents submitting the post edit form.
+			 *
+			 * @since 2.9.0
+			 *
+			 * @param {Event} event The keypress event that occurred.
+			 *
+			 * @return {void}
+			 */
+			$( 'input.newtag', ajaxtag ).keypress( function( event ) {
+				if ( 13 == event.which ) {
+					tagBox.userAction = 'add';
+					tagBox.flushTags( $( this ).closest( '.tagsdiv' ) );
+					event.preventDefault();
+					event.stopPropagation();
+				}
+			}).keypress( function( event ) {
+				if ( 13 == event.which ) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+			}).each( function( i, element ) {
+				$( element ).wpTagsSuggest();
+			});
+
+			/**
+			 * Before a post is saved the value currently in the new tag input field will be
+			 * added as a tag.
+			 *
+			 * @since 2.9.0
+			 *
+			 * @return {void}
+			 */
+			$('#post').submit(function(){
+				$('div.tagsdiv').each( function() {
+					tagBox.flushTags(this, false, 1);
+				});
+			});
+
+			/**
+			 * Handles clicking on the tag cloud link.
+			 *
+			 * Makes sure the ARIA attributes are set correctly.
+			 *
+			 * @since 2.9.0
+			 *
+			 * @return {void}
+			 */
+			$('.tagcloud-link').click(function(){
+				// On the first click, fetch the tag cloud and insert it in the DOM.
+				tagBox.get( $( this ).attr( 'id' ) );
+				// Update button state, remove previous click event and attach a new one to toggle the cloud.
+				$( this )
+					.attr( 'aria-expanded', 'true' )
+					.unbind()
+					.click( function() {
+						$( this )
+							.attr( 'aria-expanded', 'false' === $( this ).attr( 'aria-expanded' ) ? 'true' : 'false' )
+							.siblings( '.the-tagcloud' ).toggle();
+					});
+			});
+		}
+	};
+}( jQuery ));

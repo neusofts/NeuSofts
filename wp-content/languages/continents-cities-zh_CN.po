@@ -2095,3 +2095,24 @@ msgstr "金沙萨"
 #: wp-admin/includes/continents-cities.php:42
 msgid "Kigali"
 msgstr "基加利"
+达"
+
+#: wp-admin/includes/continents-cities.php:48
+msgid "Lubumbashi"
+msgstr "卢本巴希"
+
+#: wp-admin/includes/continents-cities.php:40
+msgid "Kampala"
+msgstr "坎帕拉"
+
+#: wp-admin/includes/continents-cities.php:38
+msgid "Johannesburg"
+msgstr "约翰内斯堡"
+
+#: wp-admin/includes/continents-cities.php:43
+msgid "Kinshasa"
+msgstr "金沙萨"
+
+#: wp-admin/includes/continents-cities.php:42
+msgid "Kigali"
+msgstr "基加利"

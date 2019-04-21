@@ -738,3 +738,35 @@ wpWidgets = {
 $document.ready( function(){ wpWidgets.init(); } );
 
 })(jQuery);
+his );
+			self.clearWidgetSelection();
+			// Move focus back to the toggle button.
+			widgetInQuestion.find( '.widget-action' ).attr( 'aria-expanded', 'false' ).focus();
+		});
+	},
+
+	clearWidgetSelection: function() {
+		$( '#widgets-left' ).removeClass( 'chooser' );
+		$( '.widget-in-question' ).removeClass( 'widget-in-question' );
+	},
+
+	/**
+	 * Closes a Sidebar that was previously closed, but opened by dragging a Widget over it.
+	 *
+	 * Used when a Widget gets dragged in/out of the Sidebar and never dropped.
+	 *
+	 * @param {object} event jQuery event object.
+	 */
+	closeSidebar: function( event ) {
+		this.hoveredSidebar
+			.addClass( 'closed' )
+			.find( '.handlediv' ).attr( 'aria-expanded', 'false' );
+
+		$( event.target ).css( 'min-height', '' );
+		this.hoveredSidebar = null;
+	}
+};
+
+$document.ready( function(){ wpWidgets.init(); } );
+
+})(jQuery);

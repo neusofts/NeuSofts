@@ -385,3 +385,149 @@ if ( typeof(jQuery) != 'undefined' ) {
 	})(document, window);
 
 }
+(hc, '') : '';
+						}, 500);
+						q[q.length] = [to, t];
+					})(t);
+				}
+				t = t.parentNode;
+			}
+		},
+
+		/**
+		 * Handles the click on the Shortlink link in the adminbar.
+		 *
+		 * @since 3.1.0
+		 *
+		 * @param {Object} e The click event.
+		 *
+		 * @return {boolean} Returns false to prevent default click behavior.
+		 */
+		clickShortlink = function(e) {
+			var i, l, node,
+				t = e.target || e.srcElement;
+
+			// Make t the shortlink menu item, or return.
+			while ( true ) {
+				// Check if we've gone past the shortlink node,
+				// or if the user is clicking on the input.
+				if ( ! t || t == d || t == aB )
+					return;
+				// Check if we've found the shortlink node.
+				if ( t.id && t.id == 'wp-admin-bar-get-shortlink' )
+					break;
+				t = t.parentNode;
+			}
+
+			// IE doesn't support preventDefault, and does support returnValue
+			if ( e.preventDefault )
+				e.preventDefault();
+			e.returnValue = false;
+
+			if ( -1 == t.className.indexOf('selected') )
+				t.className += ' selected';
+
+			for ( i = 0, l = t.childNodes.length; i < l; i++ ) {
+				node = t.childNodes[i];
+				if ( node.className && -1 != node.className.indexOf('shortlink-input') ) {
+					node.focus();
+					node.select();
+					node.onblur = function() {
+						t.className = t.className ? t.className.replace( rselected, '' ) : '';
+					};
+					break;
+				}
+			}
+			return false;
+		},
+
+		/**
+		 * Scrolls to the top of the page.
+		 *
+		 * @since 3.4.0
+		 *
+		 * @param {HTMLElement} t The HTML element.
+		 *
+		 * @return {void}
+		 */
+		scrollToTop = function(t) {
+			var distance, speed, step, steps, timer, speed_step;
+
+			// Ensure that the #wpadminbar was the target of the click.
+			if ( t.id != 'wpadminbar' && t.id != 'wp-admin-bar-top-secondary' )
+				return;
+
+			distance    = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+			if ( distance < 1 )
+				return;
+
+			speed_step = distance > 800 ? 130 : 100;
+			speed     = Math.min( 12, Math.round( distance / speed_step ) );
+			step      = distance > 800 ? Math.round( distance / 30  ) : Math.round( distance / 20  );
+			steps     = [];
+			timer     = 0;
+
+			// Animate scrolling to the top of the page by generating steps to
+			// the top of the page and shifting to each step at a set interval.
+			while ( distance ) {
+				distance -= step;
+				if ( distance < 0 )
+					distance = 0;
+				steps.push( distance );
+
+				setTimeout( function() {
+					window.scrollTo( 0, steps.shift() );
+				}, timer * speed );
+
+				timer++;
+			}
+		};
+
+		addEvent(w, 'load', function() {
+			aB = d.getElementById('wpadminbar');
+
+			if ( d.body && aB ) {
+				d.body.appendChild( aB );
+
+				if ( aB.className )
+					aB.className = aB.className.replace(/nojs/, '');
+
+				addEvent(aB, 'mouseover', function(e) {
+					addHoverClass( e.target || e.srcElement );
+				});
+
+				addEvent(aB, 'mouseout', function(e) {
+					removeHoverClass( e.target || e.srcElement );
+				});
+
+				addEvent(aB, 'click', clickShortlink );
+
+				addEvent(aB, 'click', function(e) {
+					scrollToTop( e.target || e.srcElement );
+				});
+
+				addEvent( document.getElementById('wp-admin-bar-logout'), 'click', function() {
+					if ( 'sessionStorage' in window ) {
+						try {
+							for ( var key in sessionStorage ) {
+								if ( key.indexOf('wp-autosave-') != -1 )
+									sessionStorage.removeItem(key);
+							}
+						} catch(e) {}
+					}
+				});
+			}
+
+			if ( w.location.hash )
+				w.scrollBy(0,-32);
+
+			if ( navigator.userAgent && document.body.className.indexOf( 'no-font-face' ) === -1 &&
+				/Android (1.0|1.1|1.5|1.6|2.0|2.1)|Nokia|Opera Mini|w(eb)?OSBrowser|webOS|UCWEB|Windows Phone OS 7|XBLWP7|ZuneWP7|MSIE 7/.test( navigator.userAgent ) ) {
+
+				document.body.className += ' no-font-face';
+			}
+		});
+	})(document, window);
+
+}

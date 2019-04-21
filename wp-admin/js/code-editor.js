@@ -327,3 +327,10 @@ if ( 'undefined' === typeof window.wp.codeEditor ) {
 	};
 
 })( window.jQuery, window.wp );
+ Facilitate tabbing out of the editor.
+		configureTabbing( codemirror, settings );
+
+		return instance;
+	};
+
+})( window.jQuery, window.wp );

@@ -755,3 +755,128 @@
 	window.wp.heartbeat = new Heartbeat();
 
 }( jQuery, window ));
+oldInterval ) {
+					scheduleNextTick();
+				}
+			}
+
+			return settings.tempInterval ? settings.tempInterval / 1000 : settings.mainInterval / 1000;
+		}
+
+		/**
+		 * Enqueues data to send with the next XHR.
+		 *
+		 * As the data is send asynchronously, this function doesn't return the XHR
+		 * response. To see the response, use the custom jQuery event 'heartbeat-tick'
+		 * on the document, example:
+		 *		$(document).on( 'heartbeat-tick.myname', function( event, data, textStatus, jqXHR ) {
+		 *			// code
+		 *		});
+		 * If the same 'handle' is used more than once, the data is not overwritten when
+		 * the third argument is 'true'. Use `wp.heartbeat.isQueued('handle')` to see if
+		 * any data is already queued for that handle.
+		 *
+		 * @since 3.6.0
+		 *
+		 * @memberOf wp.heartbeat.prototype
+		 *
+		 * @param {string}  handle      Unique handle for the data, used in PHP to
+		 *                              receive the data.
+		 * @param {*}       data        The data to send.
+		 * @param {boolean} noOverwrite Whether to overwrite existing data in the queue.
+		 *
+		 * @returns {boolean} True if the data was queued.
+		 */
+		function enqueue( handle, data, noOverwrite ) {
+			if ( handle ) {
+				if ( noOverwrite && this.isQueued( handle ) ) {
+					return false;
+				}
+
+				settings.queue[handle] = data;
+				return true;
+			}
+			return false;
+		}
+
+		/**
+		 * Checks if data with a particular handle is queued.
+		 *
+		 * @since 3.6.0
+		 *
+		 * @param {string} handle The handle for the data.
+		 *
+		 * @returns {boolean} True if the data is queued with this handle.
+		 */
+		function isQueued( handle ) {
+			if ( handle ) {
+				return settings.queue.hasOwnProperty( handle );
+			}
+		}
+
+		/**
+		 * Removes data with a particular handle from the queue.
+		 *
+		 * @since 3.7.0
+		 *
+		 * @memberOf wp.heartbeat.prototype
+		 *
+		 * @param {string} handle The handle for the data.
+		 *
+		 * @returns {void}
+		 */
+		function dequeue( handle ) {
+			if ( handle ) {
+				delete settings.queue[handle];
+			}
+		}
+
+		/**
+		 * Gets data that was enqueued with a particular handle.
+		 *
+		 * @since 3.7.0
+		 *
+		 * @memberOf wp.heartbeat.prototype
+		 *
+		 * @param {string} handle The handle for the data.
+		 *
+		 * @returns {*} The data or undefined.
+		 */
+		function getQueuedItem( handle ) {
+			if ( handle ) {
+				return this.isQueued( handle ) ? settings.queue[handle] : undefined;
+			}
+		}
+
+		initialize();
+
+		// Expose public methods.
+		return {
+			hasFocus: hasFocus,
+			connectNow: connectNow,
+			disableSuspend: disableSuspend,
+			interval: interval,
+			hasConnectionError: hasConnectionError,
+			enqueue: enqueue,
+			dequeue: dequeue,
+			isQueued: isQueued,
+			getQueuedItem: getQueuedItem
+		};
+	};
+
+	/**
+	 * Ensure the global `wp` object exists.
+	 *
+	 * @namespace wp
+	 */
+	window.wp = window.wp || {};
+
+	/**
+	 * Contains the Heartbeat API.
+	 *
+	 * @namespace wp.heartbeat
+	 * @type {Heartbeat}
+	 */
+	window.wp.heartbeat = new Heartbeat();
+
+}( jQuery, window ));

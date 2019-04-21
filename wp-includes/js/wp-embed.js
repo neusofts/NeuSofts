@@ -120,3 +120,6 @@
 		window.addEventListener( 'load', onLoad, false );
 	}
 })( window, document );
+ow.addEventListener( 'load', onLoad, false );
+	}
+})( window, document );

@@ -423,3 +423,7 @@ window.wp = window.wp || {};
 
 	exports.Uploader = Uploader;
 })( wp, jQuery );
+s = new Backbone.Collection();
+
+	exports.Uploader = Uploader;
+})( wp, jQuery );

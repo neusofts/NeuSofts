@@ -2063,3 +2063,5 @@ jQuery(document).ready( function($) {
 
 	$(window).resize(function(){ tb_position(); });
 });
+n(){ tb_position(); });
+});

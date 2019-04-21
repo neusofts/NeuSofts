@@ -22,3 +22,9 @@ function WPSetAsThumbnail( id, nonce ) {
 	}
 	);
 }
+tThumbnailID(id);
+			win.WPSetThumbnailHTML(str);
+		}
+	}
+	);
+};

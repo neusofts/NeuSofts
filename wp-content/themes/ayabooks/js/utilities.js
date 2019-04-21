@@ -158,4 +158,23 @@
           });
 	}
 
+})(jQuery);ter-title, .col3a, .col3b, .col3c')
+        .addClass("hidden").viewportChecker({
+            classToAdd: 'animated zoomIn',
+            offset: 1
+          });
+
+    $('.footer-social-widget')
+        .addClass("hidden").viewportChecker({
+            classToAdd: 'animated rubberBand',
+            offset: 1
+          });
+
+    $('#footer-menu')
+        .addClass("hidden").viewportChecker({
+            classToAdd: 'animated bounceInDown',
+            offset: 1
+          });
+	}
+
 })(jQuery);

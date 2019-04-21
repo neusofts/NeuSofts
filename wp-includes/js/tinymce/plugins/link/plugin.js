@@ -711,3 +711,34 @@ var link = (function () {
 
 }());
 })();
+nk',
+        onclick: Utils.unlink(editor),
+        stateSelector: 'a[href]'
+      });
+    };
+    var setupContextToolbars = function (editor) {
+      if (editor.addContextToolbar) {
+        editor.addContextToolbar(Actions.leftClickedOnAHref(editor), 'openlink | link unlink');
+      }
+    };
+    var Controls = {
+      setupButtons: setupButtons,
+      setupMenuItems: setupMenuItems,
+      setupContextToolbars: setupContextToolbars
+    };
+
+    global.add('link', function (editor) {
+      Controls.setupButtons(editor);
+      Controls.setupMenuItems(editor);
+      Controls.setupContextToolbars(editor);
+      Actions.setupGotoLinks(editor);
+      Commands.register(editor);
+      Keyboard.setup(editor);
+    });
+    function Plugin () {
+    }
+
+    return Plugin;
+
+}());
+})();

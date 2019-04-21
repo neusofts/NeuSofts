@@ -356,3 +356,7 @@ window.wp = window.wp || {};
 		}
 	});
 }());
+n text + '</' + options.tag + '>';
+		}
+	});
+}());

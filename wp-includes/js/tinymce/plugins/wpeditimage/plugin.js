@@ -875,3 +875,29 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 		_get_shcode: getShortcode
 	};
 });
+event.preventDefault();
+
+				editor.undoManager.transact( function() {
+					if ( rng ) {
+						editor.selection.setRng( rng );
+					}
+
+					editor.selection.setNode( wrap );
+					dom.remove( wrap );
+				} );
+			}
+
+			wrap = null;
+		} );
+	} )();
+
+	// Add to editor.wp
+	editor.wp = editor.wp || {};
+	editor.wp.isPlaceholder = isPlaceholder;
+
+	// Back-compat.
+	return {
+		_do_shcode: parseShortcode,
+		_get_shcode: getShortcode
+	};
+});

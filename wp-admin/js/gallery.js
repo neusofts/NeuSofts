@@ -235,3 +235,10 @@ wpgallery = {
 		return s;
 	}
 };
+').value + '"';
+			setUserSetting('galord', I('orderby').value);
+		}
+
+		return s;
+	}
+};

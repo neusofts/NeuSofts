@@ -852,3 +852,8 @@ $.fn.wpList = function( settings ) {
 	return this;
 };
 } ) ( jQuery );
+t.process();
+
+	return this;
+};
+} ) ( jQuery );

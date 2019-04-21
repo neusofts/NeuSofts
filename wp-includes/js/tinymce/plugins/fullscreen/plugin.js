@@ -175,3 +175,14 @@ var fullscreen = (function () {
 
 }());
 })();
+itor);
+      editor.addShortcut('Ctrl+Shift+F', '', 'mceFullScreen');
+      return Api.get(fullscreenState);
+    });
+    function Plugin () {
+    }
+
+    return Plugin;
+
+}());
+})();

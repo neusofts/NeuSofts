@@ -3447,3 +3447,66 @@
 	}
 
 })( wp.customize, wp, jQuery );
+nu item control.
+	 *
+	 * @alias wp.customize.Menus.focusMenuItemControl
+	 *
+	 * @param {string} menuItemId
+	 */
+	api.Menus.focusMenuItemControl = function( menuItemId ) {
+		var control = api.Menus.getMenuItemControl( menuItemId );
+		if ( control ) {
+			control.focus();
+		}
+	};
+
+	/**
+	 * Get the control for a given menu.
+	 *
+	 * @alias wp.customize.Menus.getMenuControl
+	 *
+	 * @param menuId
+	 * @return {wp.customize.controlConstructor.menus[]}
+	 */
+	api.Menus.getMenuControl = function( menuId ) {
+		return api.control( 'nav_menu[' + menuId + ']' );
+	};
+
+	/**
+	 * Given a menu item ID, get the control associated with it.
+	 *
+	 * @alias wp.customize.Menus.getMenuItemControl
+	 *
+	 * @param {string} menuItemId
+	 * @return {object|null}
+	 */
+	api.Menus.getMenuItemControl = function( menuItemId ) {
+		return api.control( menuItemIdToSettingId( menuItemId ) );
+	};
+
+	/**
+	 * @alias wp.customize.Menus~menuItemIdToSettingId
+	 *
+	 * @param {String} menuItemId
+	 */
+	function menuItemIdToSettingId( menuItemId ) {
+		return 'nav_menu_item[' + menuItemId + ']';
+	}
+
+	/**
+	 * Apply sanitize_text_field()-like logic to the supplied name, returning a
+	 * "unnammed" fallback string if the name is then empty.
+	 *
+	 * @alias wp.customize.Menus~displayNavMenuName
+	 *
+	 * @param {string} name
+	 * @returns {string}
+	 */
+	function displayNavMenuName( name ) {
+		name = name || '';
+		name = $( '<div>' ).text( name ).html(); // Emulate esc_html() which is used in wp-admin/nav-menus.php.
+		name = $.trim( name );
+		return name || api.Menus.data.l10n.unnamed;
+	}
+
+})( wp.customize, wp, jQuery );

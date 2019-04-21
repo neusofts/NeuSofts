@@ -67,3 +67,50 @@ var tb_position;
 	$(window).resize(function(){ tb_position(); });
 
 })(jQuery);
+hickBox position based on the current
+	 * window size.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @global
+	 *
+	 * @returns {Object[]} Array containing jQuery objects for all the found
+	 *                     ThickBox anchors.
+	 */
+	window.tb_position = function() {
+		var tbWindow = $('#TB_window'),
+			width = $(window).width(),
+			H = $(window).height(),
+			W = ( 833 < width ) ? 833 : width,
+			adminbar_height = 0;
+
+		if ( $('#wpadminbar').length ) {
+			adminbar_height = parseInt( $('#wpadminbar').css('height'), 10 );
+		}
+
+		if ( tbWindow.length ) {
+			tbWindow.width( W - 50 ).height( H - 45 - adminbar_height );
+			$('#TB_iframeContent').width( W - 50 ).height( H - 75 - adminbar_height );
+			tbWindow.css({'margin-left': '-' + parseInt( ( ( W - 50 ) / 2 ), 10 ) + 'px'});
+			if ( typeof document.body.style.maxWidth !== 'undefined' )
+				tbWindow.css({'top': 20 + adminbar_height + 'px', 'margin-top': '0'});
+		}
+
+		/**
+		 * Recalculates the new height and width for all links with a ThickBox class.
+		 *
+		 * @since 2.6.0
+		 */
+		return $('a.thickbox').each( function() {
+			var href = $(this).attr('href');
+			if ( ! href ) return;
+			href = href.replace(/&width=[0-9]+/g, '');
+			href = href.replace(/&height=[0-9]+/g, '');
+			$(this).attr( 'href', href + '&width=' + ( W - 80 ) + '&height=' + ( H - 85 - adminbar_height ) );
+		});
+	};
+
+	// Add handler to recalculates the ThickBox position when the window is resized.
+	$(window).resize(function(){ tb_position(); });
+
+})(jQuery);

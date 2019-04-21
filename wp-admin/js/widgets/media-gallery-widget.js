@@ -338,3 +338,21 @@
 	component.modelConstructors.media_gallery = GalleryWidgetModel;
 
 })( wp.mediaWidgets );
+{void}
+		 */
+		handleAttachmentDestroy: function handleAttachmentDestroy( attachment ) {
+			var control = this;
+			control.model.set( {
+				ids: _.difference(
+					control.model.get( 'ids' ),
+					[ attachment.id ]
+				)
+			} );
+		}
+	} );
+
+	// Exports.
+	component.controlConstructors.media_gallery = GalleryWidgetControl;
+	component.modelConstructors.media_gallery = GalleryWidgetModel;
+
+})( wp.mediaWidgets );

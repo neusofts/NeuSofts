@@ -711,3 +711,97 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 
 	return self;
 })( jQuery, _, wp, wp.customize );
+tDefault();
+
+			self.preview.send( 'focus-widget-control', $( this ).prop( 'id' ) );
+		});
+	};
+
+	/**
+	 * Parses a widget ID.
+	 *
+	 * @memberOf wp.customize.widgetsPreview
+	 *
+	 * @since 4.5.0
+	 *
+	 * @param {string} widgetId The widget ID.
+	 *
+	 * @returns {{idBase: string, number: number|null}} An object containing the
+	 *          idBase and number of the parsed widget ID.
+	 */
+	self.parseWidgetId = function( widgetId ) {
+		var matches, parsed = {
+			idBase: '',
+			number: null
+		};
+
+		matches = widgetId.match( /^(.+)-(\d+)$/ );
+		if ( matches ) {
+			parsed.idBase = matches[1];
+			parsed.number = parseInt( matches[2], 10 );
+		} else {
+			parsed.idBase = widgetId; // Likely an old single widget.
+		}
+
+		return parsed;
+	};
+
+	/**
+	 * Parses a widget setting ID.
+	 *
+	 * @memberOf wp.customize.widgetsPreview
+	 *
+	 * @since 4.5.0
+	 *
+	 * @param {string} settingId Widget setting ID.
+	 *
+	 * @returns {{idBase: string, number: number|null}|null} Either an object
+	 *          containing the idBase and number of the parsed widget setting ID, or
+	 *          null.
+	 */
+	self.parseWidgetSettingId = function( settingId ) {
+		var matches, parsed = {
+			idBase: '',
+			number: null
+		};
+
+		matches = settingId.match( /^widget_([^\[]+?)(?:\[(\d+)])?$/ );
+		if ( ! matches ) {
+			return null;
+		}
+		parsed.idBase = matches[1];
+		if ( matches[2] ) {
+			parsed.number = parseInt( matches[2], 10 );
+		}
+		return parsed;
+	};
+
+	/**
+	 * Converts a widget ID into a Customizer setting ID.
+	 *
+	 * @memberOf wp.customize.widgetsPreview
+	 *
+	 * @since 4.5.0
+	 *
+	 * @param {string} widgetId The widget ID.
+	 *
+	 * @returns {string} The setting ID.
+	 */
+	self.getWidgetSettingId = function( widgetId ) {
+		var parsed = this.parseWidgetId( widgetId ), settingId;
+
+		settingId = 'widget_' + parsed.idBase;
+		if ( parsed.number ) {
+			settingId += '[' + String( parsed.number ) + ']';
+		}
+
+		return settingId;
+	};
+
+	api.bind( 'preview-ready', function() {
+		$.extend( self, _wpWidgetCustomizerPreviewSettings );
+		self.init();
+	});
+
+	return self;
+})( jQuery, _, wp, wp.customize );

@@ -10917,3 +10917,1451 @@ msgstr "抱歉，您不能编辑此文章的评论。"
 #: wp-admin/admin.php:227
 msgid "Invalid plugin page."
 msgstr "无效的插件页面。"
+-form.php:119
+msgid "This will be shown when someone hovers over the link in the blogroll, or optionally below the link."
+msgstr "通常，当访客将鼠标光标悬停在链接表链接的上方时，它会显示出来。根据主题的不同，也可能显示在链接下方。"
+
+#: wp-admin/includes/theme.php:253 wp-admin/custom-header.php:452
+msgid "Custom Header"
+msgstr "自定义顶部"
+
+#: wp-admin/custom-header.php:800
+msgid "Choose the part of the image you want to use as your header."
+msgstr "从图像中选取一部分作为您的页面顶部图像。"
+
+#: wp-admin/edit-form-advanced.php:155
+msgid "Post saved."
+msgstr "文章已保存。"
+
+#: wp-admin/edit-tags.php:397 wp-admin/includes/meta-boxes.php:788
+#: wp-admin/includes/meta-boxes.php:1402
+#: wp-admin/includes/class-wp-terms-list-table.php:179
+#: wp-admin/includes/class-wp-terms-list-table.php:598
+#: wp-admin/includes/class-wp-posts-list-table.php:1432
+#: wp-admin/edit-tag-form.php:125
+msgid "Slug"
+msgstr "别名"
+
+#: wp-admin/includes/import.php:193
+msgid "Blogroll"
+msgstr "链接表"
+
+#: wp-admin/includes/class-wp-users-list-table.php:324 wp-admin/export.php:169
+msgid "Posts"
+msgstr "文章"
+
+#: wp-admin/includes/dashboard.php:42
+msgid "Right Now"
+msgstr "概况"
+
+#: wp-admin/includes/nav-menu.php:363 wp-admin/includes/nav-menu.php:651
+msgid "Page"
+msgstr "页面"
+
+#: wp-admin/includes/template.php:412 wp-admin/edit-form-comment.php:71
+msgid "Comment"
+msgstr "评论"
+
+#: wp-admin/includes/dashboard.php:971
+msgid "Loading&#8230;"
+msgstr "载入中&#8230;"
+
+#: wp-admin/includes/class-wp-comments-list-table.php:563
+#: wp-admin/includes/class-wp-comments-list-table.php:569
+#: wp-admin/includes/dashboard.php:633
+msgid "Unapprove this comment"
+msgstr "驳回这条评论"
+
+#: wp-admin/includes/class-wp-comments-list-table.php:296
+#: wp-admin/includes/class-wp-comments-list-table.php:563
+#: wp-admin/includes/class-wp-comments-list-table.php:569
+#: wp-admin/includes/dashboard.php:633
+msgid "Unapprove"
+msgstr "驳回"
+
+#: wp-admin/includes/class-wp-comments-list-table.php:595
+#: wp-admin/includes/dashboard.php:635
+msgid "Reply to this comment"
+msgstr "回复这条评论"
+
+#: wp-admin/includes/dashboard.php:693 wp-admin/includes/dashboard.php:700
+#: wp-admin/includes/dashboard.php:730 wp-admin/includes/dashboard.php:737
+msgid "[Pending]"
+msgstr "[待审]"
+
+#. translators: %s: attachment title
+#. translators: %s: post title
+#: wp-admin/includes/class-wp-media-list-table.php:680
+#: wp-admin/includes/class-wp-media-list-table.php:739
+#: wp-admin/includes/class-wp-posts-list-table.php:1297
+msgid "View &#8220;%s&#8221;"
+msgstr "查看“%s”"
+
+#: wp-admin/includes/class-wp-posts-list-table.php:1412
+msgid "Bulk Edit"
+msgstr "批量编辑"
+
+#: wp-admin/includes/meta-boxes.php:861
+#: wp-admin/includes/class-wp-posts-list-table.php:1532
+msgid "Parent"
+msgstr "父级"
+
+#: wp-admin/includes/class-wp-posts-list-table.php:1538
+msgid "Main Page (no parent)"
+msgstr "主页面（无父级）"
+
+#: wp-admin/includes/class-wp-posts-list-table.php:1619
+#: wp-admin/includes/class-wp-posts-list-table.php:1628
+msgid "Allow"
+msgstr "允许"
+
+#: wp-admin/includes/class-wp-posts-list-table.php:1620
+#: wp-admin/includes/class-wp-posts-list-table.php:1629
+msgid "Do not allow"
+msgstr "不允许"
+
+#: wp-admin/includes/class-wp-posts-list-table.php:1682
+msgid "Not Sticky"
+msgstr "不置顶"
+
+#: wp-admin/includes/image-edit.php:26 wp-admin/includes/image-edit.php:757
+msgid "Image data does not exist. Please re-upload the image."
+msgstr "图像数据不存在，请重新上传图像。"
+
+#: wp-admin/includes/image-edit.php:200
+msgid "Flip vertically"
+msgstr "垂直翻转"
+
+#: wp-admin/includes/image-edit.php:201
+msgid "Flip horizontally"
+msgstr "水平翻转"
+
+#: wp-admin/includes/image-edit.php:49
+msgid "Scale Image"
+msgstr "拉伸图像"
+
+#: wp-admin/includes/image-edit.php:84
+msgid "Discard any changes and restore the original image."
+msgstr "放弃所有变更，并恢复到原始图片。"
+
+#: wp-admin/includes/image-edit.php:87
+msgid "Previously edited copies of the image will not be deleted."
+msgstr "先前编辑过的图片副本不会被删除。"
+
+#: wp-admin/includes/image-edit.php:91
+msgid "Restore image"
+msgstr "还原图像"
+
+#: wp-admin/includes/image-edit.php:107
+msgid "Crop Aspect Ratio"
+msgstr "按比例裁切"
+
+#: wp-admin/includes/image-edit.php:116
+msgid "Aspect ratio:"
+msgstr "长宽比："
+
+#: wp-admin/includes/image-edit.php:129
+msgid "Selection:"
+msgstr "选区："
+
+#: wp-admin/includes/image-edit.php:697
+msgid "Image restored successfully."
+msgstr "图像还原成功。"
+
+#: wp-admin/includes/class-wp-themes-list-table.php:182
+#: wp-admin/includes/class-theme-installer-skin.php:76
+#: wp-admin/includes/class-theme-upgrader-skin.php:67
+msgid "Activate &#8220;%s&#8221;"
+msgstr "启用“%s”"
+
+#: wp-admin/includes/media.php:1498 wp-admin/includes/media.php:2625
+#: wp-admin/includes/media.php:2631
+msgid "Insert into Post"
+msgstr "插入到文章"
+
+#: wp-admin/includes/media.php:2240
+msgid "Sort Order:"
+msgstr "排序："
+
+#: wp-admin/includes/media.php:2241 wp-admin/includes/media.php:2309
+msgid "Ascending"
+msgstr "升序"
+
+#: wp-admin/includes/media.php:2242 wp-admin/includes/media.php:2312
+msgid "Descending"
+msgstr "降序"
+
+#: wp-admin/includes/media.php:2273
+msgid "Link thumbnails to:"
+msgstr "链接缩略图到："
+
+#: wp-admin/includes/media.php:2288
+msgid "Order images by:"
+msgstr "图像排序依据："
+
+#: wp-admin/includes/media.php:2293
+msgid "Menu order"
+msgstr "菜单排序"
+
+#: wp-admin/includes/media.php:2304
+msgid "Order:"
+msgstr "排序："
+
+#: wp-admin/includes/media.php:2424
+msgid "All Types"
+msgstr "所有类型"
+
+#: wp-admin/includes/media.php:2549
+msgid "Image Caption"
+msgstr "图像说明"
+
+#. translators: %s: Plugin version
+#: wp-admin/includes/plugin-install.php:716
+msgid "Newer Version (%s) Installed"
+msgstr "新版本（%s）已安装"
+
+#: wp-admin/includes/plugin-install.php:593
+msgid "Compatible up to:"
+msgstr "兼容至："
+
+#: wp-admin/includes/plugin-install.php:621
+msgid "Average Rating"
+msgstr "综合评级"
+
+#: wp-admin/includes/class-wp-comments-list-table.php:188
+msgid "No comments found."
+msgstr "无评论。"
+
+#: wp-admin/includes/file.php:21
+msgid "Search Form"
+msgstr "搜索框"
+
+#: wp-admin/includes/file.php:58
+msgid ".htaccess (for rewrite rules )"
+msgstr ".htaccess（重写规则）"
+
+#: wp-admin/includes/file.php:756
+msgid "Failed to write file to disk."
+msgstr "写文件到磁盘失败。"
+
+#: wp-admin/includes/file.php:1192
+msgid "Could not extract file from archive."
+msgstr "无法从压缩文件解压缩。"
+
+#: wp-admin/includes/file.php:1658
+msgid "FTPS (SSL)"
+msgstr "FTPS（SSL）"
+
+#: wp-admin/includes/file.php:1751
+msgid "Private Key:"
+msgstr "私钥："
+
+#: wp-admin/includes/file.php:1767
+msgid "Proceed"
+msgstr "继续"
+
+#. translators: %s: command
+#: wp-admin/includes/class-wp-filesystem-ssh2.php:200
+msgid "Unable to perform command: %s"
+msgstr "无法执行命令：%s"
+
+#: wp-admin/includes/template.php:505 wp-admin/includes/template.php:520
+#: wp-admin/includes/template.php:584 wp-admin/includes/template.php:645
+msgid "Value"
+msgstr "值"
+
+#: wp-admin/includes/template.php:574
+msgid "Key"
+msgstr "键"
+
+#: wp-admin/includes/template.php:640
+msgid "Add New Custom Field:"
+msgstr "添加自定义栏目："
+
+#: wp-admin/includes/template.php:666
+msgid "Enter new"
+msgstr "输入新栏目"
+
+#: wp-admin/includes/template.php:677
+msgid "Add Custom Field"
+msgstr "添加自定义栏目"
+
+#: wp-admin/includes/template.php:885
+msgid "Choose a file from your computer:"
+msgstr "从您的计算机上选择一个文件："
+
+#: wp-admin/includes/meta-boxes.php:143 wp-admin/includes/meta-boxes.php:166
+#: wp-admin/includes/template.php:1889
+msgid "Password protected"
+msgstr "密码保护"
+
+#: wp-admin/includes/class-wp-screen.php:927
+msgid "Enable accessibility mode"
+msgstr "启用无障碍模式"
+
+#: wp-admin/includes/class-wp-screen.php:927
+msgid "Disable accessibility mode"
+msgstr "停用无障碍模式"
+
+#: wp-admin/includes/template.php:2150 wp-admin/nav-menus.php:659
+#: wp-admin/options.php:355
+msgid "Save Changes"
+msgstr "保存更改"
+
+#: wp-admin/includes/class-wp-upgrader.php:159
+msgid "Installing the latest version&#8230;"
+msgstr "正在安装最新版本&#8230;"
+
+#: wp-admin/includes/update-core.php:1004
+#: wp-admin/includes/class-wp-upgrader.php:166
+msgid "Enabling Maintenance mode&#8230;"
+msgstr "正在启用维护模式&#8230;"
+
+#: wp-admin/includes/update-core.php:1091
+#: wp-admin/includes/class-wp-upgrader.php:167
+msgid "Disabling Maintenance mode&#8230;"
+msgstr "正在停用维护模式&#8230;"
+
+#: wp-admin/includes/class-plugin-upgrader.php:47
+msgid "The plugin is at the latest version."
+msgstr "插件已是最新版。"
+
+#: wp-admin/includes/class-plugin-upgrader.php:51
+#: wp-admin/includes/class-theme-upgrader.php:50
+#: wp-admin/includes/class-core-upgrader.php:34
+#: wp-admin/includes/class-language-pack-upgrader.php:117
+msgid "Unpacking the update&#8230;"
+msgstr "正在解压缩升级文件&#8230;"
+
+#: wp-admin/includes/class-plugin-upgrader.php:52
+msgid "Removing the old version of the plugin&#8230;"
+msgstr "正在移除插件的旧版本&#8230;"
+
+#: wp-admin/includes/class-plugin-upgrader.php:53
+msgid "Could not remove the old plugin."
+msgstr "无法移除旧插件。"
+
+#: wp-admin/includes/class-plugin-upgrader.php:68
+#: wp-admin/includes/class-theme-upgrader.php:66
+msgid "Unpacking the package&#8230;"
+msgstr "正在解压缩安装包&#8230;"
+
+#: wp-admin/includes/class-plugin-upgrader.php:69
+msgid "Installing the plugin&#8230;"
+msgstr "正在安装插件&#8230;"
+
+#: wp-admin/includes/class-plugin-upgrader.php:72
+msgid "Plugin installed successfully."
+msgstr "插件安装成功。"
+
+#: wp-admin/includes/class-theme-upgrader.php:46
+msgid "The theme is at the latest version."
+msgstr "主题已是最新版。"
+
+#: wp-admin/includes/class-theme-upgrader.php:51
+msgid "Removing the old version of the theme&#8230;"
+msgstr "正在移除主题的旧版本&#8230;"
+
+#: wp-admin/includes/class-theme-upgrader.php:67
+msgid "Installing the theme&#8230;"
+msgstr "正在安装主题&#8230;"
+
+#: wp-admin/includes/class-theme-upgrader.php:70
+msgid "Theme installed successfully."
+msgstr "主题安装成功。"
+
+#: wp-admin/includes/plugin.php:630
+msgid "The plugin generated unexpected output."
+msgstr "此插件产生了一个异常输出。"
+
+#. translators: user role
+#: wp-admin/includes/schema.php:629
+msgctxt "User role"
+msgid "Contributor"
+msgstr "投稿者"
+
+#: wp-admin/includes/class-wp-links-list-table.php:129
+msgid "Relationship"
+msgstr "关系"
+
+#: wp-admin/includes/class-wp-links-list-table.php:130
+msgid "Visible"
+msgstr "可见性"
+
+#. translators: Post date information. 1: Date on which the post is to be
+#. published
+#: wp-admin/includes/meta-boxes.php:196
+msgid "Publish on: <b>%1$s</b>"
+msgstr "发布于：<b>%1$s</b>"
+
+#: wp-admin/includes/meta-boxes.php:1022 wp-admin/includes/meta-boxes.php:1024
+msgid "+ Add New Category"
+msgstr "+ 添加分类目录"
+
+#: wp-admin/includes/meta-boxes.php:1054
+msgid "Choose the target frame for your link."
+msgstr "为您的链接选择目标框架。"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1153
+msgid "co-resident"
+msgstr "同住"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1193
+msgid "crush"
+msgstr "迷恋"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1196
+msgid "date"
+msgstr "交往中"
+
+#: wp-admin/includes/meta-boxes.php:1220
+msgid "Image Address"
+msgstr "图像地址"
+
+#: wp-admin/includes/edit-tag-messages.php:16
+msgid "Item updated."
+msgstr "项目已更新。"
+
+#: wp-admin/includes/edit-tag-messages.php:17
+msgid "Item not added."
+msgstr "项目未被添加。"
+
+#: wp-admin/includes/edit-tag-messages.php:19
+msgid "Items deleted."
+msgstr "多个项目已被删除。"
+
+#: wp-admin/edit-tags.php:393 wp-admin/edit-tag-form.php:121
+msgid "The name is how it appears on your site."
+msgstr "这将是它在站点上显示的名字。"
+
+#: wp-admin/edit-form-comment.php:57
+msgid "URL:"
+msgstr "URL："
+
+#: wp-admin/includes/class-wp-posts-list-table.php:995
+msgid "Missed schedule"
+msgstr "定时发布失败"
+
+#: wp-admin/includes/file.php:752
+msgid "The uploaded file was only partially uploaded."
+msgstr "上传的文件不完整。"
+
+#: wp-admin/edit-tags.php:451 wp-admin/edit-tag-form.php:177
+msgid "The description is not prominent by default; however, some themes may show it."
+msgstr "描述只会在一部分主题中显示。"
+
+#: wp-admin/includes/media.php:2319
+msgid "Gallery columns:"
+msgstr "相册列数："
+
+#: wp-admin/comment.php:126
+msgid "You are about to approve the following comment:"
+msgstr "您正在批准以下评论："
+
+#: wp-admin/comment.php:127
+msgid "Approve Comment"
+msgstr "批准评论"
+
+#: wp-admin/includes/class-wp-comments-list-table.php:298
+#: wp-admin/includes/class-wp-comments-list-table.php:565
+#: wp-admin/includes/class-wp-comments-list-table.php:568
+#: wp-admin/includes/dashboard.php:632
+msgid "Approve"
+msgstr "批准"
+
+#: wp-admin/includes/class-wp-comments-list-table.php:565
+#: wp-admin/includes/class-wp-comments-list-table.php:568
+#: wp-admin/includes/dashboard.php:632
+msgid "Approve this comment"
+msgstr "批准这条评论"
+
+#: wp-admin/export.php:290
+msgid "Download Export File"
+msgstr "下载导出的文件"
+
+#: wp-admin/includes/dashboard.php:112
+msgid "View all"
+msgstr "查看所有"
+
+#: wp-admin/includes/class-wp-links-list-table.php:113
+#: wp-admin/includes/class-wp-media-list-table.php:183
+#: wp-admin/includes/class-wp-comments-list-table.php:362
+#: wp-admin/includes/class-wp-posts-list-table.php:484
+msgid "Filter"
+msgstr "筛选"
+
+#: wp-admin/includes/class-wp-media-list-table.php:441
+#: wp-admin/includes/class-wp-posts-list-table.php:975
+msgid "Unpublished"
+msgstr "未发布"
+
+#: wp-admin/includes/meta-boxes.php:893
+#: wp-admin/includes/class-wp-posts-list-table.php:1585
+msgid "Default Template"
+msgstr "默认模板"
+
+#: wp-admin/includes/image-edit.php:173
+msgid "All sizes except thumbnail"
+msgstr "除缩略图外所有尺寸"
+
+#: wp-admin/includes/media.php:1477
+msgid "Upload date:"
+msgstr "上传日期："
+
+#: wp-admin/includes/plugin-install.php:245
+msgid "You may also browse based on the most popular tags in the Plugin Directory:"
+msgstr "您也可以浏览插件目录中最流行的标签："
+
+#: wp-admin/includes/plugin-install.php:711
+msgid "Install Update Now"
+msgstr "现在安装更新"
+
+#: wp-admin/includes/class-wp-plugin-install-list-table.php:601
+#: wp-admin/includes/plugin-install.php:578
+msgid "Last Updated:"
+msgstr "最近更新："
+
+#: wp-admin/includes/file.php:16
+msgid "Theme Functions"
+msgstr "模板函数"
+
+#: wp-admin/includes/file.php:40
+msgid "Attachment Template"
+msgstr "附件模板"
+
+#: wp-admin/includes/file.php:41
+msgid "Image Attachment Template"
+msgstr "图片附件模板"
+
+#: wp-admin/includes/file.php:42
+msgid "Video Attachment Template"
+msgstr "视频附件模板"
+
+#: wp-admin/includes/file.php:43
+msgid "Audio Attachment Template"
+msgstr "音频附件模板"
+
+#: wp-admin/includes/file.php:44
+msgid "Application Attachment Template"
+msgstr "程序附件模板"
+
+#: wp-admin/includes/file.php:61
+msgid "Comments Template"
+msgstr "评论模板"
+
+#: wp-admin/includes/file.php:755
+msgid "Missing a temporary folder."
+msgstr "缺少临时文件夹。"
+
+#: wp-admin/includes/file.php:792
+msgid "Specified file failed upload test."
+msgstr "指定的文件没有通过上传测试。"
+
+#: wp-admin/includes/file.php:1745
+msgid "Authentication Keys"
+msgstr "验证密钥对"
+
+#: wp-admin/includes/file.php:1747
+msgid "Public Key:"
+msgstr "公钥："
+
+#: wp-admin/includes/template.php:441
+msgid "Submit Reply"
+msgstr "提交回复"
+
+#: wp-admin/includes/template.php:879
+msgid "Before you can upload your import file, you will need to fix the following error:"
+msgstr "在上传您的导入文件之前，您需要修正以下错误："
+
+#: wp-admin/includes/class-wp-upgrader.php:161
+msgid "Destination folder already exists."
+msgstr "目标目录已存在。"
+
+#: wp-admin/includes/class-theme-upgrader.php:52
+msgid "Could not remove the old theme."
+msgstr "无法移除旧版本主题。"
+
+#: wp-admin/includes/plugin.php:765
+msgid "One of the plugins is invalid."
+msgstr "其中有一个插件无效。"
+
+#: wp-admin/includes/plugin.php:974
+msgid "The plugin does not have a valid header."
+msgstr "该插件没有有效的标题。"
+
+#. translators: Post date information. 1: Date on which the post was published
+#: wp-admin/includes/meta-boxes.php:188
+msgid "Published on: <b>%1$s</b>"
+msgstr "发布于：</b>%1$s</b>"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1106 wp-admin/includes/meta-boxes.php:1107
+msgid "identity"
+msgstr "同一个人"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1117
+msgid "contact"
+msgstr "偶有联系"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1131 wp-admin/includes/meta-boxes.php:1132
+msgid "physical"
+msgstr "网下接触"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1134
+msgid "met"
+msgstr "已见过面"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1139 wp-admin/includes/meta-boxes.php:1140
+msgid "professional"
+msgstr "职场关系"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1142
+msgid "co-worker"
+msgstr "同事"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1145
+msgid "colleague"
+msgstr "同行"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1164 wp-admin/includes/meta-boxes.php:1165
+msgid "family"
+msgstr "家庭关系"
+
+#: wp-admin/includes/bookmark.php:208
+msgid "Could not insert link into the database"
+msgstr "无法在数据库中插入链接"
+
+#: wp-admin/includes/meta-boxes.php:1228
+msgid "Notes"
+msgstr "备注"
+
+#: wp-admin/custom-background.php:239
+msgid "Background updated. <a href=\"%s\">Visit your site</a> to see how it looks."
+msgstr "背景已更新。<a href=\"%s\">访问您的站点</a>来看看效果。"
+
+#: wp-admin/custom-background.php:317 wp-admin/custom-header.php:571
+msgid "Choose an image from your computer:"
+msgstr "从您的计算机中选择图像："
+
+#: wp-admin/custom-header.php:469
+msgid "Header updated. <a href=\"%s\">Visit your site</a> to see how it looks."
+msgstr "顶部已更新。<a href=\"%s\">访问您的站点</a>来看看效果。"
+
+#: wp-admin/custom-header.php:783 wp-admin/custom-header.php:919
+msgid "Image Processing Error"
+msgstr "图像处理出错"
+
+#. translators: %s: link name
+#. translators: %s: taxonomy term name
+#. translators: %s: attachment title
+#. translators: %s: post title
+#: wp-admin/includes/class-wp-links-list-table.php:185
+#: wp-admin/includes/class-wp-terms-list-table.php:436
+#: wp-admin/includes/class-wp-media-list-table.php:651
+#: wp-admin/includes/class-wp-media-list-table.php:700
+#: wp-admin/includes/class-wp-posts-list-table.php:1237
+#: wp-admin/includes/dashboard.php:578 wp-admin/includes/dashboard.php:866
+msgid "Edit &#8220;%s&#8221;"
+msgstr "编辑“%s”"
+
+#: wp-admin/includes/class-wp-media-list-table.php:505
+msgid "(Unattached)"
+msgstr "(尚未附加)"
+
+#: wp-admin/includes/class-wp-media-list-table.php:160
+#: wp-admin/includes/class-wp-media-list-table.php:513
+#: wp-admin/includes/class-wp-media-list-table.php:690
+msgid "Attach"
+msgstr "现在附加到文章或页面"
+
+#: wp-admin/includes/meta-boxes.php:280 wp-admin/includes/media.php:1514
+#: wp-admin/includes/class-wp-comments-list-table.php:311
+#: wp-admin/includes/class-wp-posts-list-table.php:404 wp-admin/comment.php:119
+#: wp-admin/edit-form-comment.php:166
+msgid "Move to Trash"
+msgstr "移至回收站"
+
+#: wp-admin/edit-form-advanced.php:149 wp-admin/edit-form-advanced.php:163
+msgid "Custom field updated."
+msgstr "已更新自定义栏目。"
+
+#: wp-admin/edit-form-advanced.php:150 wp-admin/edit-form-advanced.php:164
+msgid "Custom field deleted."
+msgstr "已删除自定义栏目。"
+
+#: wp-admin/includes/meta-boxes.php:164
+msgid "Stick this post to the front page"
+msgstr "将文章置于首页顶端"
+
+#: wp-admin/edit-link-form.php:103
+msgid "Example: Nifty blogging software"
+msgstr "例如：好用的博客软件"
+
+#. translators: %s: directory name
+#: wp-admin/includes/class-wp-upgrader.php:156
+msgid "Unable to locate needed folder (%s)."
+msgstr "无法定位所需目录（%s）。"
+
+#: wp-admin/includes/file.php:1112 wp-admin/includes/file.php:1233
+msgid "Incompatible Archive."
+msgstr "存档不兼容。"
+
+#: wp-admin/includes/class-plugin-installer-skin.php:72
+#: wp-admin/includes/class-bulk-plugin-upgrader-skin.php:48
+#: wp-admin/includes/class-plugin-upgrader-skin.php:52
+msgid "Return to Plugins page"
+msgstr "返回“插件”页面"
+
+#. translators: %s: post title
+#: wp-admin/includes/class-wp-theme-install-list-table.php:255
+#: wp-admin/includes/class-wp-posts-list-table.php:1288
+msgid "Preview &#8220;%s&#8221;"
+msgstr "预览“%s”"
+
+#: wp-admin/includes/class-theme-installer-skin.php:84
+#: wp-admin/includes/class-theme-upgrader-skin.php:74
+#: wp-admin/includes/class-bulk-theme-upgrader-skin.php:48
+msgid "Return to Themes page"
+msgstr "返回“主题”页面"
+
+#: wp-admin/includes/class-wp-comments-list-table.php:573
+#: wp-admin/includes/dashboard.php:636
+msgid "Mark this comment as spam"
+msgstr "将这条评论标记为垃圾评论"
+
+#: wp-admin/includes/file.php:25
+msgid "Main Index Template"
+msgstr "首页模板"
+
+#: wp-admin/includes/file.php:63
+msgid "Popup Comments"
+msgstr "评论弹出窗口"
+
+#: wp-admin/includes/file.php:36
+msgid "Single Post"
+msgstr "文章页面"
+
+#: wp-admin/includes/file.php:29
+msgid "Category Template"
+msgstr "分类目录模板"
+
+#: wp-admin/includes/file.php:23
+msgid "Links Template"
+msgstr "链接模板"
+
+#: wp-admin/includes/file.php:62
+msgid "Popup Comments Template"
+msgstr "评论弹出窗口模板"
+
+#: wp-admin/includes/file.php:753
+msgid "No file was uploaded."
+msgstr "没有被上传的文件。"
+
+#: wp-admin/includes/file.php:757
+msgid "File upload stopped by extension."
+msgstr "扩展中止了文件的上传。"
+
+#: wp-admin/includes/file.php:771
+msgid "Invalid form submission."
+msgstr "表单提交无效。"
+
+#: wp-admin/includes/file.php:1118 wp-admin/includes/file.php:1177
+msgid "Could not retrieve file from archive."
+msgstr "无法从压缩文件中获取文件。"
+
+#: wp-admin/includes/file.php:1236
+msgid "Empty archive."
+msgstr "压缩文件为空。"
+
+#: wp-admin/includes/image-edit.php:82 wp-admin/custom-background.php:301
+#: wp-admin/custom-background.php:305
+msgid "Restore Original Image"
+msgstr "还原原始图像"
+
+#: wp-admin/includes/image-edit.php:165
+msgid "All image sizes"
+msgstr "所有图像大小"
+
+#: wp-admin/includes/image-edit.php:634
+msgid "Cannot load image metadata."
+msgstr "无法载入图像属性。"
+
+#: wp-admin/includes/image-edit.php:161
+msgid "Apply changes to:"
+msgstr "将更改应用于："
+
+#: wp-admin/includes/image-edit.php:695
+msgid "Image metadata is inconsistent."
+msgstr "图像属性不正确。"
+
+#: wp-admin/includes/image-edit.php:110
+msgid "Crop Selection"
+msgstr "裁切选区"
+
+#: wp-admin/includes/image-edit.php:690
+msgid "Cannot save image metadata."
+msgstr "无法保存图像属性。"
+
+#: wp-admin/includes/image-edit.php:741
+msgid "Error while saving the scaled image. Please reload the page and try again."
+msgstr "保存缩放后的图片图像时出错，请刷新后再试。"
+
+#: wp-admin/includes/media.php:18
+msgid "From Computer"
+msgstr "从计算机"
+
+#: wp-admin/includes/media.php:464
+msgid "Uploads"
+msgstr "上传内容"
+
+#: wp-admin/includes/media.php:1287 wp-admin/includes/media.php:2595
+msgid "Alt text for the image, e.g. &#8220;The Mona Lisa&#8221;"
+msgstr "图像的替代文本，例如“蒙娜丽莎”"
+
+#: wp-admin/includes/media.php:1246
+msgid "Location of the uploaded file."
+msgstr "上传文件的位置。"
+
+#: wp-admin/includes/media.php:1164
+msgid "Empty Title filled from filename."
+msgstr "文件名返回了空的标题。"
+
+#: wp-admin/includes/media.php:2023
+msgid "Add media files from your computer"
+msgstr "从您的计算机添加媒体文件"
+
+#: wp-admin/includes/media.php:2295
+msgid "Date/Time"
+msgstr "日期和时间"
+
+#: wp-admin/includes/media.php:2614
+msgid "Link Image To:"
+msgstr "将图像链接到："
+
+#. translators: Post date information. 1: Date on which the post is currently
+#. scheduled to be published
+#: wp-admin/includes/meta-boxes.php:185
+msgid "Scheduled for: <b>%1$s</b>"
+msgstr "计划发布于：<b>%1$s</b>"
+
+#. translators: Post date information. 1: Date on which the post is to be
+#. published
+#: wp-admin/includes/meta-boxes.php:193
+msgid "Schedule for: <b>%1$s</b>"
+msgstr "计划发布于：<b>%1$s</b>"
+
+#: wp-admin/includes/meta-boxes.php:1025
+msgid "New category name"
+msgstr "新分类目录名称"
+
+#: wp-admin/includes/meta-boxes.php:949
+msgid "Keep this link private"
+msgstr "将这个链接设为私密链接"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1102
+msgid "rel:"
+msgstr "关系（rel）："
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1187 wp-admin/includes/meta-boxes.php:1188
+msgid "romantic"
+msgstr "情感关系"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1190
+msgid "muse"
+msgstr "灵感女神"
+
+#. translators: xfn: http://gmpg.org/xfn
+#: wp-admin/includes/meta-boxes.php:1199
+msgid "sweetheart"
+msgstr "恋人"
+
+#: wp-admin/includes/meta-boxes.php:1205
+msgid "If the link is to a person, you can specify your relationship with them using the above form. If you would like to learn more about the idea check out <a href=\"http://gmpg.org/xfn/\">XFN</a>."
+msgstr "如果链接指向某个人，您可以用上面的表单指定您与此人的关系。如果您想了解更多，请查看：<a href=\"http://gmpg.org/xfn/\">XFN</a>。"
+
+#: wp-admin/includes/class-wp-links-list-table.php:131
+#: wp-admin/includes/meta-boxes.php:1232
+msgid "Rating"
+msgstr "评分"
+
+#: wp-admin/includes/image-edit.php:749
+msgid "Nothing to save, the image has not changed."
+msgstr "没有可供保存的内容，因此没有修改图像。"
+
+#: wp-admin/includes/plugin-install.php:719
+msgid "Latest Version Installed"
+msgstr "已安装最新版本"
+
+#: wp-admin/includes/plugin.php:968
+msgid "Invalid plugin path."
+msgstr "插件路径无效。"
+
+#: wp-admin/includes/class-wp-posts-list-table.php:1690
+msgid "Make this post sticky"
+msgstr "置顶这篇文章"
+
+#: wp-admin/includes/template.php:885
+msgid "Maximum size: %s"
+msgstr "最大大小：%s"
+
+#. translators: %s: number of comments approved
+#: wp-admin/edit-comments.php:256
+msgid "%s comment approved"
+msgid_plural "%s comments approved"
+msgstr[0] "已批准%s条评论"
+
+#. translators: %s: number of comments marked as spam
+#: wp-admin/edit-comments.php:262
+msgid "%s comment marked as spam."
+msgid_plural "%s comments marked as spam."
+msgstr[0] "已标记%s条评论为垃圾评论。"
+
+#. translators: %s: number of comments restored from the spam
+#: wp-admin/edit-comments.php:267
+msgid "%s comment restored from the spam"
+msgid_plural "%s comments restored from the spam"
+msgstr[0] "已从垃圾评论中恢复%s条评论"
+
+#. translators: %s: number of comments permanently deleted
+#: wp-admin/edit-comments.php:283
+msgid "%s comment permanently deleted"
+msgid_plural "%s comments permanently deleted"
+msgstr[0] "已永久删除%s条评论"
+
+#: wp-admin/includes/meta-boxes.php:1361
+msgid "Send Trackbacks"
+msgstr "发送Trackback"
+
+#. translators: 1: Name of most recent post author, 2: Post edited date, 3:
+#. Post edited time
+#: wp-admin/includes/ajax-actions.php:2342 wp-admin/edit-form-advanced.php:520
+msgid "Last edited by %1$s on %2$s at %3$s"
+msgstr "最后由%1$s编辑于%2$s%3$s"
+
+#: wp-admin/edit-link-form.php:108
+msgid "Web Address"
+msgstr "Web地址"
+
+#: wp-admin/edit-link-form.php:111
+msgid "Example: <code>http://wordpress.org/</code> &#8212; don&#8217;t forget the <code>http://</code>"
+msgstr "例子：<code>http://cn.wordpress.org/</code>——不要忘了<code>http://</code>"
+
+#: wp-admin/edit-tags.php:399 wp-admin/edit-tag-form.php:143
+msgid "The &#8220;slug&#8221; is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
+msgstr "“别名”是在URL中使用的别称，它可以令URL更美观。通常使用小写，只能包含字母，数字和连字符（-）。"
+
+#: wp-admin/edit-tags.php:442 wp-admin/edit-tag-form.php:167
+msgid "Categories, unlike tags, can have a hierarchy. You might have a Jazz category, and under that have children categories for Bebop and Big Band. Totally optional."
+msgstr "分类目录和标签不同，它可以有层级关系。您可以有一个“音乐”分类目录，在这个目录下可以有叫做“流行”和“古典”的子目录。"
+
+#: wp-admin/edit.php:278
+msgid "%s post updated."
+msgid_plural "%s posts updated."
+msgstr[0] "%s篇文章已更新。"
+
+#: wp-admin/export.php:157
+msgid "When you click the button below WordPress will create an XML file for you to save to your computer."
+msgstr "在您点击下面的按钮后，WordPress会创建一个XML文件，供您保存到计算机中。"
+
+#: wp-admin/export.php:158
+msgid "This format, which we call WordPress eXtended RSS or WXR, will contain your posts, pages, comments, custom fields, categories, and tags."
+msgstr "我们称这种格式为WordPress eXtended RSS或WXR，它包含了您的全部文章、页面、评论、自定义栏目、分类目录和标签。"
+
+#: wp-admin/import.php:86
+msgid "No importers are available."
+msgstr "当前没有可用的导入工具。"
+
+#: wp-admin/includes/class-wp-comments-list-table.php:348
+#: wp-admin/includes/class-wp-posts-list-table.php:1625
+msgid "Pings"
+msgstr "Ping通告"
+
+#. translators: %s: directory name
+#: wp-admin/includes/class-wp-filesystem-base.php:270
+msgid "Changing to %s"
+msgstr "变更为%s"
+
+#. translators: %s: directory name
+#: wp-admin/includes/class-wp-filesystem-base.php:285
+msgid "Found %s"
+msgstr "找到%s"
+
+#: wp-admin/includes/class-wp-filesystem-ftpsockets.php:42
+#: wp-admin/includes/class-wp-filesystem-ftpext.php:44
+msgid "FTP hostname is required"
+msgstr "FTP主机名必填"
+
+#: wp-admin/includes/class-wp-filesystem-ftpsockets.php:48
+#: wp-admin/includes/class-wp-filesystem-ftpext.php:50
+msgid "FTP username is required"
+msgstr "FTP用户名必填"
+
+#: wp-admin/includes/class-wp-filesystem-ftpsockets.php:53
+#: wp-admin/includes/class-wp-filesystem-ftpext.php:55
+msgid "FTP password is required"
+msgstr "FTP密码必填"
+
+#. translators: %s: username
+#: wp-admin/includes/class-wp-filesystem-ftpsockets.php:91
+#: wp-admin/includes/class-wp-filesystem-ftpext.php:87
+#: wp-admin/includes/class-wp-filesystem-ssh2.php:133
+msgid "Username/Password incorrect for %s"
+msgstr "%s用户名和密码错误"
+
+#: wp-admin/includes/class-wp-filesystem-ssh2.php:58
+msgid "The ssh2 PHP extension is not available"
+msgstr "PHP的SSH2扩展不可用"
+
+#: wp-admin/includes/class-wp-filesystem-ssh2.php:80
+msgid "SSH2 hostname is required"
+msgstr "SSH2主机名必填"
+
+#: wp-admin/includes/class-wp-filesystem-ssh2.php:93
+msgid "SSH2 username is required"
+msgstr "SSH2用户名必填"
+
+#: wp-admin/includes/class-wp-filesystem-ssh2.php:102
+msgid "SSH2 password is required"
+msgstr "SSH2密码必填"
+
+#. translators: %s: username
+#: wp-admin/includes/class-wp-filesystem-ssh2.php:143
+msgid "Public and Private keys incorrect for %s"
+msgstr "%s的公匙和私钥不正确"
+
+#: wp-admin/includes/class-wp-links-list-table.php:318
+#: wp-admin/includes/meta-boxes.php:963
+msgid ""
+"You are about to delete this link '%s'\n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"您将删除链接“%s”\n"
+"按“取消”停止，按“确定”删除。"
+
+#: wp-admin/includes/plugin-install.php:623
+msgid "(based on %s rating)"
+msgid_plural "(based on %s ratings)"
+msgstr[0] "（基于%s次评价）"
+
+#: wp-admin/includes/class-wp-posts-list-table.php:294
+msgctxt "posts"
+msgid "Mine <span class=\"count\">(%s)</span>"
+msgid_plural "Mine <span class=\"count\">(%s)</span>"
+msgstr[0] "我的<span class=\"count\">（%s）</span>"
+
+#: wp-admin/includes/class-wp-posts-list-table.php:314
+msgctxt "posts"
+msgid "All <span class=\"count\">(%s)</span>"
+msgid_plural "All <span class=\"count\">(%s)</span>"
+msgstr[0] "全部<span class=\"count\">（%s）</span>"
+
+#. translators: Between password field and private checkbox on post quick edit
+#. interface
+#: wp-admin/includes/class-wp-posts-list-table.php:1490
+msgid "&ndash;OR&ndash;"
+msgstr "&ndash;或&ndash;"
+
+#: wp-admin/includes/class-wp-posts-list-table.php:1646
+msgid "Allow Pings"
+msgstr "允许ping"
+
+#. translators: 1: theme name, 2: version
+#: wp-admin/includes/class-theme-upgrader.php:72
+msgid "Successfully installed the theme <strong>%1$s %2$s</strong>."
+msgstr "安装主题<strong>%1$s %2$s</strong>成功。"
+
+#: wp-admin/includes/class-core-upgrader.php:29
+msgid "WordPress is at the latest version."
+msgstr "WordPress已处于最新版本。"
+
+#: wp-admin/includes/class-plugin-installer-skin.php:40
+msgid "Successfully installed the plugin <strong>%s %s</strong>."
+msgstr "安装插件<strong>%s %s</strong>成功。"
+
+#: wp-admin/includes/class-plugin-installer-skin.php:68
+#: wp-admin/includes/class-plugin-installer-skin.php:70
+msgid "Return to Plugin Installer"
+msgstr "返回“插件安装器”页面"
+
+#: wp-admin/includes/class-theme-installer-skin.php:82
+msgid "Return to Theme Installer"
+msgstr "返回“主题安装器”页面"
+
+#: wp-admin/includes/dashboard.php:1339
+msgid "Other WordPress News"
+msgstr "其它WordPress新闻"
+
+#: wp-admin/includes/dashboard.php:971 wp-admin/includes/dashboard.php:1138
+msgid "This widget requires JavaScript."
+msgstr "这个小工具需要JavaScript的支持。"
+
+#: wp-admin/includes/deprecated.php:602
+msgid "Displaying %s&#8211;%s of %s"
+msgstr "当前显示%s&#8211;%s条，共%s条"
+
+#: wp-admin/includes/file.php:55
+msgid "RTL Stylesheet"
+msgstr "RTL样式表"
+
+#: wp-admin/includes/file.php:22
+msgid "404 Template"
+msgstr "404模板"
+
+#: wp-admin/includes/file.php:57
+msgid "my-hacks.php (legacy hacks support)"
+msgstr "my-hacks.php（老式hack支持）"
+
+#: wp-admin/includes/import.php:84 wp-admin/includes/file.php:784
+msgid "File is empty. Please upload something more substantial. This error could also be caused by uploads being disabled in your php.ini or by post_max_size being defined as smaller than upload_max_filesize in php.ini."
+msgstr "文件是空的。请上传有内容的文件。这个错误也有可能是因为您的php.ini禁止了上传，或其中post_max_size的值小于upload_max_filesize的值。"
+
+#: wp-admin/includes/file.php:859
+msgid "The uploaded file could not be moved to %s."
+msgstr "无法将上传的文件移动至%s。"
+
+#: wp-admin/includes/file.php:968
+msgid "Invalid URL Provided."
+msgstr "提供的URL无效。"
+
+#: wp-admin/includes/image-edit.php:55
+msgid "Original dimensions %s"
+msgstr "原始尺寸%s"
+
+#: wp-admin/includes/import.php:187
+msgid "Movable Type and TypePad"
+msgstr "Movable Type和TypePad"
+
+#: wp-admin/includes/media.php:19
+msgid "From URL"
+msgstr "从URL"
+
+#: wp-admin/includes/media.php:62
+msgid "Gallery (%s)"
+msgstr "相册（%s）"
+
+#: wp-admin/includes/media.php:1085 wp-admin/includes/media.php:1242
+msgid "File URL"
+msgstr "文件URL"
+
+#: wp-admin/includes/media.php:2236
+msgid "All Tabs:"
+msgstr "所有单项："
+
+#: wp-admin/includes/meta-boxes.php:641
+msgid "Already pinged:"
+msgstr "已ping通告过："
+
+#: wp-admin/includes/meta-boxes.php:651
+msgid "Send trackbacks to:"
+msgstr "发送trackback到："
+
+#: wp-admin/includes/meta-boxes.php:654
+msgid "Separate multiple URLs with spaces"
+msgstr "多个URL用空格分隔"
+
+#: wp-admin/includes/meta-boxes.php:1110
+msgid "another web address of mine"
+msgstr "我的另一个web地址"
+
+#: wp-admin/includes/meta-boxes.php:1224
+msgid "RSS Address"
+msgstr "RSS地址"
+
+#: wp-admin/includes/meta-boxes.php:1241
+msgid "(Leave at 0 for no rating.)"
+msgstr "（0代表不评分。）"
+
+#: wp-admin/includes/plugin-install.php:305
+msgid "If you have a plugin in a .zip format, you may install it by uploading it here."
+msgstr "如果您有.zip格式的插件文件，可以在这里通过上传安装它。"
+
+#: wp-admin/includes/plugin-install.php:308
+msgid "Plugin zip file"
+msgstr "插件zip文件"
+
+#: wp-admin/includes/plugin-install.php:586
+msgid "Requires WordPress Version:"
+msgstr "需要WordPress版本："
+
+#. translators: %s: version number
+#: wp-admin/includes/plugin-install.php:589
+#: wp-admin/includes/plugin-install.php:599
+msgid "%s or higher"
+msgstr "%s或更高"
+
+#: wp-admin/includes/plugin-install.php:613
+msgid "WordPress.org Plugin Page &#187;"
+msgstr "WordPress.org插件页面 &#187;"
+
+#: wp-admin/includes/plugin-install.php:680
+msgid "<strong>Warning:</strong> This plugin has <strong>not been tested</strong> with your current version of WordPress."
+msgstr "<strong>警告：</strong>目前<strong>尚未测试</strong>该插件与您当前使用的WordPress版本的兼容性。"
+
+#: wp-admin/includes/plugin-install.php:682
+msgid "<strong>Warning:</strong> This plugin has <strong>not been marked as compatible</strong> with your version of WordPress."
+msgstr "<strong>警告：</strong>该插件<strong>还未被标记为</strong>“与您当前使用的WordPress版本兼容”。"
+
+#. translators: site tagline
+#: wp-admin/includes/schema.php:398
+msgid "Just another WordPress site"
+msgstr "又一个WordPress站点"
+
+#. translators: site tagline
+#: wp-admin/includes/schema.php:536
+msgid "Just another %s site"
+msgstr "又一个%s站点"
+
+#: wp-admin/includes/schema.php:1080
+msgid "Warning! Wildcard DNS may not be configured correctly!"
+msgstr "警告！泛DNS配置可能有误！"
+
+#: wp-admin/includes/template.php:482
+msgid "Comment by %s moved to the trash."
+msgstr "%s的评论已被移动到回收站。"
+
+#: wp-admin/includes/template.php:485
+msgid "Comment by %s marked as spam."
+msgstr "%s的评论已被标记为垃圾评论。"
+
+#. translators: 1: Post edited date, 2: Post edited time
+#: wp-admin/includes/ajax-actions.php:2344 wp-admin/edit-form-advanced.php:523
+msgid "Last edited on %1$s at %2$s"
+msgstr "最后编辑于%1$s %2$s"
+
+#: wp-admin/includes/class-wp-comments-list-table.php:406
+#: wp-admin/includes/class-wp-post-comments-list-table.php:28
+msgctxt "column name"
+msgid "Comment"
+msgstr "评论"
+
+#. translators: %s: date and time of the revision
+#: wp-admin/edit-form-advanced.php:153
+msgid "Post restored to revision from %s."
+msgstr "文章已还原到在%s的版本。"
+
+#. translators: %s: date and time of the revision
+#: wp-admin/edit-form-advanced.php:167
+msgid "Page restored to revision from %s."
+msgstr "页面已还原到在%s的版本。"
+
+#: wp-admin/edit-form-comment.php:51
+msgid "Email:"
+msgstr "电子邮件："
+
+#. translators: %s: hostname:port
+#: wp-admin/includes/class-wp-filesystem-ftpsockets.php:71
+#: wp-admin/includes/class-wp-filesystem-ftpsockets.php:81
+#: wp-admin/includes/class-wp-filesystem-ftpext.php:77
+msgid "Failed to connect to FTP Server %s"
+msgstr "未能连接到FTP服务器%s"
+
+#. translators: %s: hostname:port
+#: wp-admin/includes/class-wp-filesystem-ssh2.php:122
+msgid "Failed to connect to SSH2 Server %s"
+msgstr "未能连接到SSH2服务器%s"
+
+#: wp-admin/includes/class-wp-comments-list-table.php:585
+#: wp-admin/includes/dashboard.php:641
+msgid "Move this comment to the Trash"
+msgstr "将此评论移至回收站"
+
+#. translators: 1: comment author, 2: post link, 3: notification if the comment
+#. is pending
+#: wp-admin/includes/dashboard.php:690
+msgid "From %1$s on %2$s %3$s"
+msgstr "由%1$s发表在《%2$s》%3$s"
+
+#. translators: 1: type of comment, 2: notification if the comment is pending
+#: wp-admin/includes/dashboard.php:735
+msgctxt "dashboard"
+msgid "%1$s %2$s"
+msgstr "%1$s%2$s"
+
+#: wp-admin/themes.php:170 wp-admin/themes.php:172
+msgid "Visit site"
+msgstr "访问站点"
+
+#: wp-admin/edit-tags.php:100 wp-admin/post.php:268 wp-admin/themes.php:43
+#: wp-admin/upload.php:161 wp-admin/edit.php:140
+msgid "Sorry, you are not allowed to delete this item."
+msgstr "抱歉，您不能删除此项目。"
+
+#: wp-admin/includes/class-wp-upgrader.php:151
+msgid "Unable to locate WordPress root directory."
+msgstr "未能找到WordPress根目录。"
+
+#: wp-admin/includes/class-wp-upgrader.php:152
+msgid "Unable to locate WordPress content directory (wp-content)."
+msgstr "未能找到WordPress内容目录（wp-content）。"
+
+#: wp-admin/includes/class-wp-upgrader.php:153 wp-admin/includes/plugin.php:831
+msgid "Unable to locate WordPress plugin directory."
+msgstr "未能找到WordPress插件目录。"
+
+#: wp-admin/includes/class-wp-upgrader.php:148
+msgid "Invalid data provided."
+msgstr "提供了无效资料。"
+
+#: wp-admin/includes/post.php:32 wp-admin/includes/post.php:70
+msgid "Sorry, you are not allowed to edit pages as this user."
+msgstr "抱歉，您不能以此用户编辑页面。"
+
+#: wp-admin/includes/post.php:34 wp-admin/includes/post.php:72
+msgid "Sorry, you are not allowed to edit posts as this user."
+msgstr "抱歉，您不能以此用户编辑文章。"
+
+#: wp-admin/includes/class-plugin-upgrader.php:65
+#: wp-admin/includes/class-theme-upgrader.php:63
+msgid "Installation package not available."
+msgstr "安装包不可用。"
+
+#: wp-admin/includes/class-wp-filesystem-ftpext.php:29
+msgid "The ftp PHP extension is not available"
+msgstr "PHP扩展ftp不可用"
+
+#. translators: %s: comma-separated list of plugin filenames
+#: wp-admin/includes/plugin.php:909
+msgid "Could not fully remove the plugins %s."
+msgstr "未能完整移除插件%s。"
+
+#: wp-admin/includes/class-wp-posts-list-table.php:1464
+#: wp-admin/includes/class-wp-posts-list-table.php:1544
+#: wp-admin/includes/class-wp-posts-list-table.php:1581
+#: wp-admin/includes/class-wp-posts-list-table.php:1618
+#: wp-admin/includes/class-wp-posts-list-table.php:1627
+#: wp-admin/includes/class-wp-posts-list-table.php:1659
+#: wp-admin/includes/class-wp-posts-list-table.php:1680
+#: wp-admin/includes/class-wp-posts-list-table.php:1708
+msgid "&mdash; No Change &mdash;"
+msgstr "—无更改—"
+
+#: wp-admin/includes/meta-boxes.php:1046
+msgid "<code>_blank</code> &mdash; new window or tab."
+msgstr "<code>_blank</code> — 新窗口或新标签。"
+
+#: wp-admin/includes/meta-boxes.php:1049
+msgid "<code>_top</code> &mdash; current window or tab, with no frames."
+msgstr "<code>_top</code> — 不包含框架的当前窗口或标签。"
+
+#: wp-admin/includes/meta-boxes.php:1052
+msgid "<code>_none</code> &mdash; same window or tab."
+msgstr "<code>_none</code> — 同一窗口或标签。"
+
+#: wp-admin/includes/media.php:2588
+msgid "Link text, e.g. &#8220;Ransom Demands (PDF)&#8221;"
+msgstr "链接的文字，例如：“赎金要求（PDF）”"
+
+#: wp-admin/includes/user.php:789 wp-admin/includes/user.php:862
+msgid "Search Requests"
+msgstr "搜索请求"
+
+#: wp-admin/edit.php:295
+msgid "%s block not updated, somebody is editing it."
+msgid_plural "%s blocks not updated, somebody is editing them."
+msgstr[0] "未更新%s个区块，有人正在编辑。"
+
+#: wp-admin/admin.php:288 wp-admin/import.php:18 wp-admin/menu.php:245
+msgid "Import"
+msgstr "导入"
+
+#: wp-admin/includes/template.php:406 wp-admin/comment.php:39
+#: wp-admin/edit-form-comment.php:16
+msgid "Edit Comment"
+msgstr "编辑评论"
+
+#: wp-admin/includes/media.php:2456 wp-admin/includes/nav-menu.php:361
+#: wp-admin/includes/nav-menu.php:649
+msgid "&laquo;"
+msgstr "&laquo;"
+
+#: wp-admin/includes/media.php:2457 wp-admin/includes/nav-menu.php:362
+#: wp-admin/includes/nav-menu.php:650
+msgid "&raquo;"
+msgstr "&raquo;"
+
+#: wp-admin/comment.php:67
+msgid "This comment is in the Trash. Please move it out of the Trash if you want to edit it."
+msgstr "评论在回收站里，如要编辑请移出回收站。"
+
+#: wp-admin/comment.php:114
+msgid "You are about to mark the following comment as spam:"
+msgstr "您将标记以下评论为垃圾评论："
+
+#: wp-admin/comment.php:118
+msgid "You are about to move the following comment to the Trash:"
+msgstr "您将移动以下评论到回收站："
+
+#: wp-admin/comment.php:122
+msgid "You are about to delete the following comment:"
+msgstr "您将删除以下评论："
+
+#: wp-admin/includes/ajax-actions.php:1320
+#: wp-admin/includes/ajax-actions.php:1325
+msgid "Please provide a custom field value."
+msgstr "请输入一个自定义栏目值。"
+
+#: wp-admin/includes/ajax-actions.php:1678
+msgid "Someone"
+msgstr "有人"
+
+#: wp-admin/includes/edit-tag-messages.php:18
+#: wp-admin/includes/ajax-actions.php:1785
+#: wp-admin/includes/ajax-actions.php:1790
+msgid "Item not updated."
+msgstr "项目未更新。"
+
+#: wp-admin/includes/taxonomy.php:116
+msgid "You did not enter a category name."
+msgstr "您没有输入分类目录名称。"
+
+#: wp-admin/includes/ajax-actions.php:1076
+msgid "Sorry, you must be logged in to reply to a comment."
+msgstr "抱歉，回复评论需先登录。"
+
+#: wp-admin/admin.php:231
+msgid "Cannot load %s."
+msgstr "无法载入%s。"
+
+#: wp-admin/includes/ajax-actions.php:805
+msgid "Comment %d does not exist"
+msgstr "评论%d不存在"
+
+#. translators: draft saved date format, see https://secure.php.net/date
+#: wp-admin/includes/misc.php:1087
+msgid "g:i:s a"
+msgstr "ag:i:s"
+
+#. translators: %s: date and time
+#: wp-admin/includes/misc.php:1089
+msgid "Draft saved at %s."
+msgstr "草稿保存于%s。"
+
+#: wp-admin/includes/ajax-actions.php:1679
+msgid "Saving is disabled: %s is currently editing this page."
+msgstr "无法保存：%s正在编辑这个页面。"
+
+#: wp-admin/includes/ajax-actions.php:1679
+msgid "Saving is disabled: %s is currently editing this post."
+msgstr "无法保存：%s正在编辑这篇文章。"
+
+#: wp-admin/includes/comment.php:49 wp-admin/comment.php:257
+#: wp-admin/edit-comments.php:237
+msgid "Sorry, you are not allowed to edit comments on this post."
+msgstr "抱歉，您不能编辑此文章的评论。"
+
+#: wp-admin/admin.php:227
+msgid "Invalid plugin page."
+msgstr "无效的插件页面。"

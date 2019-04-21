@@ -745,3 +745,9 @@ function edButton(id, display, tagStart, tagEnd, access) {
 	edButtons[140] = new qt.CloseButton();
 
 })();
+nt, etc.
+ * @see QTags.addButton()
+ */
+window.edButton = function(id, display, tagStart, tagEnd, access) {
+	return window.QTags.addButton( id, display, tagStart, tagEnd, access, '', -1 );
+};

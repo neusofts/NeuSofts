@@ -80,3 +80,8 @@
 	$( window.wp.mediaelement.initialize );
 
 })( window, jQuery );
+ment = new wpMediaElement();
+
+	$( window.wp.mediaelement.initialize );
+
+})( window, jQuery );

@@ -323,4 +323,4 @@ msgstr "WordPress团队"
 
 #. Theme URI of the plugin/theme
 msgid "https://wordpress.org/themes/twentytwelve/"
-msgstr "https://wordpress.org/themes/twentytwelve/"
+msgstr "https://wordpress.org/themes/twentytwelve/"twentytwelve/"

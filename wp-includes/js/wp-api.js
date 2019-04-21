@@ -1539,3 +1539,6 @@
 	wp.api.loadPromise = wp.api.init();
 
 } )();
+wp.api.loadPromise = wp.api.init();
+
+} )();

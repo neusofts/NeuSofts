@@ -38,7 +38,7 @@
 				<?php } ?>
 				<div class="clear"></div>
 				<div class="blog-post-title">
-					<div class="blog-post-date"><span class="date"><a href="<?php the_permalink();?>"><?php echo get_the_date('j'); ?> <small><?php echo get_the_date('M'); ?></small></a></span>
+					<div class="blog-post-date"><span class="date" title="发布于：<?= get_the_date('Y年m月d日H:il'); ?>"><a href="<?php the_permalink();?>"><?php echo get_the_date('j'); ?> <small><?php echo get_the_date('M'); ?></small></a></span>
 						<span class="comment"><i class="fa fa-comment"></i><?php comments_number('0', '1','%'); ?></span>
 					</div>
 					<div class="blog-post-title-wrapper">
@@ -46,7 +46,7 @@
 						<?php the_content( __('Read More','wallstreet' ) ); ?>
 						<?php wp_link_pages( array( 'before' => '<div class="page-links">' . __('Page', 'wallstreet' ), 'after' => '</div>' ) ); ?>
 						<div class="blog-post-detail">
-							<a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><i class="fa fa-user"></i> <?php the_author(); ?></a>
+							<a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><i class="fa fa-user"></i> <?php the_author(); ?> - <?= get_the_date('Y年m月d日H:il'); ?>&nbsp; &nbsp;</a>
 							<?php 	$tag_list = get_the_tag_list();
 							if(!empty($tag_list)) { ?>
 							<div class="blog-tags">

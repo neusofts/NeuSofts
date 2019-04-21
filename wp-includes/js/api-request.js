@@ -85,3 +85,21 @@
 	window.wp = window.wp || {};
 	window.wp.apiRequest = apiRequest;
 } )( jQuery );
+		options = $.extend( {}, options, {
+			headers: headers,
+			url: url
+		} );
+
+		delete options.path;
+		delete options.namespace;
+		delete options.endpoint;
+
+		return options;
+	};
+
+	apiRequest.transport = $.ajax;
+
+	/** @namespace wp */
+	window.wp = window.wp || {};
+	window.wp.apiRequest = apiRequest;
+} )( jQuery );
